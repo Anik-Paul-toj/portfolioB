@@ -1,8 +1,10 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import type { NavItem } from "@/lib/content";
 import { BloomButtonOrnaments } from "@/components/bloom-button-ornaments";
+import leftWisteria from "@/pinsnap-211174979083582.jpg";
 
 type NavbarProps = {
   items: NavItem[];
@@ -27,9 +29,16 @@ export function Navbar({ items }: NavbarProps) {
 
   return (
     <header className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${isScrolled ? "backdrop-blur-2xl" : "bg-transparent"}`}>
-      <div className="section-shell">
+      <div className="section-shell relative">
+        <Image
+          src={leftWisteria}
+          alt=""
+          priority
+          className="pointer-events-none absolute left-[-8px] top-[-8px] z-[1] h-auto w-[280px] opacity-95 md:left-[-24px] md:top-[-18px] md:w-[430px]"
+        />
+
         <nav
-          className={`mt-4 flex items-center justify-between rounded-full px-4 py-3 md:mt-6 md:px-6 ${
+          className={`relative z-[2] mt-4 flex items-center justify-between rounded-full px-4 py-3 md:mt-6 md:px-6 ${
             isScrolled
               ? "glass-panel border-[#FE9EC7]/20 bg-white/88 shadow-[0_24px_60px_rgba(254,158,199,0.12)]"
               : "border border-[#FE9EC7]/30 bg-white/72 backdrop-blur-xl"
