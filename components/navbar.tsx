@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import type { NavItem } from "@/lib/content";
+import { BloomButtonOrnaments } from "@/components/bloom-button-ornaments";
 
 type NavbarProps = {
   items: NavItem[];
@@ -48,9 +49,10 @@ export function Navbar({ items }: NavbarProps) {
 
           <a
             href="#contact"
-            className="button-glow hidden rounded-full border border-[#FE9EC7]/30 bg-[linear-gradient(135deg,#FE9EC7,#F9F6C4,#89D4FF)] px-4 py-2 text-sm tracking-[0.22em] uppercase text-[#3d1f35] md:inline-flex"
+            className="button-glow button-bloom hidden rounded-full border px-4 py-2 text-sm tracking-[0.22em] uppercase text-[#3d1f35] md:inline-flex"
           >
-            Book Edit
+            <span className="button-bloom__label">Book Edit</span>
+            <BloomButtonOrnaments />
           </a>
 
           <button
@@ -98,10 +100,11 @@ export function Navbar({ items }: NavbarProps) {
               ))}
               <a
                 href="#contact"
-                className="button-glow mt-2 inline-flex rounded-full border border-[#FE9EC7]/30 bg-[linear-gradient(135deg,#FE9EC7,#F9F6C4,#89D4FF)] px-4 py-3 text-sm tracking-[0.22em] uppercase text-[#3d1f35]"
+                className="button-glow button-bloom mt-2 inline-flex rounded-full border px-4 py-3 text-sm tracking-[0.22em] uppercase text-[#3d1f35]"
                 onClick={() => setIsOpen(false)}
               >
-                Book Edit
+                <span className="button-bloom__label">Book Edit</span>
+                <BloomButtonOrnaments />
               </a>
             </div>
           </div>

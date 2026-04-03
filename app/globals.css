@@ -68,11 +68,7 @@ body::before {
   color: #3d1f35;
 }
 
-
-
-
-
-/* ── Glass panel ─────────────────────────────────────────── */
+/* Glass panel */
 .glass-panel {
   background: linear-gradient(160deg, rgba(255,255,255,0.96), rgba(255,240,248,0.90));
   border: 1px solid rgba(254,158,199,0.22);
@@ -83,7 +79,7 @@ body::before {
   backdrop-filter: blur(24px);
 }
 
-/* ── Rainbow glow border ─────────────────────────────────── */
+/* Rainbow glow border */
 .glow-border { position: relative; }
 
 .glow-border::before {
@@ -107,7 +103,7 @@ body::before {
   pointer-events: none;
 }
 
-/* ── Layout ──────────────────────────────────────────────── */
+/* Layout */
 .section-shell {
   position: relative;
   z-index: 1;
@@ -115,7 +111,7 @@ body::before {
   width: min(100% - 1.5rem, 1180px);
 }
 
-/* ── Section badge ───────────────────────────────────────── */
+/* Section badge */
 .section-label {
   display: inline-flex;
   align-items: center;
@@ -141,7 +137,7 @@ body::before {
     0 0 20px rgba(137,212,255,0.45);
 }
 
-/* ── Typography ──────────────────────────────────────────── */
+/* Typography */
 .text-glow {
   text-shadow:
     0 0 18px rgba(254,158,199,0.22),
@@ -161,15 +157,148 @@ body::before {
   color: transparent;
 }
 
-/* ── Buttons ─────────────────────────────────────────────── */
+/* Buttons */
 .button-glow {
   box-shadow:
     0 0 0 1px rgba(255,255,255,0.72) inset,
     0 16px 34px rgba(254,158,199,0.22),
-    0 8px  24px rgba(137,212,255,0.18);
+    0 8px 24px rgba(137,212,255,0.18);
 }
 
-/* ── Project card sheen ──────────────────────────────────── */
+.button-bloom {
+  position: relative;
+  overflow: visible;
+  border-color: rgba(254, 158, 199, 0.32);
+  background: linear-gradient(115deg, #fdb7d8 0%, #f9f6c4 46%, #9edcff 100%);
+  background-size: 200% 200%;
+  color: #3d1f35;
+  filter: drop-shadow(2px 4px 10px rgba(61, 31, 53, 0.14));
+  transition:
+    transform 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.button-bloom:hover {
+  border-color: rgba(254, 158, 199, 0.58);
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.78) inset,
+    0 18px 42px rgba(254,158,199,0.24),
+    0 10px 28px rgba(137,212,255,0.22);
+  animation: bloom-wind 2.4s ease-in-out infinite;
+  transform: translateY(-1px);
+}
+
+.button-bloom__label {
+  position: relative;
+  z-index: 1;
+}
+
+.button-bloom__icon {
+  pointer-events: none;
+  position: absolute;
+  top: -1px;
+  color: rgba(61, 31, 53, 0.92);
+  filter: drop-shadow(2px 2px 3px rgba(61, 31, 53, 0.18));
+}
+
+.button-bloom__icon svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  fill: currentColor;
+}
+
+.button-bloom__icon--1 {
+  right: 0.55rem;
+  width: 1.45rem;
+  transform-origin: 0 0;
+  transform: rotate(10deg);
+}
+
+.button-bloom:hover .button-bloom__icon--1 {
+  animation: bloom-sway-1 3s cubic-bezier(0.52, 0, 0.58, 1) infinite;
+}
+
+.button-bloom__icon--2 {
+  left: 1.55rem;
+  width: 0.7rem;
+  transform-origin: 50% 0;
+  transform: rotate(10deg);
+}
+
+.button-bloom:hover .button-bloom__icon--2 {
+  animation: bloom-sway-2 3s cubic-bezier(0.52, 0, 0.58, 1) 0.8s infinite;
+}
+
+.button-bloom__icon--3 {
+  left: 0.7rem;
+  width: 1rem;
+  transform-origin: 50% 0;
+  transform: rotate(-5deg);
+}
+
+.button-bloom:hover .button-bloom__icon--3 {
+  animation: bloom-sway-3 2.2s cubic-bezier(0.52, 0, 0.58, 1) 0.8s infinite;
+}
+
+@keyframes bloom-wind {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes bloom-sway-1 {
+  0% {
+    transform: rotate(10deg);
+  }
+
+  50% {
+    transform: rotate(-5deg);
+  }
+
+  100% {
+    transform: rotate(10deg);
+  }
+}
+
+@keyframes bloom-sway-2 {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  50% {
+    transform: rotate(15deg);
+  }
+
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes bloom-sway-3 {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  50% {
+    transform: rotate(-5deg);
+  }
+
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+/* Project card sheen */
 .project-sheen::after {
   content: "";
   position: absolute;
@@ -183,7 +312,7 @@ body::before {
   transform: translateX(120%) rotate(12deg);
 }
 
-/* ── Ambient blobs ───────────────────────────────────────── */
+/* Ambient blobs */
 .gradient-ring {
   position: absolute;
   border-radius: 999px;

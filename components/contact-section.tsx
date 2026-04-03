@@ -2,6 +2,7 @@
 
 import { type FormEvent } from "react";
 import type { SocialLink } from "@/lib/content";
+import { BloomButtonOrnaments } from "@/components/bloom-button-ornaments";
 
 type ContactSectionProps = {
   socialLinks: SocialLink[];
@@ -84,9 +85,10 @@ export function ContactSection({ socialLinks }: ContactSectionProps) {
               </label>
               <button
                 type="submit"
-                className="button-glow mt-2 inline-flex items-center justify-center rounded-full border border-[#FE9EC7]/30 bg-[linear-gradient(135deg,#FE9EC7,#F9F6C4,#89D4FF)] px-6 py-3.5 text-sm uppercase tracking-[0.24em] text-[#3d1f35]"
+                className="button-glow button-bloom mt-2 inline-flex items-center justify-center rounded-full border px-6 py-3.5 text-sm uppercase tracking-[0.24em] text-[#3d1f35]"
               >
-                Send Inquiry
+                <span className="button-bloom__label">Send Inquiry</span>
+                <BloomButtonOrnaments />
               </button>
             </form>
           </div>
