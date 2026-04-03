@@ -35,7 +35,7 @@ export function Navbar({ items }: NavbarProps) {
           }`}
         >
           <a href="#hero" className="font-display text-lg tracking-[0.35em] text-[#3d1f35]">
-            ARIA VALE
+            AMPITA DAS
           </a>
 
           <div className="hidden items-center gap-8 md:flex">

@@ -49,7 +49,7 @@ export function HeroSection() {
             Premium edits. Soft neon finish. Story-first motion.
           </p>
           <h1 className="text-glow max-w-5xl font-display text-[clamp(3.8rem,11vw,8.8rem)] leading-[0.88] tracking-[-0.05em] text-[#3d1f35]">
-            <span className="hero-title-line block">Aria Vale</span>
+            <span className="hero-title-line block">Ampita Das</span>
             <span className="hero-title-line headline-gradient block">Cuts that feel cinematic.</span>
           </h1>
           <p className="hero-subtitle mt-6 max-w-2xl text-base leading-7 text-[#3d1f35]/70 md:text-lg">

@@ -11,7 +11,7 @@ export function Preloader({ isLoading }: PreloaderProps) {
       aria-hidden={!isLoading}
     >
       <div className="text-center">
-        <p className="font-display text-4xl tracking-[0.45em] text-[#20304a] md:text-5xl">ARIA VALE</p>
+        <p className="font-display text-4xl tracking-[0.45em] text-[#20304a] md:text-5xl">Ampita Das</p>
         <div className="mx-auto mt-6 h-px w-44 overflow-hidden rounded-full bg-[#44ACFF]/16">
           <div className="h-full w-1/2 animate-[loading_1.2s_ease-in-out_infinite] bg-[linear-gradient(90deg,#FE9EC7,#89D4FF,#44ACFF,#F9F6C4)]" />
         </div>

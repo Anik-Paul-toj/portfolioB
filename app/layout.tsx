@@ -3,7 +3,7 @@ import "./globals.css";
 import SplashCursor from "@/components/SplashCursor";
 
 export const metadata: Metadata = {
-  title: "Aria Vale | Video Editor Portfolio",
+  title: "Ampita Das | Video Editor Portfolio",
   description:
     "Cinematic, pastel-neon portfolio for a professional video editor built with Next.js, Tailwind CSS, and GSAP.",
 };
