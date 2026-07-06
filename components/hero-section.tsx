@@ -87,7 +87,7 @@ export function HeroSection() {
             src={picmixGif}
             alt=""
             priority
-            className="pointer-events-none absolute left-1/2 top-[-180px] z-0 h-auto w-[170px] -translate-x-1/2 md:top-[-200px] md:w-[190px]"
+            className="pointer-events-none absolute left-1/2 top-[-180px] z-0 h-auto w-[170px] -translate-x-1/2 opacity-90 md:top-[-200px] md:w-[190px]"
           />
 
           <div className="glass-panel glow-border relative z-[1] rounded-[30px] p-6 md:p-7">
