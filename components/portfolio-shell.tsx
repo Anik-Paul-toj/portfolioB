@@ -79,25 +79,6 @@ export function PortfolioShell() {
         }
       );
 
-      gsap.fromTo(
-        ".skill-pill",
-        { opacity: 0, y: 28, scale: 0.9 },
-        {
-          opacity: 1,
-          y: 0,
-          scale: 1,
-          duration: 0.7,
-          stagger: 0.08,
-          ease: "back.out(1.6)",
-          scrollTrigger: {
-            trigger: ".skills-cloud",
-            start: "top 85%",
-            once: true,
-          },
-        }
-      );
-
-
     }, rootRef);
 
     return () => ctx.revert();
