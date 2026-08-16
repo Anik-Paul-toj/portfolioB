@@ -1,0 +1,27 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model PortfolioVideo {
+  id                 String   @id @default(uuid())
+  title              String
+  category           String
+  description        String?
+  client             String?
+  year               String?
+  sourceType         String   // "CLOUDINARY" or "DRIVE"
+  videoUrl           String
+  cloudinaryPublicId String?
+  thumbnailUrl       String?
+  duration           Float?
+  fileSize           Int?
+  featured           Boolean  @default(false)
+  published          Boolean  @default(false)
+  displayOrder       Int      @default(0)
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+}

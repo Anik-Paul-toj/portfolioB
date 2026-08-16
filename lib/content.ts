@@ -1,15 +1,18 @@
-﻿export type NavItem = {
+export type NavItem = {
   href: string;
   label: string;
 };
 
 export type Project = {
+  id?: string;
   title: string;
   category: string;
-  year: string;
-  thumbnail: string;
+  year?: string | null;
+  thumbnailUrl?: string | null;
+  thumbnail?: string; // fallback
   videoUrl: string;
-  accent: string;
+  accent?: string;
+  duration?: number | null;
 };
 
 export type SocialLink = {

@@ -2,6 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
+  serverExternalPackages: ["cloudinary"],
   images: {
     remotePatterns: [
       {
@@ -15,6 +16,10 @@ const nextConfig: NextConfig = {
       {
         protocol: "https",
         hostname: "media.giphy.com",
+      },
+      {
+        protocol: "https",
+        hostname: "res.cloudinary.com",
       },
     ],
   },

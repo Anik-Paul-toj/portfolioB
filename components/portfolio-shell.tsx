@@ -18,7 +18,7 @@ import leftWisteria from "@/pinsnap-211174979083582.jpg";
 
 gsap.registerPlugin(ScrollTrigger);
 
-export function PortfolioShell() {
+export function PortfolioShell({ dbProjects }: { dbProjects?: any[] }) {
   const rootRef = useRef<HTMLDivElement>(null);
   const [activeProject, setActiveProject] = useState<Project | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -61,24 +61,6 @@ export function PortfolioShell() {
         );
       });
 
-      gsap.fromTo(
-        ".project-card",
-        { opacity: 0, y: 80, scale: 0.96 },
-        {
-          opacity: 1,
-          y: 0,
-          scale: 1,
-          duration: 1,
-          stagger: 0.14,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: ".projects-grid",
-            start: "top 78%",
-            once: true,
-          },
-        }
-      );
-
     }, rootRef);
 
     return () => ctx.revert();
@@ -99,7 +81,7 @@ export function PortfolioShell() {
         <main className="relative z-10">
           <HeroSection />
           <AboutSection />
-          <ProjectsSection projects={projects} onSelectProject={setActiveProject} />
+          <ProjectsSection projects={dbProjects || projects} onSelectProject={setActiveProject} />
           <SkillsSection skills={skills} />
           <ContactSection socialLinks={socialLinks} />
         </main>
