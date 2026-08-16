@@ -28,13 +28,6 @@ export function Navbar({ items }: NavbarProps) {
   return (
     <header className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${isScrolled ? "backdrop-blur-2xl" : "bg-transparent"}`}>
       <div className="section-shell relative">
-        <Image
-          src={leftWisteria}
-          alt=""
-          priority
-          className="pointer-events-none absolute left-[-8px] top-[-8px] z-[1] h-auto w-[280px] opacity-95 md:left-[-24px] md:top-[-18px] md:w-[430px]"
-        />
-
         <nav
           className={`relative z-[2] mt-4 flex items-center justify-between rounded-full px-4 py-3 md:mt-6 md:px-6 ${
             isScrolled
