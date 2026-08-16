@@ -1,3 +1,6 @@
+import Image from "next/image";
+import shinchanGif from "@/shinchan-waving.gif";
+
 export function AboutSection() {
   return (
     <section id="about" className="scroll-mt-28 py-24 md:py-32">
@@ -14,7 +17,16 @@ export function AboutSection() {
             </p>
           </div>
 
-          <div data-reveal className="glass-panel rounded-[30px] p-7 md:p-8">
+          <div data-reveal className="glass-panel rounded-[30px] p-7 md:p-8 relative overflow-visible">
+            {/* Shinchan waving sticker */}
+            <div className="absolute right-6 top-[-58px] h-[70px] w-[70px] pointer-events-none select-none z-10">
+              <Image
+                src={shinchanGif}
+                alt="Shinchan waving"
+                priority
+                className="h-full w-full object-contain"
+              />
+            </div>
             <div className="grid gap-6 sm:grid-cols-2">
               <div>
                 <p className="text-sm uppercase tracking-[0.28em] text-[#89D4FF]">Approach</p>
