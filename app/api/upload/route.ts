@@ -41,6 +41,7 @@ export async function POST(request: Request) {
     let cloudName = process.env.CLOUDINARY_CLOUD_NAME?.trim().replace(/['"]/g, "");
     let apiKey = process.env.CLOUDINARY_API_KEY?.trim().replace(/['"]/g, "");
     let apiSecret = process.env.CLOUDINARY_API_SECRET?.trim().replace(/['"]/g, "");
+    const uploadPreset = process.env.CLOUDINARY_UPLOAD_PRESET?.trim().replace(/['"]/g, "");
 
     if ((!cloudName || !apiKey || !apiSecret) && process.env.CLOUDINARY_URL) {
       const match = process.env.CLOUDINARY_URL.trim().replace(/['"]/g, "").match(/cloudinary:\/\/([^:]+):([^@]+)@(.+)/);
@@ -51,11 +52,33 @@ export async function POST(request: Request) {
       }
     }
 
-    if (!cloudName || !apiKey || !apiSecret) {
-      return NextResponse.json({ error: "Cloudinary not configured properly in .env" }, { status: 500 });
+    if (!cloudName) {
+      return NextResponse.json({ error: "Cloudinary cloud name is missing in .env" }, { status: 500 });
     }
 
-    // Configure Cloudinary explicitly per request
+    // If an unsigned upload preset is configured, upload directly via Cloudinary REST API
+    if (uploadPreset) {
+      console.log(`[Cloudinary] Uploading with unsigned preset "${uploadPreset}" to cloud "${cloudName}"...`);
+      const uploadForm = new FormData();
+      uploadForm.append("file", file);
+      uploadForm.append("upload_preset", uploadPreset);
+
+      const res = await fetch(`https://api.cloudinary.com/v1_1/${encodeURIComponent(cloudName)}/video/upload`, {
+        method: "POST",
+        body: uploadForm,
+      });
+
+      if (!res.ok) {
+        const errorText = await res.text();
+        console.error("[Cloudinary Unsigned Error]:", errorText);
+        return NextResponse.json({ error: `Cloudinary error: ${errorText}` }, { status: res.status });
+      }
+
+      const result = await res.json();
+      return NextResponse.json(result);
+    }
+
+    // Otherwise use signed SDK upload
     cloudinary.config({
       cloud_name: cloudName,
       api_key: apiKey,
