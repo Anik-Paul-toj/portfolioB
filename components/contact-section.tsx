@@ -1,8 +1,10 @@
 "use client";
 
 import { type FormEvent } from "react";
+import Image from "next/image";
 import type { SocialLink } from "@/lib/content";
 import { BloomButtonOrnaments } from "@/components/bloom-button-ornaments";
+import shinchanGif from "@/shinchan-waving.gif";
 
 type ContactSectionProps = {
   socialLinks: SocialLink[];
@@ -24,7 +26,16 @@ export function ContactSection({ socialLinks }: ContactSectionProps) {
 
   return (
     <section id="contact" className="scroll-mt-28 py-24 pb-16 md:py-32 md:pb-24">
-      <div className="section-shell">
+      <div className="section-shell relative overflow-visible">
+        {/* Shinchan waving sticker */}
+        <div className="absolute right-[-15px] top-[-65px] h-[78px] w-[78px] pointer-events-none select-none z-20">
+          <Image
+            src={shinchanGif}
+            alt="Shinchan waving"
+            priority
+            className="h-full w-full object-contain"
+          />
+        </div>
         <div className="glass-panel glow-border overflow-hidden rounded-[34px] p-7 md:p-10">
           <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr]">
             <div data-reveal className="max-w-xl">

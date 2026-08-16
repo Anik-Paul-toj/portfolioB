@@ -1,5 +1,6 @@
 import Image from "next/image";
 import type { Project } from "@/lib/content";
+import shinchanGif from "@/shinchan-waving.gif";
 
 type ProjectsSectionProps = {
   projects: Project[];
@@ -10,7 +11,16 @@ export function ProjectsSection({ projects, onSelectProject }: ProjectsSectionPr
   return (
     <section id="projects" className="scroll-mt-28 py-24 md:py-32">
       <div className="section-shell">
-        <div data-reveal className="mb-12 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
+        <div data-reveal className="mb-12 flex flex-col gap-5 md:flex-row md:items-end md:justify-between relative overflow-visible">
+          {/* Shinchan waving sticker */}
+          <div className="absolute right-[-10px] top-[-82px] h-[75px] w-[75px] pointer-events-none select-none z-10 hidden md:block">
+            <Image
+              src={shinchanGif}
+              alt="Shinchan waving"
+              priority
+              className="h-full w-full object-contain"
+            />
+          </div>
           <div className="max-w-2xl">
             <span className="section-label">Projects</span>
             <h2 className="mt-7 font-display text-[clamp(2.4rem,5vw,4.6rem)] leading-[0.98] tracking-[-0.04em] text-[#3d1f35]">

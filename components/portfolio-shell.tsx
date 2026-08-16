@@ -13,6 +13,8 @@ import { ProjectModal } from "@/components/project-modal";
 import { ProjectsSection } from "@/components/projects-section";
 import { SkillsSection } from "@/components/skills-section";
 import { navItems, projects, skills, socialLinks, type Project } from "@/lib/content";
+import Image from "next/image";
+import leftWisteria from "@/pinsnap-211174979083582.jpg";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -106,6 +108,12 @@ export function PortfolioShell() {
       <Preloader isLoading={isLoading} />
 
       <div ref={rootRef} className="relative min-h-screen">
+        <Image
+          src={leftWisteria}
+          alt=""
+          priority
+          className="pointer-events-none absolute left-[-8px] top-[-8px] z-20 h-auto w-[280px] opacity-95 md:left-[-24px] md:top-[-18px] md:w-[430px]"
+        />
         <Navbar items={navItems} />
         <main className="relative z-10">
           <HeroSection />

@@ -320,3 +320,20 @@ body::before {
   opacity: 0.72;
   pointer-events: none;
 }
+
+/* Custom Scrollbars for CapCut Pro Workspace */
+.capcut-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.capcut-scrollbar::-webkit-scrollbar-track {
+  background: #0c0c0e;
+}
+.capcut-scrollbar::-webkit-scrollbar-thumb {
+  background: #27272a;
+  border-radius: 999px;
+}
+.capcut-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #3f3f46;
+}
+

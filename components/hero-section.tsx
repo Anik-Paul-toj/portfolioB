@@ -2,6 +2,7 @@ import Image from "next/image";
 import Grainient from "@/components/Grainient";
 import picmixGif from "@/picmix.com_336548.gif";
 import { BloomButtonOrnaments } from "@/components/bloom-button-ornaments";
+import shinchanGif from "@/shinchan-waving.gif";
 
 export function HeroSection() {
   return (
@@ -65,7 +66,18 @@ export function HeroSection() {
             Crafting music visuals, branded films, and performance edits with polished rhythm, color, and atmosphere.
           </p>
 
-          <div className="hero-cta mt-10 flex flex-col gap-4 sm:flex-row">
+          <div className="hero-cta mt-10 flex flex-col gap-4 sm:flex-row relative overflow-visible">
+            {/* Shinchan waving sticker */}
+            <div className="absolute left-[330px] bottom-[-22px] h-[55px] w-[55px] pointer-events-none select-none z-10 hidden lg:block">
+              <Image
+                src={shinchanGif}
+                alt="Shinchan waving"
+                width={55}
+                height={55}
+                unoptimized
+                className="h-full w-full object-contain"
+              />
+            </div>
             <a
               href="#projects"
               className="button-glow button-bloom inline-flex items-center justify-center rounded-full border px-6 py-3.5 text-sm uppercase tracking-[0.24em] text-[#3d1f35]"
