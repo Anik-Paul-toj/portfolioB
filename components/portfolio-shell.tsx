@@ -81,7 +81,7 @@ export function PortfolioShell({ dbProjects }: { dbProjects?: any[] }) {
         <main className="relative z-10">
           <HeroSection />
           <AboutSection />
-          <ProjectsSection projects={dbProjects && dbProjects.length > 0 ? dbProjects : projects} onSelectProject={setActiveProject} />
+          <ProjectsSection projects={dbProjects || []} onSelectProject={setActiveProject} />
           <SkillsSection skills={skills} />
           <ContactSection socialLinks={socialLinks} />
         </main>

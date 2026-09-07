@@ -95,15 +95,8 @@ export const projects: Project[] = [
 ];
 
 export const skills = [
-  "Adobe Premiere Pro",
-  "After Effects",
-  "DaVinci Resolve",
-  "Cinema 4D",
-  "Color Grading",
-  "Sound Design",
   "Narrative Cuts",
   "Social Reels",
-  "Motion Graphics",
   "Client Direction",
 ];
 
