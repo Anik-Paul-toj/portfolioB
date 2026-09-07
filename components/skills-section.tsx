@@ -1017,19 +1017,22 @@ export function SkillsSection({ skills }: SkillsSectionProps) {
       `}} />
 
       <div className="section-shell">
-        <div className="mb-4 flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
+        <div className="mb-8 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
           <div className="max-w-2xl" data-reveal>
             <span className="section-label">CapCut Pro Workspace</span>
-            <h2 className="mt-6 font-display text-[clamp(2rem,4vw,3.2rem)] leading-[0.96] tracking-[-0.04em] text-[#f7f8ff]">
+            <h2 className="mt-6 font-display text-[clamp(2.2rem,4.5vw,3.6rem)] leading-[0.98] tracking-[-0.04em] text-[#3d1f35]">
               A high-fidelity editing experience built into a premium dark interface.
             </h2>
-            <p className="mt-4 text-base leading-8 text-slate-300 md:text-lg">
+            <p className="mt-4 text-base leading-8 text-[#3d1f35]/70 md:text-lg">
               Double-click or drag assets from the left panel to insert them. Edit clip position by dragging inside the player window, or customize properties in the inspector panel.
             </p>
           </div>
-          <div className="flex flex-wrap gap-2">
-            {skills.slice(0, 8).map((skill) => (
-              <span key={skill} className="rounded-full border border-white/10 bg-white/5 px-3 py-2 text-[11px] uppercase tracking-[0.24em] text-slate-300">
+          <div className="flex flex-wrap gap-2.5 max-w-md lg:justify-end">
+            {skills.map((skill) => (
+              <span
+                key={skill}
+                className="rounded-full border border-[#FE9EC7]/35 bg-white/80 px-3.5 py-1.5 text-[11px] uppercase tracking-[0.22em] text-[#3d1f35]/75 shadow-sm backdrop-blur-sm transition hover:border-[#FE9EC7]/60 hover:bg-white hover:text-[#3d1f35]"
+              >
                 {skill}
               </span>
             ))}

@@ -7,6 +7,9 @@ export type Project = {
   id?: string;
   title: string;
   category: string;
+  description?: string | null;
+  client?: string | null;
+  sourceType?: string | null;
   year?: string | null;
   thumbnailUrl?: string | null;
   thumbnail?: string; // fallback
