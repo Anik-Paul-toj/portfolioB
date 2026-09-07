@@ -167,29 +167,29 @@ export default function AddVideoPage() {
       <form onSubmit={handleSubmit} className="grid gap-10 lg:grid-cols-[1fr_400px]">
         {/* Left Column - Details */}
         <div className="flex flex-col gap-6">
-          <div className="glass-panel rounded-2xl p-6">
-            <h2 className="mb-6 text-sm font-bold uppercase tracking-widest text-slate-300">Video Information</h2>
+          <div className="rounded-2xl border border-white/10 bg-[#0d1117]/95 p-6 md:p-7 shadow-2xl backdrop-blur-xl">
+            <h2 className="mb-6 text-sm font-bold uppercase tracking-widest text-cyan-400">Video Information</h2>
 
             <div className="space-y-5">
               <div>
-                <label className="mb-2 block text-xs uppercase tracking-widest text-slate-400">Title</label>
+                <label className="mb-2 block text-xs uppercase tracking-widest text-slate-300 font-semibold">Title</label>
                 <input
                   required
                   type="text"
                   placeholder="e.g. Luxury Brand Reel"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
-                  className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white outline-none focus:border-cyan-400/50"
+                  className="w-full rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-slate-500 outline-none transition focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400/50"
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-5">
                 <div>
-                  <label className="mb-2 block text-xs uppercase tracking-widest text-slate-400">Category</label>
+                  <label className="mb-2 block text-xs uppercase tracking-widest text-slate-300 font-semibold">Category</label>
                   <select
                     value={category}
                     onChange={(e) => setCategory(e.target.value)}
-                    className="w-full rounded-xl border border-white/10 bg-[#0d1117] px-4 py-3 text-sm text-white outline-none focus:border-cyan-400/50"
+                    className="w-full rounded-xl border border-white/15 bg-[#0d1117] px-4 py-3 text-sm text-white outline-none transition focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400/50"
                   >
                     <option>Music Reel</option>
                     <option>Brand Film</option>
@@ -201,35 +201,35 @@ export default function AddVideoPage() {
                   </select>
                 </div>
                 <div>
-                  <label className="mb-2 block text-xs uppercase tracking-widest text-slate-400">Year</label>
+                  <label className="mb-2 block text-xs uppercase tracking-widest text-slate-300 font-semibold">Year</label>
                   <input
                     type="text"
                     value={year}
                     onChange={(e) => setYear(e.target.value)}
-                    className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white outline-none focus:border-cyan-400/50"
+                    className="w-full rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-slate-500 outline-none transition focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400/50"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="mb-2 block text-xs uppercase tracking-widest text-slate-400">Client / Brand (Optional)</label>
+                <label className="mb-2 block text-xs uppercase tracking-widest text-slate-300 font-semibold">Client / Brand (Optional)</label>
                 <input
                   type="text"
                   placeholder="e.g. Nike / Sony"
                   value={client}
                   onChange={(e) => setClient(e.target.value)}
-                  className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white outline-none focus:border-cyan-400/50"
+                  className="w-full rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-slate-500 outline-none transition focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400/50"
                 />
               </div>
 
               <div>
-                <label className="mb-2 block text-xs uppercase tracking-widest text-slate-400">Description</label>
+                <label className="mb-2 block text-xs uppercase tracking-widest text-slate-300 font-semibold">Description</label>
                 <textarea
                   rows={3}
                   placeholder="Brief description of the edit style, pacing, and color grade..."
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white outline-none focus:border-cyan-400/50"
+                  className="w-full rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-slate-500 outline-none transition focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400/50"
                 />
               </div>
             </div>
@@ -238,8 +238,8 @@ export default function AddVideoPage() {
 
         {/* Right Column - Upload */}
         <div className="flex flex-col gap-6">
-          <div className="glass-panel rounded-2xl p-6">
-            <h2 className="mb-6 text-sm font-bold uppercase tracking-widest text-slate-300">Video Source</h2>
+          <div className="rounded-2xl border border-white/10 bg-[#0d1117]/95 p-6 md:p-7 shadow-2xl backdrop-blur-xl">
+            <h2 className="mb-6 text-sm font-bold uppercase tracking-widest text-cyan-400">Video Source</h2>
 
             <div className="mb-6 flex overflow-hidden rounded-xl border border-white/10 bg-white/5">
               <button
@@ -267,7 +267,7 @@ export default function AddVideoPage() {
             </div>
 
             {sourceType === "CLOUDINARY" ? (
-              <div className="rounded-xl border-2 border-dashed border-white/20 p-8 text-center transition hover:border-cyan-400/50">
+              <div className="rounded-xl border-2 border-dashed border-white/20 p-8 text-center transition hover:border-cyan-400/50 bg-white/[0.02]">
                 <input
                   type="file"
                   accept="video/mp4,video/webm,video/quicktime"
@@ -280,20 +280,20 @@ export default function AddVideoPage() {
                   <p className="mb-1 text-sm font-bold text-white">
                     {file ? file.name : "Click to select video file"}
                   </p>
-                  <p className="text-xs text-slate-500">
+                  <p className="text-xs text-slate-400">
                     {file ? `${(file.size / (1024 * 1024)).toFixed(2)} MB` : "MP4, WebM, MOV up to 300MB"}
                   </p>
                 </label>
               </div>
             ) : (
               <div>
-                <label className="mb-2 block text-xs uppercase tracking-widest text-slate-400">Google Drive URL</label>
+                <label className="mb-2 block text-xs uppercase tracking-widest text-slate-300 font-semibold">Google Drive URL</label>
                 <input
                   type="url"
                   placeholder="https://drive.google.com/file/d/..."
                   value={driveUrl}
                   onChange={(e) => setDriveUrl(e.target.value)}
-                  className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white outline-none focus:border-cyan-400/50"
+                  className="w-full rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-slate-500 outline-none transition focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400/50"
                 />
               </div>
             )}
