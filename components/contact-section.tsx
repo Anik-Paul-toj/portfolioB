@@ -1,33 +1,86 @@
 "use client";
 
-import { type FormEvent } from "react";
-import Image from "next/image";
+import { useState, useRef, type FormEvent } from "react";
+import emailjs from "@emailjs/browser";
 import type { SocialLink } from "@/lib/content";
 import { BloomButtonOrnaments } from "@/components/bloom-button-ornaments";
-
 
 type ContactSectionProps = {
   socialLinks: SocialLink[];
 };
 
 export function ContactSection({ socialLinks }: ContactSectionProps) {
-  const onSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const formRef = useRef<HTMLFormElement>(null);
+  const [isSending, setIsSending] = useState(false);
+  const [feedback, setFeedback] = useState<{ type: "success" | "error"; message: string } | null>(null);
 
-    const form = new FormData(event.currentTarget);
+  const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (!formRef.current) return;
+
+    setIsSending(true);
+    setFeedback(null);
+
+    const form = new FormData(formRef.current);
     const name = String(form.get("name") ?? "");
     const email = String(form.get("email") ?? "");
     const message = String(form.get("message") ?? "");
 
-    const subject = encodeURIComponent(`New editing inquiry from ${name || "portfolio visitor"}`);
-    const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${message}`);
-    window.location.href = `mailto:hello@ariavale.studio?subject=${subject}&body=${body}`;
+    const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || "";
+    const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || "";
+    const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || "";
+
+    if (serviceId && templateId && publicKey) {
+      try {
+        await emailjs.send(
+          serviceId,
+          templateId,
+          {
+            name: name,
+            from_name: name,
+            email: email,
+            from_email: email,
+            reply_to: email,
+            message: message,
+          },
+          publicKey
+        );
+
+        setFeedback({
+          type: "success",
+          message: "Thank you! Your inquiry has been sent successfully. I will get back to you soon.",
+        });
+        formRef.current.reset();
+      } catch (error: any) {
+        console.error("EmailJS send failed:", error);
+        setFeedback({
+          type: "error",
+          message: "Unable to send through EmailJS. Opening your email app instead...",
+        });
+        setTimeout(() => {
+          const subject = encodeURIComponent(`New editing inquiry from ${name || "portfolio visitor"}`);
+          const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${message}`);
+          window.location.href = `mailto:dasampita2@gmail.com?subject=${subject}&body=${body}`;
+        }, 1200);
+      } finally {
+        setIsSending(false);
+      }
+    } else {
+      // Fallback if environment variables are not set
+      const subject = encodeURIComponent(`New editing inquiry from ${name || "portfolio visitor"}`);
+      const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${message}`);
+      window.location.href = `mailto:dasampita2@gmail.com?subject=${subject}&body=${body}`;
+      setIsSending(false);
+      setFeedback({
+        type: "success",
+        message: "Opening your email app to send your inquiry...",
+      });
+    }
   };
 
   return (
     <section id="contact" className="scroll-mt-28 py-24 pb-16 md:py-32 md:pb-24">
       <div className="section-shell relative overflow-visible">
-
         <div className="glass-panel glow-border overflow-hidden rounded-[34px] p-7 md:p-10">
           <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr]">
             <div data-reveal className="max-w-xl">
@@ -55,7 +108,7 @@ export function ContactSection({ socialLinks }: ContactSectionProps) {
               </div>
             </div>
 
-            <form onSubmit={onSubmit} data-reveal className="grid gap-4">
+            <form ref={formRef} onSubmit={onSubmit} data-reveal className="grid gap-4">
               <label className="block">
                 <span className="mb-2 block text-xs uppercase tracking-[0.28em] text-[#3d1f35]/50">Name</span>
                 <input
@@ -86,11 +139,27 @@ export function ContactSection({ socialLinks }: ContactSectionProps) {
                   className="w-full resize-none rounded-[22px] border border-[#FE9EC7]/20 bg-white/84 px-5 py-4 text-[#3d1f35] outline-none transition placeholder:text-[#3d1f35]/35 focus:border-[#FE9EC7]/50 focus:bg-white"
                 />
               </label>
+
+              {feedback && (
+                <div
+                  className={`rounded-[18px] p-4 text-sm font-medium transition ${
+                    feedback.type === "success"
+                      ? "border border-emerald-400/30 bg-emerald-50 text-emerald-800"
+                      : "border border-red-400/30 bg-red-50 text-red-800"
+                  }`}
+                >
+                  {feedback.message}
+                </div>
+              )}
+
               <button
                 type="submit"
-                className="button-glow button-bloom mt-2 inline-flex items-center justify-center rounded-full border px-6 py-3.5 text-sm uppercase tracking-[0.24em] text-[#3d1f35]"
+                disabled={isSending}
+                className="button-glow button-bloom mt-2 inline-flex items-center justify-center rounded-full border px-6 py-3.5 text-sm uppercase tracking-[0.24em] text-[#3d1f35] disabled:opacity-60"
               >
-                <span className="button-bloom__label">Send Inquiry</span>
+                <span className="button-bloom__label">
+                  {isSending ? "Sending Inquiry..." : "Send Inquiry"}
+                </span>
                 <BloomButtonOrnaments />
               </button>
             </form>
