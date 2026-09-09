@@ -10,7 +10,7 @@ export function HeroSection() {
   return (
     <section
       id="hero"
-      className="relative flex min-h-screen items-end overflow-hidden pb-14 pt-28 md:items-center md:pb-0"
+      className="relative flex min-h-screen items-center overflow-hidden pb-10 pt-20 md:py-0"
     >
       {/* Grainient WebGL animated gradient background */}
       <div className="absolute inset-0 z-0">
@@ -46,13 +46,13 @@ export function HeroSection() {
       <div className="gradient-ring left-[-10%] top-[18%] h-64 w-64 bg-[#FE9EC7]/30 z-[1]" />
       <div className="gradient-ring bottom-[14%] right-[-6%] h-72 w-72 bg-[#89D4FF]/28 z-[1]" />
 
-      <div className="section-shell relative z-[2] flex flex-col gap-10 md:flex-row md:items-center md:justify-between">
-        <div className="max-w-4xl">
-          <div className="hero-badge section-label mb-6">Cinematic Video Editor</div>
-          <p className="hero-kicker mb-5 max-w-xl text-sm uppercase tracking-[0.45em] text-[#3d1f35]/60">
+      <div className="section-shell relative z-[2] flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
+        <div className="max-w-3xl">
+          <div className="hero-badge section-label mb-2.5">Cinematic Video Editor</div>
+          <p className="hero-kicker mb-2.5 max-w-xl text-xs md:text-sm uppercase tracking-[0.38em] text-[#3d1f35]/60">
             Premium edits. Soft neon finish. Story-first motion.
           </p>
-          <h1 className="text-glow max-w-5xl font-display text-[clamp(3.8rem,11vw,8.8rem)] leading-[0.88] tracking-[-0.05em] text-[#3d1f35]">
+          <h1 className="text-glow font-display text-[clamp(2.8rem,5.4vw,5.6rem)] leading-[0.9] tracking-[-0.04em] text-[#3d1f35]">
             <span className="hero-title-line flex items-center gap-[0.18em] block">
               <span className="inline-flex w-[0.42em] translate-y-[-0.02em] text-[#FE9EC7] opacity-90">
                 <svg viewBox="0 0 11.67 37.63" xmlns="http://www.w3.org/2000/svg" className="h-auto w-full fill-current">
@@ -64,59 +64,43 @@ export function HeroSection() {
             </span>
             <span className="hero-title-line headline-gradient block">Cuts that feel cinematic.</span>
           </h1>
-          <p className="hero-subtitle mt-6 max-w-2xl text-base leading-7 text-[#3d1f35]/70 md:text-lg">
+          <p className="hero-subtitle mt-3 max-w-xl text-sm leading-6 text-[#3d1f35]/70 md:text-base md:leading-6">
             Crafting music visuals, branded films, and performance edits with polished rhythm, color, and atmosphere.
           </p>
 
-          <div className="hero-cta mt-10 flex flex-col gap-4 sm:flex-row relative overflow-visible">
-
+          <div className="hero-cta mt-5 flex flex-col gap-3.5 sm:flex-row relative overflow-visible">
             <a
               href="#projects"
-              className="button-glow button-bloom inline-flex items-center justify-center rounded-full border px-6 py-3.5 text-sm uppercase tracking-[0.24em] text-[#3d1f35]"
+              className="button-glow button-bloom inline-flex items-center justify-center rounded-full border px-6 py-2.5 text-sm uppercase tracking-[0.24em] text-[#3d1f35]"
             >
               <span className="button-bloom__label">View Reel</span>
               <BloomButtonOrnaments />
             </a>
             <a
               href="#contact"
-              className="inline-flex items-center justify-center rounded-full border border-[#FE9EC7]/25 bg-white/80 px-6 py-3.5 text-sm uppercase tracking-[0.24em] text-[#3d1f35]/80 transition hover:border-[#FE9EC7]/55 hover:bg-white hover:text-[#3d1f35]"
+              className="inline-flex items-center justify-center rounded-full border border-[#FE9EC7]/25 bg-white/80 px-6 py-2.5 text-sm uppercase tracking-[0.24em] text-[#3d1f35]/80 transition hover:border-[#FE9EC7]/55 hover:bg-white hover:text-[#3d1f35]"
             >
               Start a Project
             </a>
           </div>
         </div>
 
-        <div data-reveal className="relative ml-auto w-full max-w-sm md:mr-3 md:-translate-y-8 lg:-translate-y-12">
+        <div data-reveal className="relative ml-auto w-full max-w-[270px] md:mr-3 md:max-w-[285px] md:mt-12 lg:mt-14">
           <Image
             src={picmixGif}
             alt=""
             priority
-            className="pointer-events-none absolute left-1/2 top-[-155px] z-0 h-auto w-[160px] -translate-x-1/2 opacity-90 md:top-[-170px] md:w-[175px]"
+            className="pointer-events-none absolute left-[26%] top-[-102px] z-0 h-auto w-[118px] -translate-x-1/2 opacity-95 md:top-[-110px] md:w-[125px]"
           />
 
-          <div className="glass-panel glow-border relative z-[1] rounded-[30px] p-6 md:p-7">
-            <div className="grid grid-cols-2 gap-3.5">
-              <div className="relative overflow-hidden rounded-[22px] ring-1 ring-[#FE9EC7]/30 shadow-sm">
-                <Image
-                  src={assetPhoto1}
-                  alt="Creative showcase frame 1"
-                  className="h-44 w-full object-cover"
-                />
-              </div>
-              <div className="relative overflow-hidden rounded-[22px] ring-1 ring-[#FE9EC7]/30 shadow-sm translate-y-3">
-                <Image
-                  src={assetPhoto2}
-                  alt="Creative showcase frame 2"
-                  className="h-44 w-full object-cover"
-                />
-              </div>
-            </div>
-
-            <div className="mt-7">
-              <p className="text-xs uppercase tracking-[0.28em] text-[#3d1f35]/46">Signature</p>
-              <p className="mt-2 text-sm leading-6 text-[#3d1f35]/70">
-                Neon softness, musical pacing, and crisp transitions built for premium storytelling.
-              </p>
+          <div className="glass-panel glow-border relative z-[1] rounded-[26px] p-3 md:p-3.5 shadow-xl">
+            <div className="relative overflow-hidden rounded-[18px] ring-1 ring-[#FE9EC7]/30 shadow-sm aspect-[3/4]">
+              <Image
+                src={assetPhoto1}
+                alt="Ampita Das - Cinematic Video Editor"
+                priority
+                className="h-full w-full object-cover object-center"
+              />
             </div>
           </div>
         </div>
