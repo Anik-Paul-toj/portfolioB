@@ -26,13 +26,13 @@ export function Navbar({ items }: NavbarProps) {
     "text-sm tracking-[0.24em] uppercase text-[#3d1f35]/70 transition hover:text-[#FE9EC7]";
 
   return (
-    <header className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${isScrolled ? "backdrop-blur-2xl" : "bg-transparent"}`}>
+    <header className="pointer-events-none fixed inset-x-0 top-0 z-50 bg-transparent">
       <div className="section-shell relative">
         <nav
-          className={`relative z-[2] mt-4 flex items-center justify-between rounded-full px-4 py-3 md:mt-6 md:px-6 ${
+          className={`pointer-events-auto relative z-[2] mt-4 flex items-center justify-between rounded-full px-4 py-3 transition-all duration-300 md:mt-6 md:px-6 ${
             isScrolled
-              ? "glass-panel border-[#FE9EC7]/20 bg-white/88 shadow-[0_24px_60px_rgba(254,158,199,0.12)]"
-              : "border border-[#FE9EC7]/30 bg-white/72 backdrop-blur-xl"
+              ? "glass-panel border-[#FE9EC7]/20 bg-white/90 shadow-[0_20px_50px_rgba(254,158,199,0.12)]"
+              : "border border-[#FE9EC7]/30 bg-white/75 backdrop-blur-xl"
           }`}
         >
           <a href="#hero" className="font-display text-lg tracking-[0.35em] text-[#3d1f35]">
@@ -82,7 +82,7 @@ export function Navbar({ items }: NavbarProps) {
         </nav>
 
         <div
-          className={`overflow-hidden transition-[max-height,opacity,margin] duration-500 md:hidden ${
+          className={`pointer-events-auto overflow-hidden transition-[max-height,opacity,margin] duration-500 md:hidden ${
             isOpen ? "mt-4 max-h-96 opacity-100" : "max-h-0 opacity-0"
           }`}
         >
