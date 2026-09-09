@@ -6,6 +6,36 @@ import { useState } from "react";
 import Link from "next/link";
 import { ArrowLeft, UploadCloud, Link as LinkIcon, Loader2, CheckCircle2 } from "lucide-react";
 
+const CATEGORY_DATA: Record<string, { label: string; description: string }> = {
+  "Doctor": {
+    label: "Doctor",
+    description:
+      "High-impact medical and healthcare video showcasing patient trust, expert consultations, and clinical excellence with clean, engaging visual pacing.",
+  },
+  "Business Owner": {
+    label: "Business Owner",
+    description:
+      "Dynamic entrepreneurial and corporate storytelling highlighting company growth, visionary leadership, brand authority, and client success.",
+  },
+  "Relationship Coach / Expert": {
+    label: "Relationship Coach / Expert",
+    description:
+      "Empathetic, insight-driven video content designed for relationship coaching, emotional connection, communication breakthroughs, and personal growth.",
+  },
+  "Wellness Coach": {
+    label: "Wellness Coach",
+    description:
+      "Inspiring holistic health and lifestyle edit focused on mindful wellness habits, workout routines, nutrition, and personal transformation.",
+  },
+  "Factory": {
+    label: "Factory",
+    description:
+      "Cinematic industrial footage capturing factory operations, precision machinery, modern manufacturing lines, and the scale of production.",
+  },
+};
+
+const CATEGORIES = Object.keys(CATEGORY_DATA);
+
 export default function AddVideoPage() {
   const { status } = useSession({
     required: true,
@@ -16,10 +46,17 @@ export default function AddVideoPage() {
   const router = useRouter();
 
   const [title, setTitle] = useState("");
-  const [category, setCategory] = useState("Music Reel");
-  const [description, setDescription] = useState("");
-  const [client, setClient] = useState("");
-  const [year, setYear] = useState(new Date().getFullYear().toString());
+  const [category, setCategory] = useState("Doctor");
+  const [description, setDescription] = useState(CATEGORY_DATA["Doctor"].description);
+
+  const handleCategoryChange = (newCategory: string) => {
+    setCategory(newCategory);
+    // Auto-update description if empty or if currently matching any default description
+    const defaultDescriptions = Object.values(CATEGORY_DATA).map((item) => item.description);
+    if (!description.trim() || defaultDescriptions.includes(description.trim())) {
+      setDescription(CATEGORY_DATA[newCategory]?.description || "");
+    }
+  };
 
   const [sourceType, setSourceType] = useState<"CLOUDINARY" | "DRIVE">("CLOUDINARY");
   const [driveUrl, setDriveUrl] = useState("");
@@ -129,8 +166,8 @@ export default function AddVideoPage() {
           title,
           category,
           description,
-          client,
-          year,
+          client: "",
+          year: new Date().getFullYear().toString(),
           sourceType,
           videoUrl: finalVideoUrl,
           cloudinaryPublicId,
@@ -176,61 +213,49 @@ export default function AddVideoPage() {
                 <input
                   required
                   type="text"
-                  placeholder="e.g. Luxury Brand Reel"
+                  placeholder="e.g. Clinical Showcase or Brand Story"
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
                   className="w-full rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-slate-500 outline-none transition focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400/50"
                 />
               </div>
 
-              <div className="grid grid-cols-2 gap-5">
-                <div>
-                  <label className="mb-2 block text-xs uppercase tracking-widest text-slate-300 font-semibold">Category</label>
-                  <select
-                    value={category}
-                    onChange={(e) => setCategory(e.target.value)}
-                    className="w-full rounded-xl border border-white/15 bg-[#0d1117] px-4 py-3 text-sm text-white outline-none transition focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400/50"
+              <div>
+                <label className="mb-2 block text-xs uppercase tracking-widest text-slate-300 font-semibold">Category</label>
+                <select
+                  value={category}
+                  onChange={(e) => handleCategoryChange(e.target.value)}
+                  className="w-full rounded-xl border border-white/15 bg-[#0d1117] px-4 py-3 text-sm text-white outline-none transition focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400/50 cursor-pointer"
+                >
+                  {CATEGORIES.map((cat) => (
+                    <option key={cat} value={cat}>
+                      {cat}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div>
+                <div className="mb-2 flex items-center justify-between">
+                  <label className="block text-xs uppercase tracking-widest text-slate-300 font-semibold">Description</label>
+                  <button
+                    type="button"
+                    onClick={() => setDescription(CATEGORY_DATA[category]?.description || "")}
+                    className="text-[11px] font-medium text-cyan-400 hover:text-cyan-300 transition underline underline-offset-2"
                   >
-                    <option>Music Reel</option>
-                    <option>Brand Film</option>
-                    <option>Beauty Spot</option>
-                    <option>Event Opener</option>
-                    <option>Fashion Campaign</option>
-                    <option>Trailer Edit</option>
-                    <option>Other</option>
-                  </select>
+                    Reset to default
+                  </button>
                 </div>
-                <div>
-                  <label className="mb-2 block text-xs uppercase tracking-widest text-slate-300 font-semibold">Year</label>
-                  <input
-                    type="text"
-                    value={year}
-                    onChange={(e) => setYear(e.target.value)}
-                    className="w-full rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-slate-500 outline-none transition focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400/50"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label className="mb-2 block text-xs uppercase tracking-widest text-slate-300 font-semibold">Client / Brand (Optional)</label>
-                <input
-                  type="text"
-                  placeholder="e.g. Nike / Sony"
-                  value={client}
-                  onChange={(e) => setClient(e.target.value)}
-                  className="w-full rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-slate-500 outline-none transition focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400/50"
-                />
-              </div>
-
-              <div>
-                <label className="mb-2 block text-xs uppercase tracking-widest text-slate-300 font-semibold">Description</label>
                 <textarea
-                  rows={3}
-                  placeholder="Brief description of the edit style, pacing, and color grade..."
+                  rows={4}
+                  placeholder="Predefined description for this category..."
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  className="w-full rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-sm text-white placeholder:text-slate-500 outline-none transition focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400/50"
+                  className="w-full rounded-xl border border-white/15 bg-white/5 px-4 py-3 text-sm leading-relaxed text-white placeholder:text-slate-500 outline-none transition focus:border-cyan-400 focus:ring-1 focus:ring-cyan-400/50"
                 />
+                <p className="mt-1.5 text-xs text-slate-500">
+                  Pre-filled automatically based on category. Feel free to edit or keep as is.
+                </p>
               </div>
             </div>
           </div>

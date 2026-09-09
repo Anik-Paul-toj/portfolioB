@@ -1,6 +1,8 @@
 import Image from "next/image";
 import Grainient from "@/components/Grainient";
 import picmixGif from "@/picmix.com_336548.gif";
+import assetPhoto1 from "@/assets/file_00000000c0b8820bb8c8d921cb357909.png";
+import assetPhoto2 from "@/assets/file_00000000c5fc8208ba8b1920c75b9eec.png";
 import { BloomButtonOrnaments } from "@/components/bloom-button-ornaments";
 
 
@@ -93,48 +95,28 @@ export function HeroSection() {
           />
 
           <div className="glass-panel glow-border relative z-[1] rounded-[30px] p-6 md:p-7">
-            <div className="mb-8 flex items-center justify-between">
-              <span className="text-xs uppercase tracking-[0.32em] text-[#3d1f35]/52">Selected Frames</span>
-              <span className="rounded-full border border-[#FE9EC7]/45 bg-[#FE9EC7]/12 px-3 py-1 text-xs uppercase tracking-[0.2em] text-[#3d1f35]">
-                2024-2026
-              </span>
+            <div className="grid grid-cols-2 gap-3.5">
+              <div className="relative overflow-hidden rounded-[22px] ring-1 ring-[#FE9EC7]/30 shadow-sm">
+                <Image
+                  src={assetPhoto1}
+                  alt="Creative showcase frame 1"
+                  className="h-44 w-full object-cover"
+                />
+              </div>
+              <div className="relative overflow-hidden rounded-[22px] ring-1 ring-[#FE9EC7]/30 shadow-sm translate-y-3">
+                <Image
+                  src={assetPhoto2}
+                  alt="Creative showcase frame 2"
+                  className="h-44 w-full object-cover"
+                />
+              </div>
             </div>
 
-            <div className="grid grid-cols-3 gap-3">
-              {[
-                "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=800&q=80",
-                "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=800&q=80",
-                "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=800&q=80",
-              ].map((frame, index) => (
-                <div
-                  key={frame}
-                  className={`relative overflow-hidden rounded-[20px] ring-1 ring-[#FE9EC7]/30 ${
-                    index === 1 ? "translate-y-5" : index === 2 ? "translate-y-2" : ""
-                  }`}
-                >
-                  <Image
-                    src={frame}
-                    alt="Video editing preview frame"
-                    width={300}
-                    height={220}
-                    sizes="(max-width: 768px) 33vw, 160px"
-                    className="h-32 w-full object-cover"
-                  />
-                </div>
-              ))}
-            </div>
-
-            <div className="mt-7 flex items-end justify-between gap-5">
-              <div>
-                <p className="text-xs uppercase tracking-[0.28em] text-[#3d1f35]/46">Signature</p>
-                <p className="mt-2 text-sm leading-6 text-[#3d1f35]/70">
-                  Neon softness, musical pacing, and crisp transitions built for premium storytelling.
-                </p>
-              </div>
-              <div className="text-right">
-                <p className="font-display text-4xl text-[#FE9EC7]">12+</p>
-                <p className="text-xs uppercase tracking-[0.24em] text-[#3d1f35]/46">Brand Films</p>
-              </div>
+            <div className="mt-7">
+              <p className="text-xs uppercase tracking-[0.28em] text-[#3d1f35]/46">Signature</p>
+              <p className="mt-2 text-sm leading-6 text-[#3d1f35]/70">
+                Neon softness, musical pacing, and crisp transitions built for premium storytelling.
+              </p>
             </div>
           </div>
         </div>
