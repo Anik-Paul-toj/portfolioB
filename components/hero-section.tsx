@@ -46,7 +46,7 @@ export function HeroSection() {
       <div className="gradient-ring left-[-10%] top-[18%] h-64 w-64 bg-[#FE9EC7]/30 z-[1]" />
       <div className="gradient-ring bottom-[14%] right-[-6%] h-72 w-72 bg-[#89D4FF]/28 z-[1]" />
 
-      <div className="section-shell relative z-[2] flex flex-col gap-14 md:flex-row md:items-end md:justify-between">
+      <div className="section-shell relative z-[2] flex flex-col gap-10 md:flex-row md:items-center md:justify-between">
         <div className="max-w-4xl">
           <div className="hero-badge section-label mb-6">Cinematic Video Editor</div>
           <p className="hero-kicker mb-5 max-w-xl text-sm uppercase tracking-[0.45em] text-[#3d1f35]/60">
@@ -86,12 +86,12 @@ export function HeroSection() {
           </div>
         </div>
 
-        <div data-reveal className="relative ml-auto w-full max-w-sm md:mr-3">
+        <div data-reveal className="relative ml-auto w-full max-w-sm md:mr-3 md:-translate-y-8 lg:-translate-y-12">
           <Image
             src={picmixGif}
             alt=""
             priority
-            className="pointer-events-none absolute left-1/2 top-[-180px] z-0 h-auto w-[170px] -translate-x-1/2 opacity-90 md:top-[-200px] md:w-[190px]"
+            className="pointer-events-none absolute left-1/2 top-[-155px] z-0 h-auto w-[160px] -translate-x-1/2 opacity-90 md:top-[-170px] md:w-[175px]"
           />
 
           <div className="glass-panel glow-border relative z-[1] rounded-[30px] p-6 md:p-7">
