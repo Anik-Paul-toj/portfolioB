@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Grainient from "@/components/Grainient";
 import picmixGif from "@/picmix.com_336548.gif";
-import assetPhoto1 from "@/assets/hero.png";
+import assetPhoto1 from "@/assets/hero1.png";
 import assetPhoto2 from "@/assets/file_00000000c5fc8208ba8b1920c75b9eec.png";
 import castleOverlay from "@/assets/castle-overlay.png";
 
@@ -108,15 +108,13 @@ export function HeroSection() {
             className="pointer-events-none absolute left-[26%] top-[-102px] z-0 h-auto w-[118px] -translate-x-1/2 opacity-95 md:top-[-110px] md:w-[125px]"
           />
 
-          <div className="glass-panel glow-border relative z-[1] rounded-[26px] p-3 md:p-3.5 shadow-xl">
-            <div className="relative overflow-hidden rounded-[18px] ring-1 ring-[#FE9EC7]/30 shadow-sm aspect-[3/4]">
-              <Image
-                src={assetPhoto1}
-                alt="Ampita Das - Cinematic Video Editor"
-                priority
-                className="h-full w-full object-cover object-center"
-              />
-            </div>
+          <div className="relative z-[1]">
+            <Image
+              src={assetPhoto1}
+              alt="Ampita Das - Cinematic Video Editor"
+              priority
+              className="h-auto w-full object-contain drop-shadow-xl"
+            />
           </div>
         </div>
       </div>
