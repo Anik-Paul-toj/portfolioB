@@ -63,6 +63,12 @@ export function HeroSection() {
         </div>
       </div>
 
+      {/* Seamless bottom transition layer blending into About section */}
+      <div
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-36 md:h-52 z-[1] bg-gradient-to-b from-transparent via-[#fff5f9]/50 to-[#fff5f9]"
+        aria-hidden="true"
+      />
+
       <div className="section-shell relative z-[2] flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
         <div className="max-w-3xl">
           <div className="hero-badge section-label mb-2.5">Cinematic Video Editor</div>
