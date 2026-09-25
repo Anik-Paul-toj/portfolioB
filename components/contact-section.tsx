@@ -3,7 +3,7 @@
 import { useState, useRef, type FormEvent } from "react";
 import emailjs from "@emailjs/browser";
 import type { SocialLink } from "@/lib/content";
-import { BloomButtonOrnaments } from "@/components/bloom-button-ornaments";
+
 
 type ContactSectionProps = {
   socialLinks: SocialLink[];
@@ -160,7 +160,6 @@ export function ContactSection({ socialLinks }: ContactSectionProps) {
                 <span className="button-bloom__label">
                   {isSending ? "Sending Inquiry..." : "Send Inquiry"}
                 </span>
-                <BloomButtonOrnaments />
               </button>
             </form>
           </div>

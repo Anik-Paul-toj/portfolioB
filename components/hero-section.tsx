@@ -1,10 +1,10 @@
 import Image from "next/image";
 import Grainient from "@/components/Grainient";
 import picmixGif from "@/picmix.com_336548.gif";
-import assetPhoto1 from "@/assets/file_00000000c0b8820bb8c8d921cb357909.png";
+import assetPhoto1 from "@/assets/hero.png";
 import assetPhoto2 from "@/assets/file_00000000c5fc8208ba8b1920c75b9eec.png";
 import castleOverlay from "@/assets/castle-overlay.png";
-import { BloomButtonOrnaments } from "@/components/bloom-button-ornaments";
+
 
 
 
@@ -90,7 +90,6 @@ export function HeroSection() {
               className="button-glow button-bloom inline-flex items-center justify-center rounded-full border px-6 py-2.5 text-sm uppercase tracking-[0.24em] text-[#3d1f35]"
             >
               <span className="button-bloom__label">View Reel</span>
-              <BloomButtonOrnaments />
             </a>
             <a
               href="#contact"
