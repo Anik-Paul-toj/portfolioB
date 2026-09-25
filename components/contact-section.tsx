@@ -1,9 +1,10 @@
 "use client";
 
 import { useState, useRef, type FormEvent } from "react";
+import Image from "next/image";
 import emailjs from "@emailjs/browser";
 import type { SocialLink } from "@/lib/content";
-
+import contactBg from "@/assets/contact.png";
 
 type ContactSectionProps = {
   socialLinks: SocialLink[];
@@ -79,8 +80,31 @@ export function ContactSection({ socialLinks }: ContactSectionProps) {
   };
 
   return (
-    <section id="contact" className="scroll-mt-28 py-24 pb-16 md:py-32 md:pb-24">
-      <div className="section-shell relative overflow-visible">
+    <section id="contact" className="relative scroll-mt-28 py-24 pb-16 md:py-32 md:pb-24 overflow-hidden">
+      {/* Decorative Atmosphere Background Layer */}
+      <div
+        className="pointer-events-none absolute inset-0 z-0 select-none overflow-hidden [mask-image:linear-gradient(180deg,transparent_0%,black_140px,black_calc(100%-80px),transparent_100%)] [webkit-mask-image:linear-gradient(180deg,transparent_0%,black_140px,black_calc(100%-80px),transparent_100%)]"
+        aria-hidden="true"
+      >
+        <Image
+          src={contactBg}
+          alt=""
+          fill
+          className="object-cover object-center opacity-65 md:opacity-75 mix-blend-multiply"
+          sizes="100vw"
+        />
+        {/* Soft pastel and ambient glow overlays */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#fff5f9]/50 via-transparent to-[#fff5f9]/60" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(254,158,199,0.08),transparent_75%)]" />
+      </div>
+
+      {/* Dedicated seamless top transition */}
+      <div
+        className="pointer-events-none absolute inset-x-0 top-0 h-36 md:h-52 z-[1] bg-gradient-to-b from-[#fff5f9] via-[#fff5f9]/60 to-transparent"
+        aria-hidden="true"
+      />
+
+      <div className="section-shell relative z-[2] overflow-visible">
         <div className="glass-panel glow-border overflow-hidden rounded-[34px] p-7 md:p-10">
           <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr]">
             <div data-reveal className="max-w-xl">
