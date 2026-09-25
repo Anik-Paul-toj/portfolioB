@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState, type MouseEvent as ReactMouseEvent, type CSSProperties } from "react";
 
-// Web Audio API Synthesizer for retro video editor feedback sound
+// Web Audio API Synthesizer for magical Disney fairytale feedback sound
 function playSynth(type: "swoosh" | "blip" | "melody") {
   try {
     const ctx = new (window.AudioContext || (window as any).webkitAudioContext)();
@@ -12,35 +12,38 @@ function playSynth(type: "swoosh" | "blip" | "melody") {
     gain.connect(ctx.destination);
 
     if (type === "blip") {
+      // Gentle enchanted sparkle chime
       osc.type = "sine";
-      osc.frequency.setValueAtTime(700, ctx.currentTime);
-      osc.frequency.exponentialRampToValueAtTime(200, ctx.currentTime + 0.12);
-      gain.gain.setValueAtTime(0.12, ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.12);
+      osc.frequency.setValueAtTime(880, ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(1760, ctx.currentTime + 0.15);
+      gain.gain.setValueAtTime(0.08, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.15);
       osc.start();
-      osc.stop(ctx.currentTime + 0.12);
+      osc.stop(ctx.currentTime + 0.15);
     } else if (type === "swoosh") {
-      osc.type = "triangle";
-      osc.frequency.setValueAtTime(90, ctx.currentTime);
-      osc.frequency.exponentialRampToValueAtTime(380, ctx.currentTime + 0.28);
+      // Magic wand sparkle sweep
+      osc.type = "sine";
+      osc.frequency.setValueAtTime(523.25, ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(1318.51, ctx.currentTime + 0.25);
       gain.gain.setValueAtTime(0.01, ctx.currentTime);
-      gain.gain.linearRampToValueAtTime(0.12, ctx.currentTime + 0.12);
-      gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.3);
+      gain.gain.linearRampToValueAtTime(0.09, ctx.currentTime + 0.1);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.28);
       osc.start();
-      osc.stop(ctx.currentTime + 0.3);
+      osc.stop(ctx.currentTime + 0.28);
     } else if (type === "melody") {
-      const notes = [261.63, 329.63, 392.00]; // C4, E4, G4
+      // Disney fairytale arpeggio (C5, E5, G5, B5, C6)
+      const notes = [523.25, 659.25, 783.99, 987.77, 1046.50];
       notes.forEach((freq, idx) => {
         const o = ctx.createOscillator();
         const g = ctx.createGain();
         o.type = "sine";
-        o.frequency.setValueAtTime(freq, ctx.currentTime + idx * 0.12);
-        g.gain.setValueAtTime(0.08, ctx.currentTime + idx * 0.12);
-        g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + idx * 0.12 + 0.3);
+        o.frequency.setValueAtTime(freq, ctx.currentTime + idx * 0.08);
+        g.gain.setValueAtTime(0.06, ctx.currentTime + idx * 0.08);
+        g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + idx * 0.08 + 0.28);
         o.connect(g);
         g.connect(ctx.destination);
-        o.start(ctx.currentTime + idx * 0.12);
-        o.stop(ctx.currentTime + idx * 0.12 + 0.35);
+        o.start(ctx.currentTime + idx * 0.08);
+        o.stop(ctx.currentTime + idx * 0.08 + 0.3);
       });
     }
   } catch (e) {
@@ -90,55 +93,60 @@ type Track = {
 };
 
 const tools: { id: ToolId; label: string; icon: string }[] = [
-  { id: "media", label: "Media", icon: "◉" },
-  { id: "audio", label: "Audio", icon: "♫" },
-  { id: "text", label: "Text", icon: "T" },
-  { id: "stickers", label: "Stickers", icon: "✦" },
-  { id: "effects", label: "Effects", icon: "✧" },
-  { id: "filters", label: "Filters", icon: "◌" },
+  { id: "media", label: "Media", icon: "🎬" },
+  { id: "audio", label: "Audio", icon: "🎵" },
+  { id: "text", label: "Text", icon: "👑" },
+  { id: "stickers", label: "Stickers", icon: "✨" },
+  { id: "effects", label: "Effects", icon: "🪄" },
+  { id: "filters", label: "Filters", icon: "🌸" },
   { id: "transitions", label: "Transitions", icon: "↔" },
-  { id: "ai", label: "AI Tools", icon: "⚡" },
-  { id: "adjustment", label: "Adjustment", icon: "⚙" },
-  { id: "templates", label: "Templates", icon: "▣" },
+  { id: "ai", label: "Magic AI", icon: "✦" },
+  { id: "adjustment", label: "Adjust", icon: "⚙" },
+  { id: "templates", label: "Castles", icon: "🏰" },
 ];
 
 const mediaLibrary = [
-  { id: "lib-video-1", title: "Forest River", kind: "video" as const, color: "#10b981", url: "https://assets.mixkit.co/videos/preview/mixkit-forest-stream-in-the-sunlight-529-large.mp4" },
-  { id: "lib-video-2", title: "Space Journey", kind: "video" as const, color: "#f472b6", url: "https://assets.mixkit.co/videos/preview/mixkit-stars-in-space-background-1611-large.mp4" },
-  { id: "lib-video-3", title: "Ocean Cliff", kind: "video" as const, color: "#06b6d4", url: "https://assets.mixkit.co/videos/preview/mixkit-waves-in-the-ocean-near-a-cliff-43063-large.mp4" },
-  { id: "lib-video-4", title: "City Traffic", kind: "video" as const, color: "#a855f7", url: "https://assets.mixkit.co/videos/preview/mixkit-urban-city-traffic-at-night-42287-large.mp4" }
+  { id: "lib-video-1", title: "🏰 Castle Opening", kind: "video" as const, color: "#fe9ec7", url: "https://assets.mixkit.co/videos/preview/mixkit-forest-stream-in-the-sunlight-529-large.mp4" },
+  { id: "lib-video-2", title: "✨ Starlight Flight", kind: "video" as const, color: "#89d4ff", url: "https://assets.mixkit.co/videos/preview/mixkit-stars-in-space-background-1611-large.mp4" },
+  { id: "lib-video-3", title: "🌸 Enchanted Garden", kind: "video" as const, color: "#f472b6", url: "https://assets.mixkit.co/videos/preview/mixkit-young-woman-walking-through-a-forest-4833-large.mp4" },
+  { id: "lib-video-4", title: "🏮 Floating Lanterns", kind: "video" as const, color: "#c084fc", url: "https://assets.mixkit.co/videos/preview/mixkit-waves-in-the-ocean-near-a-cliff-43063-large.mp4" }
 ];
 
 const audioLibrary = [
-  { id: "lib-audio-1", title: "Lofi Sunset", kind: "audio" as const, color: "#818cf8", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" },
-  { id: "lib-audio-2", title: "Synthwave", kind: "audio" as const, color: "#c084fc", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" },
-  { id: "lib-audio-3", title: "Ambient Breeze", kind: "audio" as const, color: "#60a5fa", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3" }
+  { id: "lib-audio-1", title: "🪄 Fairy Tale Waltz", kind: "audio" as const, color: "#f472b6", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" },
+  { id: "lib-audio-2", title: "🌟 Starlight Lullaby", kind: "audio" as const, color: "#89d4ff", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" },
+  { id: "lib-audio-3", title: "🏰 Kingdom Fanfare", kind: "audio" as const, color: "#f9f6c4", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3" }
 ];
 
 const textLibrary = [
-  { id: "lib-text-1", title: "Cyberpunk Glow", kind: "text" as const, color: "#f59e0b", textContent: "CYBERPUNK", effectName: "Cyberpunk" },
-  { id: "lib-text-2", title: "Minimalist Title", kind: "text" as const, color: "#d97706", textContent: "MINIMAL DESIGN", effectName: "Minimalist" },
-  { id: "lib-text-3", title: "Lower Third", kind: "text" as const, color: "#b45309", textContent: "Creative Editor", effectName: "Lower Third" }
+  { id: "lib-text-1", title: "👑 Once Upon a Time", kind: "text" as const, color: "#f9f6c4", textContent: "ONCE UPON A TIME...", effectName: "Fairytale Title" },
+  { id: "lib-text-2", title: "✨ Happily Ever After", kind: "text" as const, color: "#fe9ec7", textContent: "HAPPILY EVER AFTER", effectName: "Shimmer Glow" },
+  { id: "lib-text-3", title: "🌸 Princess Storyteller", kind: "text" as const, color: "#89d4ff", textContent: "Princess Storyteller", effectName: "Royal Lower Third" }
 ];
 
 const stickerLibrary = [
-  { id: "lib-sticker-1", title: "Fire Emoji", kind: "text" as const, color: "#ef4444", textContent: "🔥", stickerEmoji: "🔥" },
-  { id: "lib-sticker-2", title: "Sparkle Loop", kind: "text" as const, color: "#facc15", textContent: "⭐", stickerEmoji: "⭐" },
-  { id: "lib-sticker-3", title: "Heart Pulsing", kind: "text" as const, color: "#ec4899", textContent: "❤️", stickerEmoji: "❤️" },
-  { id: "lib-sticker-4", title: "Record Badge", kind: "text" as const, color: "#3b82f6", textContent: "🎥", stickerEmoji: "🎥" }
+  { id: "lib-sticker-1", title: "Castle", kind: "text" as const, color: "#c084fc", textContent: "🏰", stickerEmoji: "🏰" },
+  { id: "lib-sticker-2", title: "Royal Crown", kind: "text" as const, color: "#facc15", textContent: "👑", stickerEmoji: "👑" },
+  { id: "lib-sticker-3", title: "Fairy Sparkle", kind: "text" as const, color: "#fe9ec7", textContent: "✨", stickerEmoji: "✨" },
+  { id: "lib-sticker-4", title: "Magic Wand", kind: "text" as const, color: "#89d4ff", textContent: "🪄", stickerEmoji: "🪄" },
+  { id: "lib-sticker-5", title: "Enchanted Rose", kind: "text" as const, color: "#f43f5e", textContent: "🌹", stickerEmoji: "🌹" },
+  { id: "lib-sticker-6", title: "Ice Crystal", kind: "text" as const, color: "#67e8f9", textContent: "❄️", stickerEmoji: "❄️" },
+  { id: "lib-sticker-7", title: "Silk Bow", kind: "text" as const, color: "#f472b6", textContent: "🎀", stickerEmoji: "🎀" },
+  { id: "lib-sticker-8", title: "White Dove", kind: "text" as const, color: "#e2e8f0", textContent: "🕊️", stickerEmoji: "🕊️" }
 ];
 
 const effectLibrary = [
-  { id: "lib-effect-1", title: "VHS Glitch", effectName: "VHS Glitch" },
-  { id: "lib-effect-2", title: "Retro Grain", effectName: "Retro Grain" },
-  { id: "lib-effect-3", title: "Cinema Scope", effectName: "Cinema Scope" }
+  { id: "lib-effect-1", title: "Pixie Dust", effectName: "Pixie Dust" },
+  { id: "lib-effect-2", title: "Royal Glow", effectName: "Royal Glow" },
+  { id: "lib-effect-3", title: "Pastel Dream", effectName: "Pastel Dream" },
+  { id: "lib-effect-4", title: "Cinema Scope", effectName: "Cinema Scope" }
 ];
 
 const filterLibrary = [
-  { id: "lib-filter-1", title: "Warm Sunset", filterName: "Warm Sunset" },
-  { id: "lib-filter-2", title: "Cyber Cyan", filterName: "Cyber Cyan" },
-  { id: "lib-filter-3", title: "Noir Film", filterName: "Noir Film" },
-  { id: "lib-filter-4", title: "Vintage Faded", filterName: "Vintage Faded" }
+  { id: "lib-filter-1", title: "Rose Quartz", filterName: "Rose Quartz" },
+  { id: "lib-filter-2", title: "Ice Palace", filterName: "Ice Palace" },
+  { id: "lib-filter-3", title: "Golden Hour", filterName: "Golden Hour" },
+  { id: "lib-filter-4", title: "Midnight Dream", filterName: "Midnight Dream" }
 ];
 
 const initialTracks: Track[] = [
@@ -152,12 +160,12 @@ const initialTracks: Track[] = [
     clips: [
       {
         id: "clip-1",
-        title: "Opening Scene",
+        title: "🏰 Castle Opening",
         kind: "video",
         trackId: "track-video",
         start: 0.6,
         duration: 4.4,
-        color: "#10b981",
+        color: "#fe9ec7",
         position: 0,
         positionX: 0,
         positionY: 0,
@@ -173,12 +181,12 @@ const initialTracks: Track[] = [
       },
       {
         id: "clip-2",
-        title: "B-Roll",
+        title: "✨ Starlight Flight",
         kind: "video",
         trackId: "track-video",
         start: 7.4,
         duration: 3.6,
-        color: "#f472b6",
+        color: "#89d4ff",
         position: 0,
         positionX: 0,
         positionY: 0,
@@ -196,7 +204,7 @@ const initialTracks: Track[] = [
   },
   {
     id: "track-audio",
-    name: "Voiceover",
+    name: "Waltz Audio",
     kind: "audio",
     muted: false,
     locked: false,
@@ -204,12 +212,12 @@ const initialTracks: Track[] = [
     clips: [
       {
         id: "clip-3",
-        title: "Narration",
+        title: "🪄 Fairy Tale Waltz",
         kind: "audio",
         trackId: "track-audio",
         start: 0.8,
         duration: 6.2,
-        color: "#818cf8",
+        color: "#c084fc",
         position: 0,
         positionX: 0,
         positionY: 0,
@@ -227,7 +235,7 @@ const initialTracks: Track[] = [
   },
   {
     id: "track-text",
-    name: "Text Overlay",
+    name: "Story Title",
     kind: "text",
     muted: false,
     locked: false,
@@ -235,25 +243,25 @@ const initialTracks: Track[] = [
     clips: [
       {
         id: "clip-4",
-        title: "Lower Third",
+        title: "👑 Once Upon a Time",
         kind: "text",
         trackId: "track-text",
-        start: 5.2,
-        duration: 2.8,
-        color: "#f59e0b",
+        start: 4.8,
+        duration: 3.2,
+        color: "#f9f6c4",
         position: 0,
         positionX: 0,
         positionY: 45,
         scale: 100,
         rotation: 0,
-        opacity: 90,
+        opacity: 95,
         speed: 100,
         blur: 0,
         volume: 100,
         fadeIn: 0.1,
         fadeOut: 0.2,
-        textContent: "CapCut Pro Workspace",
-        effectName: "Lower Third",
+        textContent: "ONCE UPON A TIME...",
+        effectName: "Fairytale Title",
       },
     ],
   },
@@ -279,14 +287,14 @@ function snap(value: number) {
 function getFilterCSS(filterName?: string) {
   if (!filterName) return "";
   switch (filterName) {
-    case "Warm Sunset":
-      return "sepia(0.3) saturate(1.4) hue-rotate(-10deg) contrast(1.1)";
-    case "Cyber Cyan":
-      return "hue-rotate(140deg) saturate(1.8) contrast(1.2)";
-    case "Noir Film":
-      return "grayscale(1) contrast(1.6) brightness(0.9)";
-    case "Vintage Faded":
-      return "sepia(0.15) contrast(0.85) brightness(1.05) saturate(0.8)";
+    case "Rose Quartz":
+      return "sepia(0.2) saturate(1.5) hue-rotate(-15deg) contrast(1.08) brightness(1.05)";
+    case "Ice Palace":
+      return "hue-rotate(180deg) saturate(1.4) contrast(1.15) brightness(1.08)";
+    case "Golden Hour":
+      return "sepia(0.35) saturate(1.6) contrast(1.1) brightness(1.02)";
+    case "Midnight Dream":
+      return "hue-rotate(240deg) saturate(1.3) contrast(1.2) brightness(0.95)";
     default:
       return "";
   }
@@ -342,35 +350,35 @@ function ActiveVideoElement({
   }, [playhead, isPlaying, clip, trackMuted]);
 
   if (hasError) {
-    // Elegant fallback design if stock URL doesn't load or if user is offline
+    // Fairytale graphic fallback
     return (
       <div
         onMouseDown={onPointerDown}
         className={`absolute inset-0 flex flex-col items-center justify-center p-4 text-center cursor-move select-none ${
-          isSelected ? "border-2 border-dashed border-cyan-400" : ""
+          isSelected ? "border-2 border-dashed border-[#FE9EC7]" : ""
         }`}
         style={{
           transform: `translate(${clip.positionX ?? 0}px, ${clip.positionY ?? 0}px) scale(${(clip.scale ?? 100) / 100}) rotate(${clip.rotation ?? 0}deg)`,
           opacity: (clip.opacity ?? 100) / 100,
           filter: `blur(${clip.blur ?? 0}px) ${clip.filterName ? getFilterCSS(clip.filterName) : ""}`,
-          background: `linear-gradient(135deg, ${clip.color}, #070b10)`,
+          background: `linear-gradient(135deg, ${clip.color}, #2a152d)`,
           width: "100%",
           height: "100%",
         }}
       >
-        <span className="text-sm font-bold uppercase tracking-wider text-white/90">{clip.title}</span>
-        <span className="text-[10px] text-white/40 mt-1">Live Graphic • {(clip.duration).toFixed(1)}s</span>
+        <span className="text-sm font-bold tracking-wider text-white/90">{clip.title}</span>
+        <span className="text-[10px] text-white/50 mt-1">✨ Fairytale Reel • {(clip.duration).toFixed(1)}s</span>
         <div className="mt-2.5 flex gap-1 justify-center items-end h-5">
-          <span className="w-1 bg-white/40 animate-[pulse_1s_infinite_100ms] h-3" />
-          <span className="w-1 bg-white/60 animate-[pulse_1s_infinite_300ms] h-4" />
-          <span className="w-1 bg-white/40 animate-[pulse_1s_infinite_500ms] h-2.5" />
+          <span className="w-1.5 bg-[#FE9EC7]/60 animate-[pulse_1s_infinite_100ms] h-3 rounded-full" />
+          <span className="w-1.5 bg-[#F9F6C4]/80 animate-[pulse_1s_infinite_300ms] h-4 rounded-full" />
+          <span className="w-1.5 bg-[#89D4FF]/60 animate-[pulse_1s_infinite_500ms] h-2.5 rounded-full" />
         </div>
         {isSelected && (
           <>
-            <div className="absolute -top-1.5 -left-1.5 w-3 h-3 bg-white border border-cyan-500 rounded-full" />
-            <div className="absolute -top-1.5 -right-1.5 w-3 h-3 bg-white border border-cyan-500 rounded-full" />
-            <div className="absolute -bottom-1.5 -left-1.5 w-3 h-3 bg-white border border-cyan-500 rounded-full" />
-            <div className="absolute -bottom-1.5 -right-1.5 w-3 h-3 bg-white border border-cyan-500 rounded-full" />
+            <div className="absolute -top-1.5 -left-1.5 w-3 h-3 bg-white border border-[#FE9EC7] rounded-full shadow" />
+            <div className="absolute -top-1.5 -right-1.5 w-3 h-3 bg-white border border-[#FE9EC7] rounded-full shadow" />
+            <div className="absolute -bottom-1.5 -left-1.5 w-3 h-3 bg-white border border-[#FE9EC7] rounded-full shadow" />
+            <div className="absolute -bottom-1.5 -right-1.5 w-3 h-3 bg-white border border-[#FE9EC7] rounded-full shadow" />
           </>
         )}
       </div>
@@ -379,7 +387,7 @@ function ActiveVideoElement({
 
   return (
     <div
-      className={`absolute inset-0 w-full h-full ${isSelected ? "border-2 border-dashed border-cyan-400" : ""}`}
+      className={`absolute inset-0 w-full h-full ${isSelected ? "border-2 border-dashed border-[#FE9EC7]" : ""}`}
       style={{
         transform: `translate(${clip.positionX ?? 0}px, ${clip.positionY ?? 0}px) scale(${(clip.scale ?? 100) / 100}) rotate(${clip.rotation ?? 0}deg)`,
         opacity: (clip.opacity ?? 100) / 100,
@@ -399,10 +407,10 @@ function ActiveVideoElement({
       />
       {isSelected && (
         <>
-          <div className="absolute -top-1.5 -left-1.5 w-3 h-3 bg-white border border-cyan-500 rounded-full" />
-          <div className="absolute -top-1.5 -right-1.5 w-3 h-3 bg-white border border-cyan-500 rounded-full" />
-          <div className="absolute -bottom-1.5 -left-1.5 w-3 h-3 bg-white border border-cyan-500 rounded-full" />
-          <div className="absolute -bottom-1.5 -right-1.5 w-3 h-3 bg-white border border-cyan-500 rounded-full" />
+          <div className="absolute -top-1.5 -left-1.5 w-3 h-3 bg-white border border-[#FE9EC7] rounded-full shadow" />
+          <div className="absolute -top-1.5 -right-1.5 w-3 h-3 bg-white border border-[#FE9EC7] rounded-full shadow" />
+          <div className="absolute -bottom-1.5 -left-1.5 w-3 h-3 bg-white border border-[#FE9EC7] rounded-full shadow" />
+          <div className="absolute -bottom-1.5 -right-1.5 w-3 h-3 bg-white border border-[#FE9EC7] rounded-full shadow" />
         </>
       )}
     </div>
@@ -479,36 +487,37 @@ function ActiveTextElement({ clip, isSelected, onPointerDown }: ActiveTextElemen
       return {
         ...baseStyle,
         fontSize: "56px",
-        animation: clip.stickerEmoji === "🔥" ? "pulse-ring 1.5s infinite" : clip.stickerEmoji === "⭐" ? "spin-slow 4s linear infinite" : undefined,
+        filter: "drop-shadow(0 0 12px rgba(254,158,199,0.75))",
+        animation: clip.stickerEmoji === "✨" || clip.stickerEmoji === "🪄" ? "sparkle-float 2.5s ease-in-out infinite" : undefined,
       } as React.CSSProperties;
     }
 
     switch (clip.effectName) {
-      case "Cyberpunk":
+      case "Fairytale Title":
         return {
           ...baseStyle,
-          fontFamily: "monospace",
-          color: "#f43f5e",
-          textShadow: "0 0 10px #f43f5e, 0 0 20px #a855f7",
+          fontFamily: "var(--font-display), 'Baskerville', serif",
+          color: "#fff8db",
+          textShadow: "0 0 16px rgba(254,158,199,0.9), 0 0 32px rgba(137,212,255,0.7), 0 2px 5px rgba(0,0,0,0.8)",
           fontWeight: "bold",
-          fontSize: "32px",
-          letterSpacing: "3px",
+          fontSize: "28px",
+          letterSpacing: "4px",
         } as React.CSSProperties;
-      case "Minimalist":
+      case "Shimmer Glow":
         return {
           ...baseStyle,
-          color: "#ffffff",
-          fontFamily: "sans-serif",
-          fontWeight: "300",
-          fontSize: "24px",
-          letterSpacing: "10px",
-          textTransform: "uppercase",
+          color: "#FE9EC7",
+          fontFamily: "var(--font-display), 'Baskerville', serif",
+          fontWeight: "600",
+          fontSize: "26px",
+          letterSpacing: "5px",
+          textShadow: "0 0 20px rgba(254,158,199,0.95), 0 0 35px rgba(249,246,196,0.8)",
         } as React.CSSProperties;
-      case "Lower Third":
+      case "Royal Lower Third":
         return {
           position: "absolute",
-          left: "12%",
-          bottom: "15%",
+          left: "10%",
+          bottom: "14%",
           transform: `translate(${clip.positionX ?? 0}px, ${clip.positionY ?? 0}px) scale(${(clip.scale ?? 100) / 100}) rotate(${clip.rotation ?? 0}deg)`,
           opacity: (clip.opacity ?? 100) / 100,
           filter: `blur(${clip.blur ?? 0}px)`,
@@ -516,13 +525,17 @@ function ActiveTextElement({ clip, isSelected, onPointerDown }: ActiveTextElemen
           pointerEvents: "auto",
           userSelect: "none",
           zIndex: 20,
-          background: "rgba(0,0,0,0.8)",
-          borderLeft: "4px solid #06b6d4",
-          padding: "6px 12px",
-          color: "#06b6d4",
-          borderRadius: "0 6px 6px 0",
-          fontSize: "14px",
+          background: "linear-gradient(90deg, rgba(61,31,53,0.92), rgba(61,31,53,0.5))",
+          borderLeft: "4px solid #FE9EC7",
+          borderTop: "1px solid rgba(254,158,199,0.4)",
+          borderBottom: "1px solid rgba(254,158,199,0.4)",
+          padding: "6px 14px",
+          color: "#f9f6c4",
+          borderRadius: "0 12px 12px 0",
+          fontSize: "13px",
           fontWeight: "600",
+          letterSpacing: "2px",
+          textShadow: "0 0 8px rgba(254,158,199,0.5)",
         } as React.CSSProperties;
       default:
         return {
@@ -530,7 +543,7 @@ function ActiveTextElement({ clip, isSelected, onPointerDown }: ActiveTextElemen
           color: "#ffffff",
           fontSize: "22px",
           fontWeight: "700",
-          textShadow: "0 2px 8px rgba(0,0,0,0.85)",
+          textShadow: "0 2px 10px rgba(0,0,0,0.85)",
         } as React.CSSProperties;
     }
   }, [clip]);
@@ -539,15 +552,15 @@ function ActiveTextElement({ clip, isSelected, onPointerDown }: ActiveTextElemen
     <div
       onMouseDown={onPointerDown}
       style={textStyle}
-      className={isSelected ? "outline-2 outline-dashed outline-cyan-400 outline-offset-4" : ""}
+      className={isSelected ? "outline-2 outline-dashed outline-[#FE9EC7] outline-offset-4" : ""}
     >
       {clip.textContent || clip.title}
       {isSelected && (
         <>
-          <div className="absolute -top-1.5 -left-1.5 w-2 h-2 bg-white border border-cyan-500 rounded-full pointer-events-none" />
-          <div className="absolute -top-1.5 -right-1.5 w-2 h-2 bg-white border border-cyan-500 rounded-full pointer-events-none" />
-          <div className="absolute -bottom-1.5 -left-1.5 w-2 h-2 bg-white border border-cyan-500 rounded-full pointer-events-none" />
-          <div className="absolute -bottom-1.5 -right-1.5 w-2 h-2 bg-white border border-cyan-500 rounded-full pointer-events-none" />
+          <div className="absolute -top-1.5 -left-1.5 w-2 h-2 bg-white border border-[#FE9EC7] rounded-full pointer-events-none shadow" />
+          <div className="absolute -top-1.5 -right-1.5 w-2 h-2 bg-white border border-[#FE9EC7] rounded-full pointer-events-none shadow" />
+          <div className="absolute -bottom-1.5 -left-1.5 w-2 h-2 bg-white border border-[#FE9EC7] rounded-full pointer-events-none shadow" />
+          <div className="absolute -bottom-1.5 -right-1.5 w-2 h-2 bg-white border border-[#FE9EC7] rounded-full pointer-events-none shadow" />
         </>
       )}
     </div>
@@ -601,7 +614,6 @@ export function SkillsSection({ skills }: SkillsSectionProps) {
   // Keyboard Shortcuts (Delete, Undo, Redo)
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      // Don't trigger commands if editing input fields
       if (document.activeElement?.tagName === "INPUT" || document.activeElement?.tagName === "TEXTAREA") return;
 
       if (event.key === "Delete" || event.key === "Backspace") {
@@ -646,7 +658,6 @@ export function SkillsSection({ skills }: SkillsSectionProps) {
     const clip = tracks.flatMap((t) => t.clips).find((c) => c.id === clipId);
     if (!clip) return;
 
-    // Verify track is not locked
     const track = tracks.find((t) => t.id === clip.trackId);
     if (track?.locked) return;
 
@@ -655,7 +666,6 @@ export function SkillsSection({ skills }: SkillsSectionProps) {
     const initialX = clip.positionX ?? 0;
     const initialY = clip.positionY ?? 0;
 
-    // Push history before edit
     setHistory((h) => [...h, tracks].slice(-20));
     setRedoHistory([]);
 
@@ -696,7 +706,6 @@ export function SkillsSection({ skills }: SkillsSectionProps) {
     event.preventDefault();
     event.stopPropagation();
     
-    // Ignore edits on locked tracks
     const track = tracks.find((t) => t.id === clip.trackId);
     if (track?.locked) return;
 
@@ -707,7 +716,6 @@ export function SkillsSection({ skills }: SkillsSectionProps) {
     const initialDuration = clip.duration;
     const currentTracks = [...tracks];
 
-    // Push state to undo history
     setHistory((h) => [...h, currentTracks].slice(-20));
     setRedoHistory([]);
 
@@ -773,7 +781,7 @@ export function SkillsSection({ skills }: SkillsSectionProps) {
       trackId: trackId,
       start: isSnapping ? snap(clipStart) : Number(clipStart.toFixed(2)),
       duration: defaultDuration,
-      color: asset.color || "#10b981",
+      color: asset.color || "#fe9ec7",
       position: 0,
       positionX: 0,
       positionY: 0,
@@ -957,74 +965,60 @@ export function SkillsSection({ skills }: SkillsSectionProps) {
   }, [tracks, playhead]);
 
   return (
-    <section id="skills" className="scroll-mt-28 py-8 md:py-12">
-      {/* Glitch & Noise CSS animations injected dynamically */}
+    <section id="skills" className="scroll-mt-28 py-12 md:py-20">
+      {/* Fairytale animations injected dynamically */}
       <style dangerouslySetInnerHTML={{__html: `
-        @keyframes glitch {
-          0% { transform: translate(0) }
-          20% { transform: translate(-1.5px, 1.5px) }
-          40% { transform: translate(-1.5px, -1.5px) }
-          60% { transform: translate(1.5px, 1.5px) }
-          80% { transform: translate(1.5px, -1.5px) }
-          100% { transform: translate(0) }
+        @keyframes sparkle-float {
+          0%, 100% { transform: scale(1) translateY(0); filter: drop-shadow(0 0 10px rgba(254,158,199,0.8)); }
+          50% { transform: scale(1.1) translateY(-6px); filter: drop-shadow(0 0 20px rgba(249,246,196,0.95)); }
         }
-        @keyframes scanline {
-          0% { transform: translateY(-100%) }
-          100% { transform: translateY(100%) }
+        @keyframes pixie-drift {
+          0% { transform: translateY(0) rotate(0deg); }
+          50% { transform: translateY(-12px) rotate(2deg); }
+          100% { transform: translateY(0) rotate(0deg); }
         }
-        @keyframes grain {
-          0%, 100% { transform: translate(0, 0) }
-          10% { transform: translate(-1%, -1%) }
-          20% { transform: translate(-2%, 1%) }
-          30% { transform: translate(1%, -2%) }
-          40% { transform: translate(-1%, 3%) }
-          50% { transform: translate(-2%, 1%) }
-          60% { transform: translate(1%, 3%) }
-          70% { transform: translate(2%, 1%) }
-          80% { transform: translate(-2%, -2%) }
-          90% { transform: translate(1%, -3%) }
-        }
-        @keyframes pulse-ring {
-          0% { transform: scale(0.95) translate(-50%, -50%); opacity: 0.7; }
-          50% { transform: scale(1.08) translate(-50%, -50%); opacity: 1; }
-          100% { transform: scale(0.95) translate(-50%, -50%); opacity: 0.7; }
-        }
-        @keyframes spin-slow {
-          0% { transform: rotate(0deg) translate(-50%, -50%); }
-          100% { transform: rotate(360deg) translate(-50%, -50%); }
-        }
-        .effect-vhs-scanline {
+        .effect-pixie-dust {
           position: absolute;
-          top: 0; left: 0; width: 100%; height: 100%;
-          background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 48%, rgba(0,255,255,0.18) 50%, rgba(0,255,255,0.18));
-          background-size: 100% 16px;
-          animation: scanline 4.5s linear infinite;
+          inset: 0;
           pointer-events: none;
+          background-image: 
+            radial-gradient(2px 2px at 20px 30px, #f9f6c4, transparent),
+            radial-gradient(2px 2px at 60px 80px, #fe9ec7, transparent),
+            radial-gradient(3px 3px at 120px 50px, #89d4ff, transparent),
+            radial-gradient(2px 2px at 200px 140px, #f9f6c4, transparent),
+            radial-gradient(3px 3px at 280px 100px, #ffffff, transparent);
+          background-size: 300px 300px;
+          animation: pixie-drift 6s linear infinite;
+          opacity: 0.85;
           z-index: 25;
         }
-        .effect-grain {
+        .effect-royal-glow {
           position: absolute;
-          top: -10%; left: -10%; width: 120%; height: 120%;
-          opacity: 0.12;
-          background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-          animation: grain 0.3s steps(6) infinite;
+          inset: 0;
           pointer-events: none;
-          z-index: 22;
+          box-shadow: inset 0 0 50px rgba(254,158,199,0.4), inset 0 0 90px rgba(249,246,196,0.3);
+          mix-blend-mode: screen;
+          z-index: 25;
         }
-        .vhs-chromatic {
-          animation: glitch 0.25s infinite;
+        .effect-pastel-dream {
+          position: absolute;
+          inset: 0;
+          pointer-events: none;
+          background: linear-gradient(135deg, rgba(254,158,199,0.2), rgba(137,212,255,0.18));
+          mix-blend-mode: soft-light;
+          z-index: 25;
         }
       `}} />
 
       <div className="section-shell">
         <div className="mb-8 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
           <div className="max-w-2xl" data-reveal>
-            <span className="section-label">CapCut Pro Workspace</span>
+            <span className="section-label">Enchanted Studio Suite</span>
             <h2 className="mt-6 font-display text-[clamp(2.2rem,4.5vw,3.6rem)] leading-[0.98] tracking-[-0.04em] text-[#3d1f35]">
-              A high-fidelity editing experience built into a premium dark interface.
+              A magical editing workspace shaped with fairytale rhythm & glow.
             </h2>
             <p className="mt-4 text-base leading-8 text-[#3d1f35]/70 md:text-lg">
-              Double-click or drag assets from the left panel to insert them. Edit clip position by dragging inside the player window, or customize properties in the inspector panel.
+              Arrange royal clips, layer starlight audio, customize enchanted titles, and edit magical motion in real-time.
             </p>
           </div>
           <div className="flex flex-wrap gap-2.5 max-w-md lg:justify-end">
@@ -1039,11 +1033,14 @@ export function SkillsSection({ skills }: SkillsSectionProps) {
           </div>
         </div>
 
-        <div className="overflow-x-auto rounded-[34px] border border-white/10 bg-[#06070b]/95 shadow-[0_35px_140px_rgba(2,6,23,0.72)]">
+        {/* Disney Fairytale Themed Editor Container */}
+        <div className="overflow-x-auto rounded-[34px] border border-[#FE9EC7]/30 bg-gradient-to-br from-[#24132b]/95 via-[#1a0f23]/95 to-[#13091c]/95 shadow-[0_35px_120px_rgba(254,158,199,0.22),0_0_50px_rgba(137,212,255,0.12)] backdrop-blur-xl">
           <div className="flex min-w-[1120px] flex-row">
             {/* Sidebar Library Tabs */}
-            <aside className="w-[230px] border-r border-white/10 p-3 flex flex-col">
-              <div className="mb-3 text-[10px] uppercase tracking-[0.36em] text-slate-500">Tools</div>
+            <aside className="w-[230px] border-r border-[#FE9EC7]/15 p-3 flex flex-col bg-[#160b1e]/50">
+              <div className="mb-3 text-[10px] uppercase tracking-[0.36em] text-[#FE9EC7]/70 font-semibold flex items-center gap-1.5">
+                <span>✦</span> Tools
+              </div>
               <div className="grid grid-cols-2 gap-1.5 mb-3">
                 {tools.map((tool) => (
                   <button
@@ -1055,8 +1052,8 @@ export function SkillsSection({ skills }: SkillsSectionProps) {
                     }}
                     className={`flex flex-col items-center justify-center rounded-xl border p-2 text-center transition ${
                       activeTool === tool.id
-                        ? "border-cyan-400/40 bg-gradient-to-b from-cyan-500/15 to-transparent text-white"
-                        : "border-white/5 bg-white/5 text-slate-400 hover:border-cyan-400/20 hover:text-slate-200"
+                        ? "border-[#FE9EC7]/70 bg-gradient-to-b from-[#FE9EC7]/25 to-[#FE9EC7]/5 text-[#f9f6c4] shadow-[0_0_15px_rgba(254,158,199,0.3)]"
+                        : "border-white/5 bg-white/5 text-pink-100/60 hover:border-[#FE9EC7]/30 hover:text-white"
                     }`}
                   >
                     <span className="text-sm font-semibold">{tool.icon}</span>
@@ -1066,23 +1063,23 @@ export function SkillsSection({ skills }: SkillsSectionProps) {
               </div>
 
               {/* Sidebar Asset Lists */}
-              <div className="flex-1 overflow-y-auto rounded-[20px] border border-white/10 bg-white/5 p-3 max-h-[380px]">
-                <div className="font-semibold text-slate-100 flex items-center justify-between text-xs pb-2 border-b border-white/5 mb-3">
+              <div className="flex-1 overflow-y-auto rounded-[20px] border border-[#FE9EC7]/20 bg-[#0e0614]/60 p-3 max-h-[380px]">
+                <div className="font-semibold text-[#f9f6c4] flex items-center justify-between text-xs pb-2 border-b border-white/10 mb-3">
                   <span>{tools.find((t) => t.id === activeTool)?.label}</span>
-                  <span className="text-[9px] text-cyan-400 bg-cyan-400/10 px-1.5 py-0.5 rounded-full font-mono uppercase">Assets</span>
+                  <span className="text-[9px] text-[#FE9EC7] bg-[#FE9EC7]/15 border border-[#FE9EC7]/30 px-2 py-0.5 rounded-full font-mono uppercase">Magic Assets</span>
                 </div>
                 
                 <div className="space-y-2">
                   {activeTool === "media" && mediaLibrary.map((item) => (
-                    <div key={item.id} className="group relative flex items-center justify-between rounded-xl bg-black/30 border border-white/5 p-2 hover:border-cyan-400/35 transition">
+                    <div key={item.id} className="group relative flex items-center justify-between rounded-xl bg-black/40 border border-[#FE9EC7]/15 p-2 hover:border-[#FE9EC7]/40 transition">
                       <div className="flex items-center gap-2 overflow-hidden">
-                        <div className="w-7 h-7 rounded-lg flex items-center justify-center font-bold text-xs" style={{ background: item.color }}>🎬</div>
-                        <span className="text-[11px] text-slate-300 truncate">{item.title}</span>
+                        <div className="w-7 h-7 rounded-lg flex items-center justify-center font-bold text-xs shadow" style={{ background: item.color, color: "#3d1f35" }}>🎬</div>
+                        <span className="text-[11px] text-pink-100/90 truncate">{item.title}</span>
                       </div>
                       <button
                         type="button"
                         onClick={() => addAssetToTimeline(item)}
-                        className="rounded-lg bg-cyan-500 hover:bg-cyan-400 p-1 text-slate-950 font-bold text-xs w-5 h-5 flex items-center justify-center transition"
+                        className="rounded-lg bg-gradient-to-r from-[#FE9EC7] to-[#f9f6c4] hover:brightness-110 p-1 text-[#3d1f35] font-bold text-xs w-5 h-5 flex items-center justify-center transition shadow-sm"
                         title="Insert at Playhead"
                       >
                         +
@@ -1091,10 +1088,10 @@ export function SkillsSection({ skills }: SkillsSectionProps) {
                   ))}
 
                   {activeTool === "audio" && audioLibrary.map((item) => (
-                    <div key={item.id} className="group relative flex items-center justify-between rounded-xl bg-black/30 border border-white/5 p-2 hover:border-cyan-400/35 transition">
+                    <div key={item.id} className="group relative flex items-center justify-between rounded-xl bg-black/40 border border-[#FE9EC7]/15 p-2 hover:border-[#FE9EC7]/40 transition">
                       <div className="flex items-center gap-2 overflow-hidden">
-                        <div className="w-7 h-7 rounded-lg flex items-center justify-center font-bold text-xs" style={{ background: item.color }}>🎵</div>
-                        <span className="text-[11px] text-slate-300 truncate">{item.title}</span>
+                        <div className="w-7 h-7 rounded-lg flex items-center justify-center font-bold text-xs shadow" style={{ background: item.color, color: "#3d1f35" }}>🎵</div>
+                        <span className="text-[11px] text-pink-100/90 truncate">{item.title}</span>
                       </div>
                       <div className="flex items-center gap-1">
                         <button
@@ -1105,7 +1102,7 @@ export function SkillsSection({ skills }: SkillsSectionProps) {
                             audio.play().catch(() => {});
                             setTimeout(() => audio.pause(), 2500);
                           }}
-                          className="rounded bg-white/10 hover:bg-white/20 px-1 py-0.5 text-slate-300 text-[9px]"
+                          className="rounded bg-white/10 hover:bg-white/20 px-1.5 py-0.5 text-pink-200 text-[9px]"
                           title="Preview"
                         >
                           ▶
@@ -1113,7 +1110,7 @@ export function SkillsSection({ skills }: SkillsSectionProps) {
                         <button
                           type="button"
                           onClick={() => addAssetToTimeline(item)}
-                          className="rounded-lg bg-cyan-500 hover:bg-cyan-400 p-1 text-slate-950 font-bold text-xs w-5 h-5 flex items-center justify-center transition"
+                          className="rounded-lg bg-gradient-to-r from-[#FE9EC7] to-[#f9f6c4] hover:brightness-110 p-1 text-[#3d1f35] font-bold text-xs w-5 h-5 flex items-center justify-center transition shadow-sm"
                           title="Insert"
                         >
                           +
@@ -1123,15 +1120,15 @@ export function SkillsSection({ skills }: SkillsSectionProps) {
                   ))}
 
                   {activeTool === "text" && textLibrary.map((item) => (
-                    <div key={item.id} className="group relative flex items-center justify-between rounded-xl bg-black/30 border border-white/5 p-2 hover:border-cyan-400/35 transition">
+                    <div key={item.id} className="group relative flex items-center justify-between rounded-xl bg-black/40 border border-[#FE9EC7]/15 p-2 hover:border-[#FE9EC7]/40 transition">
                       <div className="flex items-center gap-2 overflow-hidden">
-                        <div className="w-7 h-7 rounded-lg bg-amber-500/20 text-amber-300 border border-amber-500/30 flex items-center justify-center font-bold text-xs">T</div>
-                        <span className="text-[11px] text-slate-300 truncate">{item.title}</span>
+                        <div className="w-7 h-7 rounded-lg bg-[#FE9EC7]/20 text-[#f9f6c4] border border-[#FE9EC7]/40 flex items-center justify-center font-bold text-xs">👑</div>
+                        <span className="text-[11px] text-pink-100/90 truncate">{item.title}</span>
                       </div>
                       <button
                         type="button"
                         onClick={() => addAssetToTimeline(item)}
-                        className="rounded-lg bg-cyan-500 hover:bg-cyan-400 p-1 text-slate-950 font-bold text-xs w-5 h-5 flex items-center justify-center transition"
+                        className="rounded-lg bg-gradient-to-r from-[#FE9EC7] to-[#f9f6c4] hover:brightness-110 p-1 text-[#3d1f35] font-bold text-xs w-5 h-5 flex items-center justify-center transition shadow-sm"
                       >
                         +
                       </button>
@@ -1139,15 +1136,15 @@ export function SkillsSection({ skills }: SkillsSectionProps) {
                   ))}
 
                   {activeTool === "stickers" && stickerLibrary.map((item) => (
-                    <div key={item.id} className="group relative flex items-center justify-between rounded-xl bg-black/30 border border-white/5 p-2 hover:border-cyan-400/35 transition">
+                    <div key={item.id} className="group relative flex items-center justify-between rounded-xl bg-black/40 border border-[#FE9EC7]/15 p-2 hover:border-[#FE9EC7]/40 transition">
                       <div className="flex items-center gap-2 overflow-hidden">
-                        <div className="w-7 h-7 rounded-lg bg-pink-500/20 text-pink-300 border border-pink-500/30 flex items-center justify-center text-[13px]">{item.stickerEmoji}</div>
-                        <span className="text-[11px] text-slate-300 truncate">{item.title}</span>
+                        <div className="w-7 h-7 rounded-lg bg-[#FE9EC7]/20 text-pink-200 border border-[#FE9EC7]/30 flex items-center justify-center text-[13px]">{item.stickerEmoji}</div>
+                        <span className="text-[11px] text-pink-100/90 truncate">{item.title}</span>
                       </div>
                       <button
                         type="button"
                         onClick={() => addAssetToTimeline(item)}
-                        className="rounded-lg bg-cyan-500 hover:bg-cyan-400 p-1 text-slate-950 font-bold text-xs w-5 h-5 flex items-center justify-center transition"
+                        className="rounded-lg bg-gradient-to-r from-[#FE9EC7] to-[#f9f6c4] hover:brightness-110 p-1 text-[#3d1f35] font-bold text-xs w-5 h-5 flex items-center justify-center transition shadow-sm"
                       >
                         +
                       </button>
@@ -1161,12 +1158,12 @@ export function SkillsSection({ skills }: SkillsSectionProps) {
                       onClick={() => applyEffectToSelected(item.effectName)}
                       className={`flex w-full items-center justify-between rounded-xl border p-2 text-left text-[11px] transition ${
                         selectedClip?.effectName === item.effectName
-                          ? "border-cyan-400 bg-cyan-500/10 text-cyan-200"
-                          : "border-white/5 bg-black/30 text-slate-300 hover:border-white/20"
+                          ? "border-[#FE9EC7] bg-[#FE9EC7]/20 text-[#f9f6c4] shadow-[0_0_10px_rgba(254,158,199,0.3)]"
+                          : "border-white/5 bg-black/30 text-pink-100/80 hover:border-[#FE9EC7]/30"
                       }`}
                     >
                       <span>✨ {item.title}</span>
-                      <span className="text-[9px] text-slate-500">{selectedClip ? "Toggle" : "Select clip"}</span>
+                      <span className="text-[9px] text-[#FE9EC7]/70">{selectedClip ? "Toggle" : "Select clip"}</span>
                     </button>
                   ))}
 
@@ -1177,18 +1174,18 @@ export function SkillsSection({ skills }: SkillsSectionProps) {
                       onClick={() => applyFilterToSelected(item.filterName)}
                       className={`flex w-full items-center justify-between rounded-xl border p-2 text-left text-[11px] transition ${
                         selectedClip?.filterName === item.filterName
-                          ? "border-cyan-400 bg-cyan-500/10 text-cyan-200"
-                          : "border-white/5 bg-black/30 text-slate-300 hover:border-white/20"
+                          ? "border-[#89D4FF] bg-[#89D4FF]/20 text-[#89D4FF] shadow-[0_0_10px_rgba(137,212,255,0.3)]"
+                          : "border-white/5 bg-black/30 text-pink-100/80 hover:border-[#89D4FF]/30"
                       }`}
                     >
-                      <span>🎨 {item.title}</span>
-                      <span className="text-[9px] text-slate-500">{selectedClip ? "Toggle" : "Select clip"}</span>
+                      <span>🌸 {item.title}</span>
+                      <span className="text-[9px] text-[#89D4FF]/70">{selectedClip ? "Toggle" : "Select clip"}</span>
                     </button>
                   ))}
 
                   {["transitions", "ai", "adjustment", "templates"].includes(activeTool) && (
-                    <div className="text-[11px] text-slate-500 py-6 text-center leading-relaxed">
-                      Option coming soon. Select Media, Audio, Text, Stickers, Effects, or Filters to import/apply assets.
+                    <div className="text-[11px] text-pink-200/60 py-6 text-center leading-relaxed">
+                      ✨ Fairytale options unlocked. Select Media, Audio, Text, Stickers, Effects, or Filters to cast edits.
                     </div>
                   )}
                 </div>
@@ -1197,11 +1194,11 @@ export function SkillsSection({ skills }: SkillsSectionProps) {
 
             {/* Video Player and Inspector panel */}
             <div className="flex-1 p-3 flex flex-col gap-3 min-w-0">
-              <div className="rounded-[28px] border border-white/10 bg-[#080b11] p-3 flex flex-col">
-                <div className="mb-3 flex flex-wrap items-center justify-between gap-3 border-b border-white/5 pb-3">
+              <div className="rounded-[28px] border border-[#FE9EC7]/20 bg-[#160b20]/80 p-3 flex flex-col backdrop-blur-md">
+                <div className="mb-3 flex flex-wrap items-center justify-between gap-3 border-b border-white/10 pb-3">
                   <div className="flex items-center gap-2">
-                    <span className="rounded-full bg-white/10 px-2.5 py-0.5 text-[10px] uppercase tracking-[0.2em] text-slate-300">Preview</span>
-                    <span className="rounded-full bg-cyan-500/15 px-2.5 py-0.5 text-[10px] text-cyan-200 font-mono">{resolution} • 30fps</span>
+                    <span className="rounded-full border border-[#FE9EC7]/30 bg-white/10 px-2.5 py-0.5 text-[10px] uppercase tracking-[0.2em] text-[#f9f6c4]">✨ Fairytale Canvas</span>
+                    <span className="rounded-full bg-[#FE9EC7]/15 border border-[#FE9EC7]/30 px-2.5 py-0.5 text-[10px] text-[#FE9EC7] font-mono">{resolution} • 60fps</span>
                   </div>
 
                   <div className="flex items-center gap-2">
@@ -1211,37 +1208,37 @@ export function SkillsSection({ skills }: SkillsSectionProps) {
                         setResolution(event.target.value);
                         playSynth("blip");
                       }}
-                      className="rounded-full border border-white/10 bg-white/5 px-2.5 py-1.5 text-xs text-slate-200 focus:outline-none"
+                      className="rounded-full border border-[#FE9EC7]/30 bg-[#24132b] px-3 py-1 text-xs text-pink-100 focus:outline-none"
                     >
-                      <option value="1080p (16:9)" className="bg-slate-900">1080p (16:9)</option>
-                      <option value="4K (16:9)" className="bg-slate-900">4K (16:9)</option>
-                      <option value="Mobile (9:16)" className="bg-slate-900">Mobile (9:16)</option>
+                      <option value="1080p (16:9)" className="bg-[#24132b]">1080p (16:9)</option>
+                      <option value="4K (16:9)" className="bg-[#24132b]">4K (16:9)</option>
+                      <option value="Mobile (9:16)" className="bg-[#24132b]">Mobile (9:16)</option>
                     </select>
                     <button
                       type="button"
                       onClick={() => {
                         playSynth("melody");
-                        alert("Exporting project... Composition compiled successfully (Simulation only).");
+                        alert("✨ Enchanted composition rendered successfully with fairytale magic!");
                       }}
-                      className="rounded-full bg-cyan-500 px-3.5 py-1.5 text-xs font-semibold text-slate-950 transition hover:bg-cyan-400"
+                      className="rounded-full bg-gradient-to-r from-[#FE9EC7] via-[#f9f6c4] to-[#89D4FF] px-4 py-1.5 text-xs font-bold text-[#3d1f35] transition hover:brightness-110 shadow-[0_0_15px_rgba(254,158,199,0.35)]"
                     >
-                      Export
+                      Export Reel ✦
                     </button>
                   </div>
                 </div>
 
                 <div className="grid gap-3 xl:grid-cols-[1.2fr_0.8fr]">
                   {/* Left: Video Player Bezel */}
-                  <div className="rounded-[24px] border border-white/10 bg-[#0b1017] p-3 flex flex-col justify-between">
-                    <div className="mb-2 flex items-center justify-between text-xs text-slate-400 font-mono">
+                  <div className="rounded-[24px] border border-[#FE9EC7]/15 bg-[#120719]/90 p-3 flex flex-col justify-between shadow-inner">
+                    <div className="mb-2 flex items-center justify-between text-xs text-pink-200/70 font-mono">
                       <span>Timeline Head</span>
-                      <span className="text-cyan-400">{formatTime(playhead)} / {formatTime(totalDuration)}</span>
+                      <span className="text-[#f9f6c4] font-semibold">{formatTime(playhead)} / {formatTime(totalDuration)}</span>
                     </div>
 
                     {/* Live Video Preview Window */}
-                    <div className="flex-1 flex items-center justify-center py-2 bg-black/40 rounded-[20px] min-h-[300px]">
+                    <div className="flex-1 flex items-center justify-center py-2 bg-black/50 rounded-[20px] min-h-[300px] border border-white/5">
                       <div
-                        className={`relative overflow-hidden rounded-[16px] border border-white/10 bg-black transition-all duration-300 ${
+                        className={`relative overflow-hidden rounded-[16px] border border-[#FE9EC7]/30 bg-[#0d0512] transition-all duration-300 shadow-[0_0_25px_rgba(254,158,199,0.15)] ${
                           resolution === "Mobile (9:16)" ? "aspect-[9/16] h-[320px] w-auto" : "aspect-video w-full"
                         }`}
                       >
@@ -1259,7 +1256,7 @@ export function SkillsSection({ skills }: SkillsSectionProps) {
                             />
                           ))}
 
-                        {/* Video / Text elements (sorted by layout layering: video at bottom, text on top) */}
+                        {/* Video / Text elements */}
                         {activeClips
                           .slice()
                           .sort((a, b) => {
@@ -1295,39 +1292,39 @@ export function SkillsSection({ skills }: SkillsSectionProps) {
                             return null;
                           })}
 
-                        {/* Global Visual Effects applied on top of player */}
-                        {activeClips.some((c) => c.effectName === "VHS Glitch") && (
-                          <div className="vhs-chromatic pointer-events-none absolute inset-0 z-30">
-                            <div className="effect-vhs-scanline" />
-                            <div className="effect-grain" />
-                          </div>
+                        {/* Global Fairytale Visual Effects applied on top of player */}
+                        {activeClips.some((c) => c.effectName === "Pixie Dust") && (
+                          <div className="effect-pixie-dust" />
                         )}
-                        {activeClips.some((c) => c.effectName === "Retro Grain") && (
-                          <div className="effect-grain pointer-events-none absolute inset-0 z-30" />
+                        {activeClips.some((c) => c.effectName === "Royal Glow") && (
+                          <div className="effect-royal-glow" />
+                        )}
+                        {activeClips.some((c) => c.effectName === "Pastel Dream") && (
+                          <div className="effect-pastel-dream" />
                         )}
                         {activeClips.some((c) => c.effectName === "Cinema Scope") && (
                           <div className="pointer-events-none absolute inset-0 z-30">
-                            <div className="absolute top-0 inset-x-0 h-[22px] bg-black border-b border-white/5" />
-                            <div className="absolute bottom-0 inset-x-0 h-[22px] bg-black border-t border-white/5" />
+                            <div className="absolute top-0 inset-x-0 h-[22px] bg-black border-b border-[#FE9EC7]/20" />
+                            <div className="absolute bottom-0 inset-x-0 h-[22px] bg-black border-t border-[#FE9EC7]/20" />
                           </div>
                         )}
 
-                        {/* Ambient Grid overlay showing player frame bounds */}
+                        {/* Ambient frame boundary */}
                         <div className="absolute inset-0 border border-white/5 pointer-events-none z-10" />
                       </div>
                     </div>
 
                     {/* Audio & Video Controls bar */}
-                    <div className="mt-3 rounded-[16px] border border-white/10 bg-black/45 p-2.5 backdrop-blur flex flex-col gap-2">
+                    <div className="mt-3 rounded-[16px] border border-[#FE9EC7]/20 bg-[#1e0e29]/90 p-2.5 backdrop-blur flex flex-col gap-2">
                       <div className="flex items-center justify-between gap-4">
-                        <div className="flex items-center gap-1">
+                        <div className="flex items-center gap-1.5">
                           <button
                             type="button"
                             onClick={() => {
                               setPlayhead(0);
                               playSynth("blip");
                             }}
-                            className="rounded-full bg-white/5 hover:bg-white/10 px-2 py-1.5 text-xs text-slate-200 transition"
+                            className="rounded-full bg-white/5 hover:bg-white/10 px-2 py-1.5 text-xs text-pink-200 transition"
                             title="Go to start"
                           >
                             ⏮
@@ -1338,7 +1335,7 @@ export function SkillsSection({ skills }: SkillsSectionProps) {
                               setPlayhead((v) => clamp(v - 0.5, 0, totalDuration));
                               playSynth("blip");
                             }}
-                            className="rounded-full bg-white/5 hover:bg-white/10 px-2 py-1.5 text-xs text-slate-200 transition"
+                            className="rounded-full bg-white/5 hover:bg-white/10 px-2 py-1.5 text-xs text-pink-200 transition"
                             title="-0.5s"
                           >
                             ◀
@@ -1349,9 +1346,9 @@ export function SkillsSection({ skills }: SkillsSectionProps) {
                               setIsPlaying((v) => !v);
                               playSynth("swoosh");
                             }}
-                            className="rounded-full bg-cyan-500 hover:bg-cyan-400 px-4 py-1.5 text-xs font-semibold text-slate-950 transition"
+                            className="rounded-full bg-gradient-to-r from-[#FE9EC7] via-[#f9f6c4] to-[#89D4FF] hover:brightness-110 px-4 py-1.5 text-xs font-bold text-[#3d1f35] transition shadow-[0_0_15px_rgba(254,158,199,0.35)]"
                           >
-                            {isPlaying ? "⏸ Pause" : "▶ Play"}
+                            {isPlaying ? "⏸ Pause" : "▶ Play Reel"}
                           </button>
                           <button
                             type="button"
@@ -1359,7 +1356,7 @@ export function SkillsSection({ skills }: SkillsSectionProps) {
                               setPlayhead((v) => clamp(v + 0.5, 0, totalDuration));
                               playSynth("blip");
                             }}
-                            className="rounded-full bg-white/5 hover:bg-white/10 px-2 py-1.5 text-xs text-slate-200 transition"
+                            className="rounded-full bg-white/5 hover:bg-white/10 px-2 py-1.5 text-xs text-pink-200 transition"
                             title="+0.5s"
                           >
                             ▶
@@ -1370,14 +1367,14 @@ export function SkillsSection({ skills }: SkillsSectionProps) {
                               setPlayhead(totalDuration);
                               playSynth("blip");
                             }}
-                            className="rounded-full bg-white/5 hover:bg-white/10 px-2 py-1.5 text-xs text-slate-200 transition"
+                            className="rounded-full bg-white/5 hover:bg-white/10 px-2 py-1.5 text-xs text-pink-200 transition"
                             title="Go to end"
                           >
                             ⏭
                           </button>
                         </div>
 
-                        {/* Split Clip & Snapping Toolbar */}
+                        {/* Split Clip Toolbar */}
                         <div className="flex items-center gap-1.5">
                           <button
                             type="button"
@@ -1385,8 +1382,8 @@ export function SkillsSection({ skills }: SkillsSectionProps) {
                             disabled={!selectedClip || playhead <= selectedClip.start || playhead >= selectedClip.start + selectedClip.duration}
                             className={`rounded-full px-3 py-1.5 text-xs font-medium flex items-center gap-1 transition ${
                               selectedClip && playhead > selectedClip.start && playhead < selectedClip.start + selectedClip.duration
-                                ? "bg-red-500 hover:bg-red-400 text-white"
-                                : "bg-white/5 text-slate-500 cursor-not-allowed"
+                                ? "bg-gradient-to-r from-rose-500 to-pink-500 hover:brightness-110 text-white shadow-sm"
+                                : "bg-white/5 text-pink-300/30 cursor-not-allowed"
                             }`}
                             title="Split Clip at Playhead (✂️)"
                           >
@@ -1402,35 +1399,37 @@ export function SkillsSection({ skills }: SkillsSectionProps) {
                         step={0.05}
                         value={playhead}
                         onChange={(e) => setPlayhead(Number(e.target.value))}
-                        className="h-1 w-full cursor-pointer accent-cyan-400 bg-white/10 rounded-lg appearance-none"
+                        className="h-1.5 w-full cursor-pointer accent-[#FE9EC7] bg-white/10 rounded-lg appearance-none"
                       />
                     </div>
                   </div>
 
                   {/* Right: Clip Properties Inspector Panel */}
-                  <div className="rounded-[24px] border border-white/10 bg-[#0b1017] p-3 flex flex-col max-h-[460px] overflow-y-auto">
-                    <div className="text-xs font-semibold text-slate-400 border-b border-white/5 pb-2 mb-3">Transform Inspector</div>
+                  <div className="rounded-[24px] border border-[#FE9EC7]/15 bg-[#120719]/90 p-3 flex flex-col max-h-[460px] overflow-y-auto">
+                    <div className="text-xs font-semibold text-[#f9f6c4] border-b border-white/10 pb-2 mb-3 flex items-center gap-1.5">
+                      <span>🪄</span> Royal Inspector
+                    </div>
                     
                     {selectedClip ? (
                       <div className="space-y-3">
-                        <div className="rounded-[16px] border border-white/10 bg-white/5 p-3">
-                          <div className="text-xs text-slate-400">Clip Title</div>
+                        <div className="rounded-[16px] border border-[#FE9EC7]/20 bg-white/5 p-3">
+                          <div className="text-xs text-pink-200/80">Clip Title</div>
                           <input
                             type="text"
                             value={selectedClip.title}
                             onChange={(e) => updateClip(selectedClip.id, (c) => ({ ...c, title: e.target.value }))}
-                            className="mt-1.5 w-full rounded-lg border border-white/10 bg-black/40 px-2.5 py-1.5 text-xs text-white focus:border-cyan-400 focus:outline-none"
+                            className="mt-1.5 w-full rounded-lg border border-[#FE9EC7]/25 bg-[#200d2b]/80 px-2.5 py-1.5 text-xs text-pink-100 focus:border-[#FE9EC7] focus:outline-none"
                           />
                         </div>
 
                         {selectedClip.kind === "text" && (
-                          <div className="rounded-[16px] border border-white/10 bg-white/5 p-3">
-                            <div className="text-xs text-slate-400">Text Content</div>
+                          <div className="rounded-[16px] border border-[#FE9EC7]/20 bg-white/5 p-3">
+                            <div className="text-xs text-pink-200/80">Story Text Content</div>
                             <input
                               type="text"
                               value={selectedClip.textContent ?? ""}
                               onChange={(e) => updateClip(selectedClip.id, (c) => ({ ...c, textContent: e.target.value }))}
-                              className="mt-1.5 w-full rounded-lg border border-white/10 bg-black/40 px-2.5 py-1.5 text-xs text-white focus:border-cyan-400 focus:outline-none"
+                              className="mt-1.5 w-full rounded-lg border border-[#FE9EC7]/25 bg-[#200d2b]/80 px-2.5 py-1.5 text-xs text-pink-100 focus:border-[#FE9EC7] focus:outline-none"
                             />
                           </div>
                         )}
@@ -1445,10 +1444,10 @@ export function SkillsSection({ skills }: SkillsSectionProps) {
                           { label: "Blur", value: selectedClip.blur ?? 0, min: 0, max: 20, unit: "px", onChange: (value: number) => updateClip(selectedClip.id, (clip) => ({ ...clip, blur: value })) },
                           { label: "Volume", value: selectedClip.volume ?? 100, min: 0, max: 100, unit: "%", onChange: (value: number) => updateClip(selectedClip.id, (clip) => ({ ...clip, volume: value })) },
                         ].map((item) => (
-                          <label key={item.label} className="block rounded-[16px] border border-white/10 bg-white/5 p-2.5">
-                            <div className="mb-1.5 flex items-center justify-between text-xs text-slate-300">
+                          <label key={item.label} className="block rounded-[16px] border border-[#FE9EC7]/15 bg-white/5 p-2.5">
+                            <div className="mb-1.5 flex items-center justify-between text-xs text-pink-100/90">
                               <span>{item.label}</span>
-                              <span className="text-cyan-300 font-mono text-[11px]">{item.value}{item.unit}</span>
+                              <span className="text-[#f9f6c4] font-mono text-[11px]">{item.value}{item.unit}</span>
                             </div>
                             <input
                               type="range"
@@ -1456,7 +1455,7 @@ export function SkillsSection({ skills }: SkillsSectionProps) {
                               max={item.max}
                               value={item.value}
                               onChange={(e) => item.onChange(Number(e.target.value))}
-                              className="h-1 w-full cursor-pointer accent-cyan-400 bg-white/10 rounded-lg appearance-none"
+                              className="h-1.5 w-full cursor-pointer accent-[#FE9EC7] bg-white/10 rounded-lg appearance-none"
                             />
                           </label>
                         ))}
@@ -1465,24 +1464,24 @@ export function SkillsSection({ skills }: SkillsSectionProps) {
                           <button
                             type="button"
                             onClick={() => duplicateClip(selectedClip.id)}
-                            className="flex-1 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 py-2 text-xs text-slate-200 transition"
+                            className="flex-1 rounded-xl bg-white/5 hover:bg-white/10 border border-[#FE9EC7]/20 py-2 text-xs text-pink-100 transition"
                           >
                             👥 Duplicate
                           </button>
                           <button
                             type="button"
                             onClick={() => deleteClip(selectedClip.id)}
-                            className="flex-1 rounded-xl bg-red-500/10 hover:bg-red-500/20 border border-red-500/20 py-2 text-xs text-red-400 transition"
+                            className="flex-1 rounded-xl bg-rose-500/15 hover:bg-rose-500/25 border border-rose-500/30 py-2 text-xs text-rose-300 transition"
                           >
-                            🗑️ Delete
+                            🗑️ Remove
                           </button>
                         </div>
                       </div>
                     ) : (
                       <div className="my-auto text-center py-10 px-4">
-                        <div className="text-xl mb-2">🎬</div>
-                        <p className="text-xs text-slate-500 leading-relaxed">
-                          Select a clip in the timeline below to customize its position, rotation, speed, volume, and visual filters.
+                        <div className="text-2xl mb-2">✨</div>
+                        <p className="text-xs text-pink-200/60 leading-relaxed">
+                          Select a clip in the enchanted timeline below to adjust scale, magical rotation, volume, and fairytale filters.
                         </p>
                       </div>
                     )}
@@ -1491,10 +1490,10 @@ export function SkillsSection({ skills }: SkillsSectionProps) {
               </div>
 
               {/* Multitrack Timeline Section */}
-              <div className="rounded-[28px] border border-white/10 bg-[#080b11] p-3 flex flex-col">
-                <div className="mb-3 flex flex-wrap items-center justify-between gap-3 border-b border-white/5 pb-2">
-                  <div className="flex items-center gap-2 text-xs text-slate-400">
-                    <span className="rounded-full bg-white/10 px-2.5 py-0.5 font-semibold">Timeline</span>
+              <div className="rounded-[28px] border border-[#FE9EC7]/20 bg-[#160b20]/80 p-3 flex flex-col backdrop-blur-md">
+                <div className="mb-3 flex flex-wrap items-center justify-between gap-3 border-b border-white/10 pb-2">
+                  <div className="flex items-center gap-2 text-xs text-pink-200/80">
+                    <span className="rounded-full bg-white/10 border border-white/10 px-2.5 py-0.5 font-semibold text-[#f9f6c4]">✨ Royal Timeline</span>
                     <button
                       type="button"
                       onClick={() => {
@@ -1502,7 +1501,7 @@ export function SkillsSection({ skills }: SkillsSectionProps) {
                         playSynth("blip");
                       }}
                       className={`rounded-full px-2.5 py-0.5 border text-[10px] transition ${
-                        isSnapping ? "border-cyan-500 bg-cyan-500/10 text-cyan-200" : "border-white/10 text-slate-400"
+                        isSnapping ? "border-[#FE9EC7] bg-[#FE9EC7]/20 text-[#f9f6c4]" : "border-white/10 text-pink-200/50"
                       }`}
                     >
                       🧲 Snapping: {isSnapping ? "On" : "Off"}
@@ -1512,15 +1511,15 @@ export function SkillsSection({ skills }: SkillsSectionProps) {
                     <button
                       type="button"
                       onClick={() => setZoom((z) => clamp(z - 0.15, 0.8, 2.2))}
-                      className="rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-xs text-slate-300 hover:bg-white/10"
+                      className="rounded-full border border-[#FE9EC7]/20 bg-white/5 px-2.5 py-1 text-xs text-pink-100 hover:bg-white/10"
                     >
                       Zoom out
                     </button>
-                    <span className="min-w-8 text-center text-xs font-mono text-slate-400">{(zoom * 100).toFixed(0)}%</span>
+                    <span className="min-w-8 text-center text-xs font-mono text-[#f9f6c4]">{(zoom * 100).toFixed(0)}%</span>
                     <button
                       type="button"
                       onClick={() => setZoom((z) => clamp(z + 0.15, 0.8, 2.2))}
-                      className="rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-xs text-slate-300 hover:bg-white/10"
+                      className="rounded-full border border-[#FE9EC7]/20 bg-white/5 px-2.5 py-1 text-xs text-pink-100 hover:bg-white/10"
                     >
                       Zoom in
                     </button>
@@ -1528,17 +1527,17 @@ export function SkillsSection({ skills }: SkillsSectionProps) {
                 </div>
 
                 {/* Multitrack timeline container */}
-                <div className="overflow-hidden rounded-[20px] border border-white/10 bg-[#090d13]">
+                <div className="overflow-hidden rounded-[20px] border border-[#FE9EC7]/20 bg-[#110619]/90">
                   <div className="flex flex-row overflow-x-auto select-none">
                     
                     {/* Sticky left headers */}
-                    <div className="w-[150px] shrink-0 border-r border-white/10 bg-[#090d13] z-10 py-3 pl-3 space-y-3">
-                      <div className="h-8 text-[9px] uppercase tracking-wider text-slate-500 flex items-center">
-                        Layers
+                    <div className="w-[150px] shrink-0 border-r border-[#FE9EC7]/20 bg-[#14081e] z-10 py-3 pl-3 space-y-3">
+                      <div className="h-8 text-[9px] uppercase tracking-wider text-[#FE9EC7]/70 font-semibold flex items-center">
+                        ✦ Layers
                       </div>
                       {tracks.map((track) => (
                         <div key={track.id} className="h-16 flex flex-col justify-center border-b border-white/5 last:border-0 pb-1.5">
-                          <span className="text-[11px] font-bold text-slate-300 truncate">{track.name}</span>
+                          <span className="text-[11px] font-bold text-pink-100 truncate">{track.name}</span>
                           <div className="mt-1 flex items-center gap-1">
                             <button
                               type="button"
@@ -1547,7 +1546,7 @@ export function SkillsSection({ skills }: SkillsSectionProps) {
                                 playSynth("blip");
                               }}
                               className={`rounded px-1.5 py-0.5 text-[8px] font-semibold font-mono ${
-                                track.locked ? "bg-amber-500/20 text-amber-300" : "bg-white/5 text-slate-400"
+                                track.locked ? "bg-amber-500/20 text-amber-300 border border-amber-500/30" : "bg-white/5 text-pink-200/60"
                               }`}
                               title={track.locked ? "Unlock track" : "Lock track"}
                             >
@@ -1560,7 +1559,7 @@ export function SkillsSection({ skills }: SkillsSectionProps) {
                                 playSynth("blip");
                               }}
                               className={`rounded px-1.5 py-0.5 text-[8px] font-semibold font-mono ${
-                                track.muted ? "bg-red-500/20 text-red-300" : "bg-white/5 text-slate-400"
+                                track.muted ? "bg-rose-500/20 text-rose-300 border border-rose-500/30" : "bg-white/5 text-pink-200/60"
                               }`}
                             >
                               {track.muted ? "🔇 Muted" : "🔊 Mute"}
@@ -1576,7 +1575,7 @@ export function SkillsSection({ skills }: SkillsSectionProps) {
                         
                         {/* Ruler Area */}
                         <div
-                          className="h-8 rounded-lg border border-white/5 bg-black/25 mb-3 relative cursor-ew-resize select-none"
+                          className="h-8 rounded-lg border border-[#FE9EC7]/15 bg-black/30 mb-3 relative cursor-ew-resize select-none"
                           onMouseDown={handleRulerPointerDown}
                         >
                           {Array.from({ length: Math.floor(totalDuration * 2) + 1 }).map((_, idx) => {
@@ -1589,11 +1588,11 @@ export function SkillsSection({ skills }: SkillsSectionProps) {
                                 style={{
                                   left: `${(time / totalDuration) * 100}%`,
                                   height: isMajor ? "12px" : "6px",
-                                  borderColor: isMajor ? "rgba(255,255,255,0.22)" : "rgba(255,255,255,0.06)",
+                                  borderColor: isMajor ? "rgba(254,158,199,0.5)" : "rgba(255,255,255,0.08)",
                                 }}
                               >
                                 {isMajor && (
-                                  <span className="absolute bottom-4 -left-3 text-[8px] font-mono text-slate-500">
+                                  <span className="absolute bottom-4 -left-3 text-[8px] font-mono text-[#f9f6c4]/80">
                                     {formatTime(time)}
                                   </span>
                                 )}
@@ -1608,7 +1607,7 @@ export function SkillsSection({ skills }: SkillsSectionProps) {
                             <div
                               key={track.id}
                               className={`h-16 relative rounded-xl border p-1 overflow-hidden transition ${
-                                track.locked ? "border-amber-500/10 bg-[#161310]" : "border-white/5 bg-[#0f141c]"
+                                track.locked ? "border-amber-500/20 bg-[#1d1217]" : "border-[#FE9EC7]/15 bg-[#180922]/80"
                               }`}
                             >
                               {/* Grid lines */}
@@ -1632,17 +1631,17 @@ export function SkillsSection({ skills }: SkillsSectionProps) {
                                   }}
                                   onMouseDown={(event) => handleClipPointerDown(event, clip)}
                                   className={`absolute top-1.5 bottom-1.5 rounded-lg border px-2 text-left text-[10px] font-medium text-white shadow-lg transition select-none ${
-                                    selectedClipId === clip.id ? "border-cyan-400 ring-1 ring-cyan-400/40" : "border-white/10 hover:border-cyan-400/40"
+                                    selectedClipId === clip.id ? "border-[#FE9EC7] ring-2 ring-[#FE9EC7]/60 shadow-[0_0_15px_rgba(254,158,199,0.5)]" : "border-white/20 hover:border-[#FE9EC7]/60"
                                   }`}
                                   style={{
                                     left: `${(clip.start / totalDuration) * 100}%`,
                                     width: `${(clip.duration / totalDuration) * 100}%`,
-                                    background: `linear-gradient(135deg, ${clip.color}, rgba(8, 12, 20, 0.9))`,
+                                    background: `linear-gradient(135deg, ${clip.color}, rgba(28, 12, 36, 0.95))`,
                                   }}
                                 >
                                   <div className="flex h-full flex-col justify-between py-0.5 truncate">
-                                    <span className="font-bold truncate leading-tight">{clip.title}</span>
-                                    <span className="text-[8px] opacity-60 leading-none">{clip.duration.toFixed(1)}s</span>
+                                    <span className="font-bold truncate leading-tight text-white">{clip.title}</span>
+                                    <span className="text-[8px] text-pink-100/70 leading-none">{clip.duration.toFixed(1)}s</span>
                                   </div>
 
                                   {/* Trim/resize handles */}
@@ -1650,11 +1649,11 @@ export function SkillsSection({ skills }: SkillsSectionProps) {
                                     <>
                                       <div
                                         onMouseDown={(event) => handleClipPointerDown(event, clip, "resize-left")}
-                                        className="absolute left-0 top-0 bottom-0 w-2.5 cursor-w-resize rounded-l-lg hover:bg-cyan-400/35 active:bg-cyan-400"
+                                        className="absolute left-0 top-0 bottom-0 w-2.5 cursor-w-resize rounded-l-lg hover:bg-[#FE9EC7]/50 active:bg-[#FE9EC7]"
                                       />
                                       <div
                                         onMouseDown={(event) => handleClipPointerDown(event, clip, "resize-right")}
-                                        className="absolute right-0 top-0 bottom-0 w-2.5 cursor-e-resize rounded-r-lg hover:bg-cyan-400/35 active:bg-cyan-400"
+                                        className="absolute right-0 top-0 bottom-0 w-2.5 cursor-e-resize rounded-r-lg hover:bg-[#FE9EC7]/50 active:bg-[#FE9EC7]"
                                       />
                                     </>
                                   )}
@@ -1663,12 +1662,14 @@ export function SkillsSection({ skills }: SkillsSectionProps) {
                             </div>
                           ))}
 
-                          {/* Playhead Overlay Bar */}
+                          {/* Playhead Overlay Needle */}
                           <div
-                            className="absolute top-0 bottom-0 w-px bg-cyan-400 shadow-[0_0_8px_rgba(34,211,238,0.85)] z-10 pointer-events-none"
+                            className="absolute top-0 bottom-0 w-0.5 bg-gradient-to-b from-[#f9f6c4] via-[#FE9EC7] to-[#89D4FF] shadow-[0_0_12px_#FE9EC7] z-10 pointer-events-none"
                             style={{ left: `${(playhead / totalDuration) * 100}%` }}
                           >
-                            <div className="w-2.5 h-2.5 bg-cyan-400 rounded-full -ml-[4.5px] -mt-1 shadow shadow-cyan-400/90" />
+                            <div className="w-3 h-3 bg-[#f9f6c4] border border-[#FE9EC7] rounded-full -ml-[5px] -mt-1 shadow-[0_0_8px_#f9f6c4] flex items-center justify-center text-[7px] text-[#3d1f35] font-bold">
+                              ✦
+                            </div>
                           </div>
                         </div>
 
@@ -1686,12 +1687,12 @@ export function SkillsSection({ skills }: SkillsSectionProps) {
       {/* Right Click Context Menu */}
       {contextMenu && selectedClip && (
         <div
-          className="fixed z-50 rounded-xl border border-white/10 bg-[#0d1117]/95 p-1.5 shadow-2xl"
+          className="fixed z-50 rounded-xl border border-[#FE9EC7]/30 bg-[#1d0e26]/95 backdrop-blur-md p-1.5 shadow-2xl"
           style={{ left: contextMenu.x, top: contextMenu.y }}
         >
           <button
             type="button"
-            className="block w-full rounded-lg px-3 py-1.5 text-left text-xs text-slate-200 hover:bg-white/10 transition"
+            className="block w-full rounded-lg px-3 py-1.5 text-left text-xs text-pink-100 hover:bg-white/10 transition"
             onClick={() => {
               duplicateClip(contextMenu.clipId);
               setContextMenu(null);
@@ -1701,7 +1702,7 @@ export function SkillsSection({ skills }: SkillsSectionProps) {
           </button>
           <button
             type="button"
-            className="block w-full rounded-lg px-3 py-1.5 text-left text-xs text-slate-200 hover:bg-white/10 transition"
+            className="block w-full rounded-lg px-3 py-1.5 text-left text-xs text-pink-100 hover:bg-white/10 transition"
             onClick={() => {
               moveClipTrack(contextMenu.clipId, -1);
               setContextMenu(null);
@@ -1711,7 +1712,7 @@ export function SkillsSection({ skills }: SkillsSectionProps) {
           </button>
           <button
             type="button"
-            className="block w-full rounded-lg px-3 py-1.5 text-left text-xs text-slate-200 hover:bg-white/10 transition"
+            className="block w-full rounded-lg px-3 py-1.5 text-left text-xs text-pink-100 hover:bg-white/10 transition"
             onClick={() => {
               moveClipTrack(contextMenu.clipId, 1);
               setContextMenu(null);
@@ -1722,7 +1723,7 @@ export function SkillsSection({ skills }: SkillsSectionProps) {
           <div className="h-px bg-white/10 my-1" />
           <button
             type="button"
-            className="block w-full rounded-lg px-3 py-1.5 text-left text-xs text-red-400 hover:bg-red-500/10 transition"
+            className="block w-full rounded-lg px-3 py-1.5 text-left text-xs text-rose-300 hover:bg-rose-500/10 transition"
             onClick={() => {
               deleteClip(contextMenu.clipId);
               setContextMenu(null);
@@ -1739,4 +1740,3 @@ export function SkillsSection({ skills }: SkillsSectionProps) {
 interface SkillsSectionProps {
   skills: string[];
 }
-
