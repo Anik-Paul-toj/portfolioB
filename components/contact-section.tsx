@@ -105,7 +105,7 @@ export function ContactSection({ socialLinks }: ContactSectionProps) {
       />
 
       <div className="section-shell relative z-[2] overflow-visible">
-        <div className="glass-panel glow-border overflow-hidden rounded-[34px] p-7 md:p-10">
+        <div className="relative overflow-hidden rounded-[34px] md:rounded-[40px] p-7 md:p-10 bg-gradient-to-br from-white/45 via-[#fff0f6]/35 to-[#fdf2f8]/40 backdrop-blur-md border border-white/55 shadow-[0_24px_70px_rgba(254,158,199,0.16),0_0_0_1px_rgba(255,255,255,0.5)_inset]">
           <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr]">
             <div data-reveal className="max-w-xl">
               <span className="section-label">Contact</span>
@@ -124,7 +124,7 @@ export function ContactSection({ socialLinks }: ContactSectionProps) {
                     href={link.href}
                     target="_blank"
                     rel="noreferrer"
-                    className="rounded-full border border-[#FE9EC7]/28 bg-white/80 px-4 py-2 text-sm uppercase tracking-[0.2em] text-[#3d1f35]/72 transition hover:border-[#FE9EC7]/55 hover:text-[#FE9EC7]"
+                    className="rounded-full border border-white/60 bg-white/60 backdrop-blur-sm px-4 py-2 text-sm uppercase tracking-[0.2em] text-[#3d1f35]/75 transition hover:border-[#FE9EC7]/55 hover:bg-white/85 hover:text-[#FE9EC7]"
                   >
                     {link.label}
                   </a>
@@ -140,7 +140,7 @@ export function ContactSection({ socialLinks }: ContactSectionProps) {
                   type="text"
                   required
                   placeholder="Your name"
-                  className="w-full rounded-[22px] border border-[#FE9EC7]/20 bg-white/84 px-5 py-4 text-[#3d1f35] outline-none transition placeholder:text-[#3d1f35]/35 focus:border-[#FE9EC7]/50 focus:bg-white"
+                  className="w-full rounded-[22px] border border-white/60 bg-white/55 backdrop-blur-sm px-5 py-4 text-[#3d1f35] outline-none transition placeholder:text-[#3d1f35]/40 focus:border-[#FE9EC7]/60 focus:bg-white/80 focus:shadow-[0_0_15px_rgba(254,158,199,0.18)]"
                 />
               </label>
               <label className="block">
@@ -150,7 +150,7 @@ export function ContactSection({ socialLinks }: ContactSectionProps) {
                   type="email"
                   required
                   placeholder="you@example.com"
-                  className="w-full rounded-[22px] border border-[#FE9EC7]/20 bg-white/84 px-5 py-4 text-[#3d1f35] outline-none transition placeholder:text-[#3d1f35]/35 focus:border-[#89D4FF]/50 focus:bg-white"
+                  className="w-full rounded-[22px] border border-white/60 bg-white/55 backdrop-blur-sm px-5 py-4 text-[#3d1f35] outline-none transition placeholder:text-[#3d1f35]/40 focus:border-[#89D4FF]/60 focus:bg-white/80 focus:shadow-[0_0_15px_rgba(137,212,255,0.18)]"
                 />
               </label>
               <label className="block">
@@ -160,7 +160,7 @@ export function ContactSection({ socialLinks }: ContactSectionProps) {
                   required
                   rows={5}
                   placeholder="Project scope, timeline, and the vibe you are after."
-                  className="w-full resize-none rounded-[22px] border border-[#FE9EC7]/20 bg-white/84 px-5 py-4 text-[#3d1f35] outline-none transition placeholder:text-[#3d1f35]/35 focus:border-[#FE9EC7]/50 focus:bg-white"
+                  className="w-full resize-none rounded-[22px] border border-white/60 bg-white/55 backdrop-blur-sm px-5 py-4 text-[#3d1f35] outline-none transition placeholder:text-[#3d1f35]/40 focus:border-[#FE9EC7]/60 focus:bg-white/80 focus:shadow-[0_0_15px_rgba(254,158,199,0.18)]"
                 />
               </label>
 
