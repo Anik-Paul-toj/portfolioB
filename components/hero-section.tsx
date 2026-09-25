@@ -12,7 +12,7 @@ export function HeroSection() {
   return (
     <section
       id="hero"
-      className="relative flex min-h-screen items-center overflow-hidden pb-10 pt-20 md:py-0"
+      className="relative flex min-h-screen items-center overflow-hidden pb-16 pt-28 md:py-20 lg:py-0"
     >
       {/* Grainient WebGL animated gradient background */}
       <div className="absolute inset-0 z-0">
@@ -69,13 +69,13 @@ export function HeroSection() {
         aria-hidden="true"
       />
 
-      <div className="section-shell relative z-[2] flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
+      <div className="section-shell relative z-[2] flex flex-col gap-10 md:flex-row md:items-center md:justify-between">
         <div className="max-w-3xl">
           <div className="hero-badge section-label mb-2.5">Cinematic Video Editor</div>
           <p className="hero-kicker mb-2.5 max-w-xl text-xs md:text-sm uppercase tracking-[0.38em] text-[#3d1f35]/60">
             Premium edits. Soft neon finish. Story-first motion.
           </p>
-          <h1 className="text-glow font-display text-[clamp(2.8rem,5.4vw,5.6rem)] leading-[0.9] tracking-[-0.04em] text-[#3d1f35]">
+          <h1 className="text-glow font-display text-[clamp(2.3rem,6vw,5.6rem)] leading-[0.94] md:leading-[0.9] tracking-[-0.04em] text-[#3d1f35]">
             <span className="hero-title-line flex items-center gap-[0.18em] block">
               <span className="inline-flex w-[0.42em] translate-y-[-0.02em] text-[#FE9EC7] opacity-90">
                 <svg viewBox="0 0 11.67 37.63" xmlns="http://www.w3.org/2000/svg" className="h-auto w-full fill-current">
@@ -90,23 +90,23 @@ export function HeroSection() {
             Crafting music visuals, branded films, and performance edits with polished rhythm, color, and atmosphere.
           </p>
 
-          <div className="hero-cta mt-5 flex flex-col gap-3.5 sm:flex-row relative overflow-visible">
+          <div className="hero-cta mt-6 flex flex-col gap-3.5 sm:flex-row relative overflow-visible">
             <a
               href="#projects"
-              className="button-glow button-bloom inline-flex items-center justify-center rounded-full border px-6 py-2.5 text-sm uppercase tracking-[0.24em] text-[#3d1f35]"
+              className="button-glow button-bloom inline-flex w-full sm:w-auto items-center justify-center rounded-full border px-6 py-2.5 text-sm uppercase tracking-[0.24em] text-[#3d1f35]"
             >
               <span className="button-bloom__label">View Reel</span>
             </a>
             <a
               href="#contact"
-              className="inline-flex items-center justify-center rounded-full border border-[#FE9EC7]/25 bg-white/80 px-6 py-2.5 text-sm uppercase tracking-[0.24em] text-[#3d1f35]/80 transition hover:border-[#FE9EC7]/55 hover:bg-white hover:text-[#3d1f35]"
+              className="inline-flex w-full sm:w-auto items-center justify-center rounded-full border border-[#FE9EC7]/25 bg-white/80 px-6 py-2.5 text-sm uppercase tracking-[0.24em] text-[#3d1f35]/80 transition hover:border-[#FE9EC7]/55 hover:bg-white hover:text-[#3d1f35]"
             >
               Start a Project
             </a>
           </div>
         </div>
 
-        <div data-reveal className="relative ml-auto w-full max-w-[270px] md:mr-3 md:max-w-[285px] md:mt-12 lg:mt-14">
+        <div data-reveal className="relative mx-auto md:ml-auto md:mr-3 w-full max-w-[240px] sm:max-w-[260px] md:max-w-[285px] mt-16 md:mt-12 lg:mt-14">
           <Image
             src={picmixGif}
             alt=""

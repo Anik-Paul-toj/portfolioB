@@ -75,7 +75,7 @@ export function PortfolioShell({ dbProjects }: { dbProjects?: any[] }) {
           src={leftWisteria}
           alt=""
           priority
-          className="pointer-events-none absolute left-[-8px] top-[-8px] z-20 h-auto w-[280px] opacity-95 md:left-[-24px] md:top-[-18px] md:w-[430px]"
+          className="pointer-events-none absolute left-[-4px] top-[-4px] z-20 h-auto w-[180px] sm:w-[240px] md:w-[430px] opacity-90 md:left-[-24px] md:top-[-18px]"
         />
         <Navbar items={navItems} />
         <main className="relative z-10">

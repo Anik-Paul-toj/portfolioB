@@ -72,7 +72,7 @@ function VideoCard({ project, index, onSelect }: { project: Project; index: numb
       onClick={onSelect}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className="project-card project-sheen group glass-panel glow-border relative block h-[480px] w-full flex-none overflow-hidden rounded-[30px] text-left transition duration-500 hover:-translate-y-2 md:w-[400px] xl:w-[450px]"
+      className="project-card project-sheen group glass-panel glow-border relative block h-[450px] sm:h-[480px] w-[84vw] max-w-[340px] sm:w-[360px] md:w-[400px] xl:w-[450px] flex-none overflow-hidden rounded-[26px] md:rounded-[30px] text-left transition duration-500 hover:-translate-y-2"
     >
       <div className="absolute inset-0">
         {isDriveVideo ? (
@@ -203,15 +203,15 @@ export function ProjectsSection({ projects, onSelectProject }: ProjectsSectionPr
       />
 
       <div className="section-shell relative z-[2] overflow-visible">
-        <div data-reveal className="mb-12 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
+        <div data-reveal className="mb-8 md:mb-12 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
           <div className="max-w-2xl">
             <span className="section-label">Projects</span>
-            <h2 className="mt-7 font-display text-[clamp(2.4rem,5vw,4.6rem)] leading-[0.98] tracking-[-0.04em] text-[#3d1f35]">
+            <h2 className="mt-6 md:mt-7 font-display text-[clamp(2.1rem,6vw,4.6rem)] leading-[1.02] md:leading-[0.98] tracking-[-0.04em] text-[#3d1f35]">
               A reel built for glow, pace, and impact.
             </h2>
           </div>
-          <div className="flex flex-col gap-4 items-end">
-            <p className="max-w-lg text-sm leading-7 text-[#3d1f35]/60 md:text-base md:text-right">
+          <div className="flex flex-col gap-4 items-start md:items-end">
+            <p className="max-w-lg text-sm leading-6 md:leading-7 text-[#3d1f35]/60 md:text-base text-left md:text-right">
               Selected edits across music, brand, beauty, and event visuals. Tap any piece to preview the motion.
             </p>
             <div className="flex gap-2">
@@ -232,7 +232,7 @@ export function ProjectsSection({ projects, onSelectProject }: ProjectsSectionPr
         </div>
       </div>
 
-      <div className="w-full pl-6 md:pl-12 lg:pl-16 relative z-[2]">
+      <div className="w-full px-4 sm:px-6 md:pl-12 lg:pl-16 relative z-[2]">
         {projects && projects.length > 0 ? (
           <div className="overflow-hidden" ref={emblaRef}>
             <div className="flex gap-6 pr-12 pb-8">

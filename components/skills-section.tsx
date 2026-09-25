@@ -1042,17 +1042,17 @@ export function SkillsSection({ skills }: SkillsSectionProps) {
       `}} />
 
       <div className="section-shell relative z-[2]">
-        <div className="mb-8 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+        <div className="mb-6 md:mb-8 flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
           <div className="max-w-2xl" data-reveal>
             <span className="section-label">Enchanted Studio Suite</span>
-            <h2 className="mt-6 font-display text-[clamp(2.2rem,4.5vw,3.6rem)] leading-[0.98] tracking-[-0.04em] text-[#3d1f35]">
+            <h2 className="mt-5 md:mt-6 font-display text-[clamp(2.1rem,5.5vw,3.6rem)] leading-[1.02] md:leading-[0.98] tracking-[-0.04em] text-[#3d1f35]">
               A magical editing workspace shaped with fairytale rhythm & glow.
             </h2>
-            <p className="mt-4 text-base leading-8 text-[#3d1f35]/70 md:text-lg">
+            <p className="mt-3.5 md:mt-4 text-base leading-7 md:leading-8 text-[#3d1f35]/70 md:text-lg">
               Arrange royal clips, layer starlight audio, customize enchanted titles, and edit magical motion in real-time.
             </p>
           </div>
-          <div className="flex flex-wrap gap-2.5 max-w-md lg:justify-end">
+          <div className="flex flex-wrap gap-2 max-w-md lg:justify-end">
             {skills.map((skill) => (
               <span
                 key={skill}
@@ -1064,8 +1064,14 @@ export function SkillsSection({ skills }: SkillsSectionProps) {
           </div>
         </div>
 
+        {/* Mobile Horizontal Scroll Helper Banner */}
+        <div className="flex items-center justify-between rounded-full border border-[#FE9EC7]/30 bg-white/70 px-4 py-2 text-xs text-[#3d1f35]/80 backdrop-blur-sm mb-3.5 md:hidden shadow-sm">
+          <span className="font-semibold flex items-center gap-1.5"><span>✨</span> Interactive Studio</span>
+          <span className="text-[#FE9EC7] font-semibold text-[11px] tracking-wider uppercase">Swipe to edit ➔</span>
+        </div>
+
         {/* Disney Fairytale Themed Editor Container */}
-        <div className="overflow-x-auto rounded-[34px] border border-[#FE9EC7]/30 bg-gradient-to-br from-[#24132b]/95 via-[#1a0f23]/95 to-[#13091c]/95 shadow-[0_35px_120px_rgba(254,158,199,0.22),0_0_50px_rgba(137,212,255,0.12)] backdrop-blur-xl">
+        <div className="overflow-x-auto rounded-[28px] md:rounded-[34px] border border-[#FE9EC7]/30 bg-gradient-to-br from-[#24132b]/95 via-[#1a0f23]/95 to-[#13091c]/95 shadow-[0_35px_120px_rgba(254,158,199,0.22),0_0_50px_rgba(137,212,255,0.12)] backdrop-blur-xl">
           <div className="flex min-w-[1120px] flex-row">
             {/* Sidebar Library Tabs */}
             <aside className="w-[230px] border-r border-[#FE9EC7]/15 p-3 flex flex-col bg-[#160b1e]/50">

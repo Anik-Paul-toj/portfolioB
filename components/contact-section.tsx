@@ -80,7 +80,7 @@ export function ContactSection({ socialLinks }: ContactSectionProps) {
   };
 
   return (
-    <section id="contact" className="relative scroll-mt-28 py-24 pb-16 md:py-32 md:pb-24 overflow-hidden">
+    <section id="contact" className="relative scroll-mt-28 py-16 pb-14 md:py-32 md:pb-24 overflow-hidden">
       {/* Decorative Atmosphere Background Layer */}
       <div
         className="pointer-events-none absolute inset-0 z-0 select-none overflow-hidden [mask-image:linear-gradient(180deg,transparent_0%,black_140px,black_calc(100%-80px),transparent_100%)] [webkit-mask-image:linear-gradient(180deg,transparent_0%,black_140px,black_calc(100%-80px),transparent_100%)]"
@@ -105,26 +105,26 @@ export function ContactSection({ socialLinks }: ContactSectionProps) {
       />
 
       <div className="section-shell relative z-[2] overflow-visible">
-        <div className="relative overflow-hidden rounded-[34px] md:rounded-[40px] p-7 md:p-10 bg-gradient-to-br from-white/45 via-[#fff0f6]/35 to-[#fdf2f8]/40 backdrop-blur-md border border-white/55 shadow-[0_24px_70px_rgba(254,158,199,0.16),0_0_0_1px_rgba(255,255,255,0.5)_inset]">
-          <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr]">
+        <div className="relative overflow-hidden rounded-[28px] md:rounded-[40px] p-6 sm:p-8 md:p-10 bg-gradient-to-br from-white/45 via-[#fff0f6]/35 to-[#fdf2f8]/40 backdrop-blur-md border border-white/55 shadow-[0_24px_70px_rgba(254,158,199,0.16),0_0_0_1px_rgba(255,255,255,0.5)_inset]">
+          <div className="grid gap-10 lg:gap-12 lg:grid-cols-[0.9fr_1.1fr]">
             <div data-reveal className="max-w-xl">
               <span className="section-label">Contact</span>
-              <h2 className="mt-7 font-display text-[clamp(2.5rem,5vw,4.8rem)] leading-[0.98] tracking-[-0.04em] text-[#3d1f35]">
+              <h2 className="mt-6 md:mt-7 font-display text-[clamp(2.1rem,6vw,4.8rem)] leading-[1.02] md:leading-[0.98] tracking-[-0.04em] text-[#3d1f35]">
                 Let&apos;s cut something unforgettable.
               </h2>
-              <p className="mt-6 text-base leading-8 text-[#3d1f35]/68 md:text-lg">
+              <p className="mt-5 md:mt-6 text-base leading-7 md:leading-8 text-[#3d1f35]/68 md:text-lg">
                 New campaigns, reels, launch visuals, and branded stories are all welcome. Keep it simple and I will
                 take it from there.
               </p>
 
-              <div className="mt-8 flex flex-wrap gap-3">
+              <div className="mt-6 md:mt-8 flex flex-wrap gap-2.5 sm:gap-3">
                 {socialLinks.map((link) => (
                   <a
                     key={link.label}
                     href={link.href}
                     target="_blank"
                     rel="noreferrer"
-                    className="rounded-full border border-white/60 bg-white/60 backdrop-blur-sm px-4 py-2 text-sm uppercase tracking-[0.2em] text-[#3d1f35]/75 transition hover:border-[#FE9EC7]/55 hover:bg-white/85 hover:text-[#FE9EC7]"
+                    className="rounded-full border border-white/60 bg-white/60 backdrop-blur-sm px-4 py-2 text-xs sm:text-sm uppercase tracking-[0.2em] text-[#3d1f35]/75 transition hover:border-[#FE9EC7]/55 hover:bg-white/85 hover:text-[#FE9EC7]"
                   >
                     {link.label}
                   </a>
