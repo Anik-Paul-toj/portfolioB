@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState, type MouseEvent as ReactMouseEvent, type CSSProperties } from "react";
+import Image from "next/image";
+import workspaceBg from "@/assets/workspace.png";
 
 // Web Audio API Synthesizer for magical Disney fairytale feedback sound
 function playSynth(type: "swoosh" | "blip" | "melody") {
@@ -965,7 +967,36 @@ export function SkillsSection({ skills }: SkillsSectionProps) {
   }, [tracks, playhead]);
 
   return (
-    <section id="skills" className="scroll-mt-28 py-12 md:py-20">
+    <section id="skills" className="relative scroll-mt-28 py-16 md:py-24 overflow-hidden">
+      {/* Decorative Atmosphere Background Layer */}
+      <div
+        className="pointer-events-none absolute inset-0 z-0 select-none overflow-hidden [mask-image:linear-gradient(180deg,transparent_0%,black_140px,black_calc(100%-120px),transparent_100%)] [webkit-mask-image:linear-gradient(180deg,transparent_0%,black_140px,black_calc(100%-120px),transparent_100%)]"
+        aria-hidden="true"
+      >
+        <Image
+          src={workspaceBg}
+          alt=""
+          fill
+          className="object-cover object-center opacity-65 md:opacity-75 mix-blend-multiply"
+          sizes="100vw"
+        />
+        {/* Soft pastel and ambient glow overlays */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#fff5f9]/50 via-transparent to-[#fff5f9]/60" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(254,158,199,0.08),transparent_75%)]" />
+      </div>
+
+      {/* Dedicated seamless top transition */}
+      <div
+        className="pointer-events-none absolute inset-x-0 top-0 h-36 md:h-52 z-[1] bg-gradient-to-b from-[#fff5f9] via-[#fff5f9]/60 to-transparent"
+        aria-hidden="true"
+      />
+
+      {/* Soft bottom blend into subsequent section */}
+      <div
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-28 md:h-40 z-[1] bg-gradient-to-t from-[#fff5f9] to-transparent"
+        aria-hidden="true"
+      />
+
       {/* Fairytale animations injected dynamically */}
       <style dangerouslySetInnerHTML={{__html: `
         @keyframes sparkle-float {
@@ -1010,7 +1041,7 @@ export function SkillsSection({ skills }: SkillsSectionProps) {
         }
       `}} />
 
-      <div className="section-shell">
+      <div className="section-shell relative z-[2]">
         <div className="mb-8 flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
           <div className="max-w-2xl" data-reveal>
             <span className="section-label">Enchanted Studio Suite</span>
