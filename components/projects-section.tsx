@@ -5,6 +5,7 @@ import Image from "next/image";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 import type { Project } from "@/lib/content";
+import reelBg from "@/assets/A_reel_built.png";
 
 type ProjectsSectionProps = {
   projects: Project[];
@@ -171,9 +172,37 @@ export function ProjectsSection({ projects, onSelectProject }: ProjectsSectionPr
   ]);
 
   return (
-    <section id="projects" className="scroll-mt-28 py-24 md:py-32">
-      <div className="section-shell relative overflow-visible">
+    <section id="projects" className="relative scroll-mt-28 py-24 md:py-32 overflow-hidden">
+      {/* Decorative Atmosphere Background Layer */}
+      <div
+        className="pointer-events-none absolute inset-0 z-0 select-none overflow-hidden [mask-image:linear-gradient(180deg,transparent_0%,black_140px,black_calc(100%-120px),transparent_100%)] [webkit-mask-image:linear-gradient(180deg,transparent_0%,black_140px,black_calc(100%-120px),transparent_100%)]"
+        aria-hidden="true"
+      >
+        <Image
+          src={reelBg}
+          alt=""
+          fill
+          className="object-cover object-center opacity-65 md:opacity-75 mix-blend-multiply"
+          sizes="100vw"
+        />
+        {/* Soft pastel and ambient glow overlays */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#fff5f9]/50 via-transparent to-[#fff5f9]/60" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(254,158,199,0.08),transparent_75%)]" />
+      </div>
 
+      {/* Dedicated seamless top transition */}
+      <div
+        className="pointer-events-none absolute inset-x-0 top-0 h-36 md:h-52 z-[1] bg-gradient-to-b from-[#fff5f9] via-[#fff5f9]/60 to-transparent"
+        aria-hidden="true"
+      />
+
+      {/* Soft bottom blend into subsequent section */}
+      <div
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-28 md:h-40 z-[1] bg-gradient-to-t from-[#fff5f9] to-transparent"
+        aria-hidden="true"
+      />
+
+      <div className="section-shell relative z-[2] overflow-visible">
         <div data-reveal className="mb-12 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
           <div className="max-w-2xl">
             <span className="section-label">Projects</span>
@@ -203,7 +232,7 @@ export function ProjectsSection({ projects, onSelectProject }: ProjectsSectionPr
         </div>
       </div>
 
-      <div className="w-full pl-6 md:pl-12 lg:pl-16">
+      <div className="w-full pl-6 md:pl-12 lg:pl-16 relative z-[2]">
         {projects && projects.length > 0 ? (
           <div className="overflow-hidden" ref={emblaRef}>
             <div className="flex gap-6 pr-12 pb-8">
