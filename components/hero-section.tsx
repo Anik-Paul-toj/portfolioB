@@ -3,7 +3,9 @@ import Grainient from "@/components/Grainient";
 import picmixGif from "@/picmix.com_336548.gif";
 import assetPhoto1 from "@/assets/file_00000000c0b8820bb8c8d921cb357909.png";
 import assetPhoto2 from "@/assets/file_00000000c5fc8208ba8b1920c75b9eec.png";
+import castleOverlay from "@/assets/castle-overlay.png";
 import { BloomButtonOrnaments } from "@/components/bloom-button-ornaments";
+
 
 
 export function HeroSection() {
@@ -46,6 +48,21 @@ export function HeroSection() {
       <div className="gradient-ring left-[-10%] top-[18%] h-64 w-64 bg-[#FE9EC7]/30 z-[1]" />
       <div className="gradient-ring bottom-[14%] right-[-6%] h-72 w-72 bg-[#89D4FF]/28 z-[1]" />
 
+      {/* Decorative Fairytale Castle Foreground Overlay */}
+      <div
+        className="pointer-events-none absolute inset-x-0 bottom-[-2%] sm:bottom-[-4%] md:bottom-[-2%] lg:bottom-0 z-[1] flex items-end justify-center overflow-hidden select-none"
+        aria-hidden="true"
+      >
+        <div className="relative w-[110%] sm:w-[94%] md:w-[86%] lg:w-[78%] xl:w-[72%] max-w-[1280px] aspect-[16/9] animate-castle-float opacity-45 sm:opacity-50 md:opacity-60 transition-opacity duration-700">
+          <Image
+            src={castleOverlay}
+            alt=""
+            priority
+            className="h-full w-full object-contain object-bottom [mask-image:radial-gradient(ellipse_at_50%_70%,black_50%,transparent_90%)] [filter:drop-shadow(0_0_35px_rgba(254,158,199,0.25))_drop-shadow(0_0_20px_rgba(137,212,255,0.20))]"
+          />
+        </div>
+      </div>
+
       <div className="section-shell relative z-[2] flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
         <div className="max-w-3xl">
           <div className="hero-badge section-label mb-2.5">Cinematic Video Editor</div>
@@ -60,7 +77,6 @@ export function HeroSection() {
                 </svg>
               </span>
               <span>Ampita</span>
-              <span>Das</span>
             </span>
             <span className="hero-title-line headline-gradient block">Cuts that feel cinematic.</span>
           </h1>

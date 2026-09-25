@@ -321,6 +321,21 @@ body::before {
   pointer-events: none;
 }
 
+/* Ethereal castle float */
+@keyframes castle-float {
+  0%, 100% {
+    transform: translateY(0px) scale(1);
+  }
+  50% {
+    transform: translateY(-9px) scale(1.008);
+  }
+}
+
+.animate-castle-float {
+  animation: castle-float 9s ease-in-out infinite;
+}
+
+
 /* Custom Scrollbars for CapCut Pro Workspace */
 .capcut-scrollbar::-webkit-scrollbar {
   width: 6px;

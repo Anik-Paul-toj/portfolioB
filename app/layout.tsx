@@ -3,7 +3,7 @@ import "./globals.css";
 import SparkleCursor from "@/components/SparkleCursor";
 
 export const metadata: Metadata = {
-  title: "Ampita Das | Video Editor Portfolio",
+  title: "Ampita | Video Editor Portfolio",
   description:
     "Cinematic, pastel-neon portfolio for a professional video editor built with Next.js, Tailwind CSS, and GSAP.",
 };
