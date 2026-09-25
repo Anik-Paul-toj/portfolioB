@@ -1,10 +1,27 @@
 import Image from "next/image";
-
+import atmosphereImg from "@/assets/Editing_atmosphere.png";
 
 export function AboutSection() {
   return (
-    <section id="about" className="scroll-mt-28 py-24 md:py-32">
-      <div className="section-shell">
+    <section id="about" className="relative scroll-mt-28 py-24 md:py-32 overflow-hidden">
+      {/* Decorative Atmosphere Background Layer */}
+      <div
+        className="pointer-events-none absolute inset-0 z-0 select-none overflow-hidden"
+        aria-hidden="true"
+      >
+        <Image
+          src={atmosphereImg}
+          alt=""
+          fill
+          className="object-cover object-center opacity-65 md:opacity-75 mix-blend-multiply"
+          sizes="100vw"
+        />
+        {/* Soft pastel and gradient fade overlays to maintain brand palette and legibility */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#fff5f9]/60 via-transparent to-[#fff5f9]/70" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(254,158,199,0.08),transparent_75%)]" />
+      </div>
+
+      <div className="section-shell relative z-[1]">
         <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-end">
           <div data-reveal className="max-w-3xl">
             <span className="section-label">About</span>
@@ -18,7 +35,6 @@ export function AboutSection() {
           </div>
 
           <div data-reveal className="glass-panel rounded-[30px] p-7 md:p-8 relative overflow-visible">
-
             <div className="grid gap-6 sm:grid-cols-2">
               <div>
                 <p className="text-sm uppercase tracking-[0.28em] text-[#89D4FF]">Approach</p>
