@@ -1,10 +1,8 @@
-"use client";
-
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
-import type { Project } from "@/lib/content";
+import { projects as defaultProjects, PORTFOLIO_CATEGORIES, type Project } from "@/lib/content";
 import reelBg from "@/assets/A_reel_built.png";
 
 type ProjectsSectionProps = {
@@ -12,17 +10,28 @@ type ProjectsSectionProps = {
   onSelectProject: (project: Project) => void;
 };
 
+function normalizeCategory(cat?: string | null): string {
+  if (!cat) return "";
+  return cat.toLowerCase().replace(/edits?$/i, "").trim();
+}
+
+function matchCategory(projectCat?: string | null, targetCat?: string | null): boolean {
+  if (!targetCat || targetCat === "ALL") return true;
+  if (!projectCat) return false;
+  const pNorm = normalizeCategory(projectCat);
+  const tNorm = normalizeCategory(targetCat);
+  return pNorm === tNorm || pNorm.includes(tNorm) || tNorm.includes(pNorm);
+}
+
 // Helper to add Cloudinary auto-format, auto-quality, and scale down transformation for minimum bandwidth
 function getOptimizedCloudinaryUrl(url: string, isVideo = false) {
   if (!url || !url.includes("res.cloudinary.com")) return url;
   
   if (isVideo) {
-    // f_auto: best codec (av1/vp9/h265/mp4), q_auto: optimal visual quality, w_960: max width needed for preview card
     if (url.includes("/upload/")) {
       return url.replace("/upload/", "/upload/f_auto,q_auto,w_960,vc_auto/");
     }
   } else {
-    // f_auto (webp/avif), q_auto, w_800 for high-res crisp thumbnail with tiny file size
     if (url.includes("/upload/")) {
       return url.replace("/upload/", "/upload/f_auto,q_auto,w_800/");
     }
@@ -77,7 +86,6 @@ function VideoCard({ project, index, onSelect }: { project: Project; index: numb
       <div className="absolute inset-0">
         {isDriveVideo ? (
           <>
-            {/* Elegant pastel card background for Drive videos */}
             <div className="absolute inset-0 bg-gradient-to-br from-[#fff6fb] via-white to-[#f0f8ff]" />
             <div className="pointer-events-none absolute -right-16 -top-16 h-56 w-56 rounded-full bg-[#FE9EC7]/20 blur-3xl transition duration-700 group-hover:scale-125" />
             <div className="pointer-events-none absolute -left-16 -bottom-16 h-56 w-56 rounded-full bg-[#44ACFF]/18 blur-3xl transition duration-700 group-hover:scale-125" />
@@ -95,7 +103,6 @@ function VideoCard({ project, index, onSelect }: { project: Project; index: numb
                 className={`object-cover transition duration-700 ${isHovered && isDirectVideo ? "opacity-0 scale-110" : "opacity-100 scale-100"}`}
               />
             )}
-            {/* Only load video stream when user interacts or hovers to save bandwidth */}
             {isDirectVideo && (
               <video
                 ref={videoRef}
@@ -139,7 +146,6 @@ function VideoCard({ project, index, onSelect }: { project: Project; index: numb
             {project.title}
           </h3>
 
-          {/* Video Description shown as thumbnail content for Drive videos */}
           {isDriveVideo && project.description && (
             <div className="mt-4 rounded-2xl border border-[#FE9EC7]/30 bg-white/80 p-4 shadow-sm backdrop-blur-md transition group-hover:bg-white/95 group-hover:border-[#FE9EC7]/50">
               <p className="line-clamp-4 text-sm leading-relaxed text-[#3d1f35]/85">
@@ -166,13 +172,57 @@ function VideoCard({ project, index, onSelect }: { project: Project; index: numb
   );
 }
 
-export function ProjectsSection({ projects, onSelectProject }: ProjectsSectionProps) {
-  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, dragFree: true }, [
+export function ProjectsSection({ projects: inputProjects, onSelectProject }: ProjectsSectionProps) {
+  const [selectedCategory, setSelectedCategory] = useState<string>("ALL");
+
+  const allProjects = useMemo(() => {
+    return inputProjects && inputProjects.length > 0 ? inputProjects : defaultProjects;
+  }, [inputProjects]);
+
+  // Dynamically extract all available categories, preserving standard categories list
+  const categoryTabs = useMemo(() => {
+    const existingCats = new Set<string>();
+    allProjects.forEach((p) => {
+      if (p.category) existingCats.add(p.category);
+    });
+
+    const standardCats = [...PORTFOLIO_CATEGORIES];
+    const combined = ["ALL", ...standardCats];
+
+    // Add any existing category from projects that wasn't in standardCats
+    existingCats.forEach((cat) => {
+      if (!standardCats.some((sc) => matchCategory(sc, cat))) {
+        combined.push(cat);
+      }
+    });
+
+    return combined;
+  }, [allProjects]);
+
+  const filteredProjects = useMemo(() => {
+    if (selectedCategory === "ALL") return allProjects;
+    return allProjects.filter((p) => matchCategory(p.category, selectedCategory));
+  }, [allProjects, selectedCategory]);
+
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: filteredProjects.length > 1, dragFree: true }, [
     Autoplay({ delay: 4000, stopOnInteraction: true }),
   ]);
 
+  // Reset carousel position when category filter changes
+  useEffect(() => {
+    if (emblaApi) {
+      emblaApi.scrollTo(0);
+      emblaApi.reInit();
+    }
+  }, [selectedCategory, emblaApi, filteredProjects]);
+
+  const getCategoryCount = (cat: string) => {
+    if (cat === "ALL") return allProjects.length;
+    return allProjects.filter((p) => matchCategory(p.category, cat)).length;
+  };
+
   return (
-    <section id="projects" className="relative scroll-mt-28 py-24 md:py-32 overflow-hidden">
+    <section id="projects" className="relative scroll-mt-28 py-20 md:py-28 overflow-hidden">
       {/* Decorative Atmosphere Background Layer */}
       <div
         className="pointer-events-none absolute inset-0 z-0 select-none overflow-hidden [mask-image:linear-gradient(180deg,transparent_0%,black_140px,black_calc(100%-120px),transparent_100%)] [webkit-mask-image:linear-gradient(180deg,transparent_0%,black_140px,black_calc(100%-120px),transparent_100%)]"
@@ -185,7 +235,6 @@ export function ProjectsSection({ projects, onSelectProject }: ProjectsSectionPr
           className="object-cover object-center opacity-65 md:opacity-75 mix-blend-multiply"
           sizes="100vw"
         />
-        {/* Soft pastel and ambient glow overlays */}
         <div className="absolute inset-0 bg-gradient-to-b from-[#fff5f9]/50 via-transparent to-[#fff5f9]/60" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(254,158,199,0.08),transparent_75%)]" />
       </div>
@@ -203,42 +252,84 @@ export function ProjectsSection({ projects, onSelectProject }: ProjectsSectionPr
       />
 
       <div className="section-shell relative z-[2] overflow-visible">
-        <div data-reveal className="mb-8 md:mb-12 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
+        {/* Header and navigation */}
+        <div data-reveal className="mb-6 md:mb-8 flex flex-col gap-5 md:flex-row md:items-end md:justify-between">
           <div className="max-w-2xl">
             <span className="section-label">Projects</span>
-            <h2 className="mt-6 md:mt-7 font-display text-[clamp(2.1rem,6vw,4.6rem)] leading-[1.02] md:leading-[0.98] tracking-[-0.04em] text-[#3d1f35]">
+            <h2 className="mt-5 md:mt-6 font-display text-[clamp(2.1rem,6vw,4.4rem)] leading-[1.02] md:leading-[0.98] tracking-[-0.04em] text-[#3d1f35]">
               A reel built for glow, pace, and impact.
             </h2>
           </div>
           <div className="flex flex-col gap-4 items-start md:items-end">
             <p className="max-w-lg text-sm leading-6 md:leading-7 text-[#3d1f35]/60 md:text-base text-left md:text-right">
-              Selected edits across music, brand, beauty, and event visuals. Tap any piece to preview the motion.
+              Selected edits across music, brand, beauty, and creator systems. Select a category or view all motion.
             </p>
             <div className="flex gap-2">
               <button
                 onClick={() => emblaApi?.scrollPrev()}
-                className="flex h-10 w-10 items-center justify-center rounded-full border border-[#FE9EC7]/30 bg-white/50 text-[#3d1f35] backdrop-blur-sm transition hover:bg-[#FE9EC7]/20"
+                className="flex h-10 w-10 items-center justify-center rounded-full border border-[#FE9EC7]/30 bg-white/60 text-[#3d1f35] backdrop-blur-sm transition hover:bg-[#FE9EC7]/20 shadow-2xs cursor-pointer"
+                aria-label="Previous project"
               >
                 ←
               </button>
               <button
                 onClick={() => emblaApi?.scrollNext()}
-                className="flex h-10 w-10 items-center justify-center rounded-full border border-[#FE9EC7]/30 bg-white/50 text-[#3d1f35] backdrop-blur-sm transition hover:bg-[#FE9EC7]/20"
+                className="flex h-10 w-10 items-center justify-center rounded-full border border-[#FE9EC7]/30 bg-white/60 text-[#3d1f35] backdrop-blur-sm transition hover:bg-[#FE9EC7]/20 shadow-2xs cursor-pointer"
+                aria-label="Next project"
               >
                 →
               </button>
             </div>
           </div>
         </div>
+
+        {/* Category Filters Bar */}
+        <div data-reveal className="mb-8 md:mb-10">
+          <div className="flex items-center gap-2 overflow-x-auto pb-3 pt-1 scrollbar-none [-ms-overflow-style:none] [scrollbar-width:none]">
+            {categoryTabs.map((cat) => {
+              const isActive = selectedCategory === cat;
+              const count = getCategoryCount(cat);
+              const isAll = cat === "ALL";
+              const label = isAll ? "All Edits" : cat;
+
+              return (
+                <button
+                  key={cat}
+                  type="button"
+                  onClick={() => setSelectedCategory(cat)}
+                  className={`group relative flex-none inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs uppercase tracking-[0.2em] transition-all duration-300 cursor-pointer ${
+                    isActive
+                      ? "button-glow bg-gradient-to-r from-[#FE9EC7] via-[#f9f6c4] to-[#89D4FF] text-[#3d1f35] font-bold shadow-[0_4px_18px_rgba(254,158,199,0.35)] scale-105 border border-white/60"
+                      : "border border-[#FE9EC7]/25 bg-white/70 text-[#3d1f35]/75 hover:bg-white/95 hover:text-[#3d1f35] hover:border-[#FE9EC7]/50 backdrop-blur-md shadow-2xs"
+                  }`}
+                >
+                  <span>{label}</span>
+                  <span
+                    className={`inline-flex items-center justify-center rounded-full px-1.5 py-0.2 text-[10px] font-semibold transition ${
+                      isActive
+                        ? "bg-[#3d1f35]/15 text-[#3d1f35]"
+                        : count > 0
+                        ? "bg-[#FE9EC7]/20 text-[#a0527a]"
+                        : "bg-black/5 text-[#3d1f35]/40"
+                    }`}
+                  >
+                    {count}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
       </div>
 
+      {/* Projects Carousel / Grid View */}
       <div className="w-full px-4 sm:px-6 md:pl-12 lg:pl-16 relative z-[2]">
-        {projects && projects.length > 0 ? (
+        {filteredProjects && filteredProjects.length > 0 ? (
           <div className="overflow-hidden" ref={emblaRef}>
-            <div className="flex gap-6 pr-12 pb-8">
-              {projects.map((project, index) => (
+            <div className="flex gap-6 pr-12 pb-6">
+              {filteredProjects.map((project, index) => (
                 <VideoCard
-                  key={project.id || project.title}
+                  key={project.id || `${project.title}-${index}`}
                   project={project}
                   index={index}
                   onSelect={() => onSelectProject(project)}
@@ -247,8 +338,22 @@ export function ProjectsSection({ projects, onSelectProject }: ProjectsSectionPr
             </div>
           </div>
         ) : (
-          <div className="flex h-64 items-center justify-center rounded-3xl border border-white/40 bg-white/30 backdrop-blur-md mx-6 md:mx-0 md:mr-12 lg:mr-16">
-            <p className="font-display text-2xl text-[#3d1f35]/60">The reel is coming together.</p>
+          <div className="flex flex-col items-center justify-center rounded-3xl border border-white/50 bg-white/40 backdrop-blur-md p-10 text-center mx-4 sm:mx-6 md:mr-12 lg:mr-16 shadow-sm">
+            <div className="inline-flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-tr from-[#FE9EC7]/40 to-[#89D4FF]/40 border border-[#FE9EC7]/40 text-xl text-[#3d1f35] mb-3.5">
+              ✨
+            </div>
+            <p className="font-display text-2xl md:text-3xl text-[#3d1f35]">
+              New {selectedCategory} edits coming soon.
+            </p>
+            <p className="mt-2 text-sm text-[#3d1f35]/65 max-w-md">
+              Fresh cuts for this category are currently in the editing suite. Explore other categories or view all works.
+            </p>
+            <button
+              onClick={() => setSelectedCategory("ALL")}
+              className="mt-5 inline-flex items-center gap-2 rounded-full border border-[#FE9EC7]/40 bg-white/80 px-6 py-2.5 text-xs uppercase tracking-[0.22em] text-[#3d1f35] font-semibold transition hover:bg-[#FE9EC7]/20 shadow-xs cursor-pointer"
+            >
+              ← View All Edits
+            </button>
           </div>
         )}
       </div>

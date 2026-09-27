@@ -6,35 +6,9 @@ import { useState } from "react";
 import Link from "next/link";
 import { ArrowLeft, UploadCloud, Link as LinkIcon, Loader2, CheckCircle2 } from "lucide-react";
 
-const CATEGORY_DATA: Record<string, { label: string; description: string }> = {
-  "Doctor": {
-    label: "Doctor",
-    description:
-      "High-impact medical and healthcare video showcasing patient trust, expert consultations, and clinical excellence with clean, engaging visual pacing.",
-  },
-  "Business Owner": {
-    label: "Business Owner",
-    description:
-      "Dynamic entrepreneurial and corporate storytelling highlighting company growth, visionary leadership, brand authority, and client success.",
-  },
-  "Relationship Coach / Expert": {
-    label: "Relationship Coach / Expert",
-    description:
-      "Empathetic, insight-driven video content designed for relationship coaching, emotional connection, communication breakthroughs, and personal growth.",
-  },
-  "Wellness Coach": {
-    label: "Wellness Coach",
-    description:
-      "Inspiring holistic health and lifestyle edit focused on mindful wellness habits, workout routines, nutrition, and personal transformation.",
-  },
-  "Factory": {
-    label: "Factory",
-    description:
-      "Cinematic industrial footage capturing factory operations, precision machinery, modern manufacturing lines, and the scale of production.",
-  },
-};
+import { PORTFOLIO_CATEGORIES, CATEGORY_DESCRIPTIONS } from "@/lib/content";
 
-const CATEGORIES = Object.keys(CATEGORY_DATA);
+const CATEGORIES = [...PORTFOLIO_CATEGORIES];
 
 export default function AddVideoPage() {
   const { status } = useSession({
@@ -46,15 +20,17 @@ export default function AddVideoPage() {
   const router = useRouter();
 
   const [title, setTitle] = useState("");
-  const [category, setCategory] = useState("Doctor");
-  const [description, setDescription] = useState(CATEGORY_DATA["Doctor"].description);
+  const [category, setCategory] = useState<string>(CATEGORIES[0] || "Astrology edits");
+  const [description, setDescription] = useState(
+    CATEGORY_DESCRIPTIONS[CATEGORIES[0]] || ""
+  );
 
   const handleCategoryChange = (newCategory: string) => {
     setCategory(newCategory);
     // Auto-update description if empty or if currently matching any default description
-    const defaultDescriptions = Object.values(CATEGORY_DATA).map((item) => item.description);
+    const defaultDescriptions = Object.values(CATEGORY_DESCRIPTIONS);
     if (!description.trim() || defaultDescriptions.includes(description.trim())) {
-      setDescription(CATEGORY_DATA[newCategory]?.description || "");
+      setDescription(CATEGORY_DESCRIPTIONS[newCategory] || "");
     }
   };
 
@@ -240,7 +216,7 @@ export default function AddVideoPage() {
                   <label className="block text-xs uppercase tracking-widest text-slate-300 font-semibold">Description</label>
                   <button
                     type="button"
-                    onClick={() => setDescription(CATEGORY_DATA[category]?.description || "")}
+                    onClick={() => setDescription(CATEGORY_DESCRIPTIONS[category] || "")}
                     className="text-[11px] font-medium text-cyan-400 hover:text-cyan-300 transition underline underline-offset-2"
                   >
                     Reset to default

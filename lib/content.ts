@@ -23,6 +23,47 @@ export type SocialLink = {
   href: string;
 };
 
+export const PORTFOLIO_CATEGORIES = [
+  "Astrology edits",
+  "Business edits",
+  "Doctor edits",
+  "Fun facts edits",
+  "Gaming edits",
+  "Industrial edits",
+  "Psychology edits",
+  "Real Estate edits",
+  "Recent Affairs edits",
+  "Relationship Advice edits",
+  "Tech edits",
+] as const;
+
+export const CATEGORY_DESCRIPTIONS: Record<string, string> = {
+  "Astrology edits":
+    "Captivating zodiac, cosmic horoscope, and mystical astrological storytelling with mesmerizing glow effects and ethereal visual pacing.",
+  "Business edits":
+    "Dynamic entrepreneurial and corporate storytelling highlighting company growth, visionary leadership, brand authority, and client success.",
+  "Doctor edits":
+    "High-impact medical and healthcare video showcasing patient trust, expert consultations, and clinical excellence with clean, engaging visual pacing.",
+  "Fun facts edits":
+    "Fast-paced, hook-driven trivia and curiosity-sparking educational content designed for maximum viewer retention and viral social reach.",
+  "Gaming edits":
+    "High-energy gameplay sequences, sync-heavy montage cuts, sound design, and vibrant visual effects capturing clutch moments and esports hype.",
+  "Industrial edits":
+    "Cinematic industrial footage capturing factory operations, precision machinery, modern manufacturing lines, and the scale of production.",
+  "Psychology edits":
+    "Intriguing human behavior, mind breakdown, and cognitive insights delivered through compelling pacing, visual metaphors, and narrative focus.",
+  "Psycology edits":
+    "Intriguing human behavior, mind breakdown, and cognitive insights delivered through compelling pacing, visual metaphors, and narrative focus.",
+  "Real Estate edits":
+    "Luxurious architectural tours, drone flythroughs, and premium property walkthroughs crafted to inspire buyers and elevate high-end listings.",
+  "Recent Affairs edits":
+    "Sharp journalistic breakdowns, global news analysis, and trending cultural commentary cut with authority, clear infoboxes, and momentum.",
+  "Relationship Advice edits":
+    "Empathetic, insight-driven video content designed for relationship coaching, emotional connection, communication breakthroughs, and personal growth.",
+  "Tech edits":
+    "Sleek gadget reviews, software deep dives, and futuristic product showcases with crisp graphics, macro detail, and cutting-edge sound design.",
+};
+
 export type PricingDeliverable = {
   text: string;
   note?: string;
