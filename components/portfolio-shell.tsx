@@ -11,6 +11,7 @@ import { Navbar } from "@/components/navbar";
 import { Preloader } from "@/components/preloader";
 import { ProjectModal } from "@/components/project-modal";
 import { ProjectsSection } from "@/components/projects-section";
+import { PricingSection } from "@/components/pricing-section";
 import { SkillsSection } from "@/components/skills-section";
 import { navItems, projects, skills, socialLinks, type Project } from "@/lib/content";
 import Image from "next/image";
@@ -82,6 +83,7 @@ export function PortfolioShell({ dbProjects }: { dbProjects?: any[] }) {
           <HeroSection />
           <AboutSection />
           <ProjectsSection projects={dbProjects || []} onSelectProject={setActiveProject} />
+          <PricingSection />
           <SkillsSection skills={skills} />
           <ContactSection socialLinks={socialLinks} />
         </main>

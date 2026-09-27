@@ -23,12 +23,97 @@ export type SocialLink = {
   href: string;
 };
 
+export type PricingDeliverable = {
+  text: string;
+  note?: string;
+};
+
+export type PricingPlan = {
+  id: string;
+  planNumber: string;
+  name: string;
+  tagline: string;
+  price: string;
+  period: string;
+  additionalCharge?: string;
+  featured?: boolean;
+  badge?: string;
+  deliverables: PricingDeliverable[];
+  cta: string;
+  accentGradient: string;
+  borderGlow?: boolean;
+};
+
 export const navItems: NavItem[] = [
   { href: "#hero", label: "Home" },
   { href: "#about", label: "About" },
   { href: "#projects", label: "Projects" },
+  { href: "#pricing", label: "Pricing" },
   { href: "#skills", label: "Skills" },
   { href: "#contact", label: "Contact" },
+];
+
+export const pricingPlans: PricingPlan[] = [
+  {
+    id: "the-spark",
+    planNumber: "PLAN 01",
+    name: "THE SPARK",
+    tagline: "For brands ready to stay consistently visible.",
+    price: "₹25K",
+    period: "/ month",
+    featured: false,
+    deliverables: [
+      { text: "13 Reels" },
+      { text: "10 Carousels" },
+      { text: "Cover Images" },
+      { text: "Instagram Management" },
+      { text: "Script Writing" },
+    ],
+    cta: "LET’S CREATE",
+    accentGradient: "from-[#FE9EC7]/30 via-white to-[#89D4FF]/20",
+  },
+  {
+    id: "the-glow-up",
+    planNumber: "PLAN 02",
+    name: "THE GLOW-UP",
+    tagline: "For brands ready to turn content into a serious growth engine.",
+    price: "₹45K",
+    period: "/ month",
+    featured: true,
+    badge: "MOST PURCHASED",
+    deliverables: [
+      { text: "15 Reels" },
+      { text: "4 Long-form YouTube Videos", note: "Approx. 10 minutes each" },
+      { text: "YouTube + Instagram Management" },
+      { text: "Cover Images" },
+      { text: "10 Carousels" },
+      { text: "Script Writing" },
+    ],
+    cta: "GO ALL IN",
+    accentGradient: "from-[#FE9EC7]/45 via-[#fff0f7] to-[#F9F6C4]/35",
+    borderGlow: true,
+  },
+  {
+    id: "the-takeover",
+    planNumber: "PLAN 03",
+    name: "THE TAKEOVER",
+    tagline: "For brands building a full-scale content presence across platforms.",
+    price: "₹50K",
+    period: "/ month",
+    additionalCharge: "+ ₹15K additional Meta charges",
+    featured: false,
+    deliverables: [
+      { text: "16 Reels" },
+      { text: "Cover Images" },
+      { text: "Instagram + YouTube + LinkedIn Management" },
+      { text: "10 LinkedIn Posts" },
+      { text: "10 Instagram Carousels" },
+      { text: "Script Writing" },
+      { text: "8–10 Long-form YouTube Videos", note: "Approx. 10 minutes each" },
+    ],
+    cta: "OWN THE FEED",
+    accentGradient: "from-[#89D4FF]/30 via-white to-[#FE9EC7]/25",
+  },
 ];
 
 export const projects: Project[] = [
