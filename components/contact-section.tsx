@@ -80,7 +80,7 @@ export function ContactSection({ socialLinks }: ContactSectionProps) {
   };
 
   return (
-    <section id="contact" className="relative scroll-mt-28 py-16 pb-14 md:py-32 md:pb-24 overflow-hidden">
+    <section id="contact" className="relative scroll-mt-20 py-8 sm:py-10 md:py-14 min-h-screen flex flex-col justify-center overflow-hidden">
       {/* Decorative Atmosphere Background Layer */}
       <div
         className="pointer-events-none absolute inset-0 z-0 select-none overflow-hidden [mask-image:linear-gradient(180deg,transparent_0%,black_140px,black_calc(100%-80px),transparent_100%)] [webkit-mask-image:linear-gradient(180deg,transparent_0%,black_140px,black_calc(100%-80px),transparent_100%)]"
