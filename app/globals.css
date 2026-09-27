@@ -11,7 +11,7 @@
   --color-primary:   var(--color-pink);
   --color-secondary: var(--color-blue);
   --color-accent:    var(--color-blue-lt);
-  --color-highlight: var(--color-yellow);
+  --color-highlight: var(--color-highlight);
 
   /* Surface */
   --bg-deep:       #fff5f9;          /* very soft blush white */
@@ -20,6 +20,7 @@
 
   --font-display-stack: "Baskerville", "Palatino Linotype", "Book Antiqua", serif;
   --font-body-stack: "Avenir Next", "Segoe UI", "Helvetica Neue", sans-serif;
+  --font-signature-stack: "Birthstone Bounce", "Style Script", "Ephesis", "Alex Brush", "Corinthia", "Great Vibes", cursive;
 }
 
 @theme inline {
@@ -29,6 +30,7 @@
   --color-highlight: var(--color-highlight);
   --font-display:    var(--font-display-stack);
   --font-sans:       var(--font-body-stack);
+  --font-signature:  var(--font-signature-stack);
 }
 
 * { box-sizing: border-box; }
@@ -138,6 +140,10 @@ body::before {
 }
 
 /* Typography */
+.font-signature {
+  font-family: var(--font-signature-stack);
+}
+
 .text-glow {
   text-shadow:
     0 0 18px rgba(254,158,199,0.22),
