@@ -24,18 +24,19 @@ export type SocialLink = {
 };
 
 export const PORTFOLIO_CATEGORIES = [
-  "Astrology edits",
-  "Business edits",
   "Doctor edits",
-  "Fun facts edits",
+  "Recent Affairs edits",
+  "Astrology edits",
   "Gaming edits",
   "Industrial edits",
+  "Business edits",
+  "Fun facts edits",
   "Psychology edits",
   "Real Estate edits",
-  "Recent Affairs edits",
   "Relationship Advice edits",
   "Tech edits",
 ] as const;
+
 
 export const CATEGORY_DESCRIPTIONS: Record<string, string> = {
   "Astrology edits":

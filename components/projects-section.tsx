@@ -284,8 +284,8 @@ export function ProjectsSection({ projects: inputProjects, onSelectProject }: Pr
         </div>
 
         {/* Category Filters Bar */}
-        <div data-reveal className="mb-5 md:mb-6">
-          <div className="flex items-center gap-2 overflow-x-auto pb-2.5 pt-0.5 scrollbar-none [-ms-overflow-style:none] [scrollbar-width:none]">
+        <div data-reveal className="mb-6 md:mb-7">
+          <div className="flex flex-wrap items-center gap-2 sm:gap-2.5 pb-1">
             {categoryTabs.map((cat) => {
               const isActive = selectedCategory === cat;
               const count = getCategoryCount(cat);
@@ -297,9 +297,9 @@ export function ProjectsSection({ projects: inputProjects, onSelectProject }: Pr
                   key={cat}
                   type="button"
                   onClick={() => setSelectedCategory(cat)}
-                  className={`group relative flex-none inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-[11px] uppercase tracking-[0.18em] transition-all duration-300 cursor-pointer ${
+                  className={`group relative inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-[11px] uppercase tracking-[0.18em] transition-all duration-300 cursor-pointer ${
                     isActive
-                      ? "button-glow bg-gradient-to-r from-[#FE9EC7] via-[#f9f6c4] to-[#89D4FF] text-[#3d1f35] font-bold shadow-[0_4px_16px_rgba(254,158,199,0.32)] scale-105 border border-white/60"
+                      ? "button-glow bg-gradient-to-r from-[#FE9EC7] via-[#f9f6c4] to-[#89D4FF] text-[#3d1f35] font-bold shadow-[0_4px_16px_rgba(254,158,199,0.32)] scale-[1.03] border border-white/60"
                       : "border border-[#FE9EC7]/25 bg-white/70 text-[#3d1f35]/75 hover:bg-white/95 hover:text-[#3d1f35] hover:border-[#FE9EC7]/50 backdrop-blur-md shadow-2xs"
                   }`}
                 >
