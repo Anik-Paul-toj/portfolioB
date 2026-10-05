@@ -25,3 +25,21 @@ model PortfolioVideo {
   createdAt          DateTime @default(now())
   updatedAt          DateTime @updatedAt
 }
+
+model ThumbnailCover {
+  id                 String   @id @default(uuid())
+  title              String
+  category           String   // e.g. "YouTube Thumbnail", "Instagram Cover", "Podcast Cover", etc.
+  description        String?
+  client             String?
+  year               String?
+  sourceType         String   // "CLOUDINARY" or "DRIVE" or "URL"
+  imageUrl           String   // Direct image URL or Drive link
+  cloudinaryPublicId String?
+  featured           Boolean  @default(false)
+  published          Boolean  @default(true)
+  displayOrder       Int      @default(0)
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+}
+

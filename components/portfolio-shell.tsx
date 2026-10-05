@@ -11,18 +11,28 @@ import { Navbar } from "@/components/navbar";
 import { Preloader } from "@/components/preloader";
 import { ProjectModal } from "@/components/project-modal";
 import { ProjectsSection } from "@/components/projects-section";
+import { CoversSection } from "@/components/covers-section";
+import { CoverModal } from "@/components/cover-modal";
 import { PricingSection } from "@/components/pricing-section";
 import { SkillsSection } from "@/components/skills-section";
-import { navItems, projects, skills, socialLinks, type Project } from "@/lib/content";
+import { navItems, projects, skills, socialLinks, type Project, type ThumbnailCover } from "@/lib/content";
 import Image from "next/image";
 import leftWisteria from "@/pinsnap-211174979083582.jpg";
 
 gsap.registerPlugin(ScrollTrigger);
 
-export function PortfolioShell({ dbProjects }: { dbProjects?: any[] }) {
+export function PortfolioShell({
+  dbProjects,
+  dbCovers,
+}: {
+  dbProjects?: any[];
+  dbCovers?: any[];
+}) {
   const rootRef = useRef<HTMLDivElement>(null);
   const [activeProject, setActiveProject] = useState<Project | null>(null);
+  const [activeCover, setActiveCover] = useState<ThumbnailCover | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+
 
   useEffect(() => {
     const timer = window.setTimeout(() => setIsLoading(false), 1600);
@@ -83,12 +93,15 @@ export function PortfolioShell({ dbProjects }: { dbProjects?: any[] }) {
           <HeroSection />
           <AboutSection />
           <ProjectsSection projects={dbProjects || []} onSelectProject={setActiveProject} />
+          <CoversSection covers={dbCovers || []} onSelectCover={setActiveCover} />
           <PricingSection />
           <SkillsSection skills={skills} />
           <ContactSection socialLinks={socialLinks} />
         </main>
       </div>
       <ProjectModal project={activeProject} onClose={() => setActiveProject(null)} />
+      <CoverModal cover={activeCover} onClose={() => setActiveCover(null)} />
     </>
   );
 }
+

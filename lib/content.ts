@@ -23,6 +23,29 @@ export type SocialLink = {
   href: string;
 };
 
+export type ThumbnailCover = {
+  id?: string;
+  title: string;
+  category: string;
+  description?: string | null;
+  client?: string | null;
+  year?: string | null;
+  sourceType?: string | null;
+  imageUrl: string;
+  cloudinaryPublicId?: string | null;
+  featured?: boolean;
+  published?: boolean;
+  accent?: string;
+};
+
+export const THUMBNAIL_CATEGORIES = [
+  "YouTube Thumbnails",
+  "Instagram Covers",
+  "Podcast & Music Covers",
+  "Brand Posters",
+  "Social Graphics",
+] as const;
+
 export const PORTFOLIO_CATEGORIES = [
   "Doctor edits",
   "Recent Affairs edits",
@@ -36,6 +59,7 @@ export const PORTFOLIO_CATEGORIES = [
   "Relationship Advice edits",
   "Tech edits",
 ] as const;
+
 
 
 export const CATEGORY_DESCRIPTIONS: Record<string, string> = {
@@ -90,10 +114,12 @@ export const navItems: NavItem[] = [
   { href: "#hero", label: "Home" },
   { href: "#about", label: "About" },
   { href: "#projects", label: "Projects" },
+  { href: "#covers", label: "Covers" },
   { href: "#pricing", label: "Pricing" },
   { href: "#skills", label: "Skills" },
   { href: "#contact", label: "Contact" },
 ];
+
 
 export const pricingPlans: PricingPlan[] = [
   {
@@ -236,3 +262,7 @@ export const socialLinks: SocialLink[] = [
 
 export const heroVideo =
   "https://assets.mixkit.co/videos/preview/mixkit-aerial-view-of-city-traffic-at-night-11-large.mp4";
+
+export const defaultThumbnailCovers: ThumbnailCover[] = [];
+
+
