@@ -38,16 +38,16 @@ export function FairytalePortrait() {
         <span className="absolute -bottom-4 -right-6 h-9 w-9 rounded-full bg-[#FE9EC7]/30 blur-md animate-fairy-dust-1" />
       </div>
 
-      {/* 5. Animated Character - Olaf above frame */}
+      {/* 5. Animated Character - Olaf tilted to the left peeking prominently from BEHIND the frame */}
       <Image
         src={picmixGif}
         alt=""
         priority
-        className="pointer-events-none absolute left-[26%] top-[-102px] z-[2] h-auto w-[118px] -translate-x-1/2 opacity-95 md:top-[-110px] md:w-[125px] [filter:drop-shadow(0_0_12px_rgba(255,255,255,0.70))_drop-shadow(0_0_20px_rgba(137,212,255,0.40))]"
+        className="pointer-events-none absolute left-[10%] top-[-102px] z-[1] h-auto w-[124px] -translate-x-1/2 -rotate-[16deg] opacity-95 md:top-[-112px] md:w-[132px] [filter:drop-shadow(0_0_12px_rgba(255,255,255,0.70))_drop-shadow(0_0_20px_rgba(137,212,255,0.40))]"
       />
 
       {/* 6. Original Untouched Framed Artwork with Magical Luminous Edge */}
-      <div className="relative z-[1]">
+      <div className="relative z-[2]">
         <Image
           src={heroPortrait}
           alt="Ampita Das - Cinematic Video Editor"
@@ -78,7 +78,7 @@ export function FairytalePortrait() {
 
         {/* Olaf Waving Hand Sparkle */}
         <svg
-          className="absolute -top-20 left-[38%] h-5 w-5 text-white animate-fairytale-twinkle-3 drop-shadow-[0_0_6px_rgba(255,255,255,0.95)] drop-shadow-[0_0_12px_rgba(137,212,255,0.80)]"
+          className="absolute -top-20 left-[22%] h-5 w-5 text-white animate-fairytale-twinkle-3 drop-shadow-[0_0_6px_rgba(255,255,255,0.95)] drop-shadow-[0_0_12px_rgba(137,212,255,0.80)]"
           viewBox="0 0 24 24"
           fill="currentColor"
         >
